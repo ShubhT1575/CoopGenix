@@ -1,0 +1,47 @@
+.hero-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+.hero-button a{
+  /* display: inline-block;
+  font-size: 16px;
+  padding: 10px 30px;
+  font-weight: 500;
+  font-family: "Montserrat"; */
+  /* background: linear-gradient(
+    320deg,
+    rgba(0, 140, 255),
+    rgba(128, 0, 128)
+  ); */
+  /* color: #090909;
+  background: linear-gradient(90deg, #EE64FE 0%, #7000FD 100%);
+  border-radius: 5px;
+  border: 1px solid rgb(247, 247, 252);
+  position: relative;
+  z-index: 1;
+  color: white; */
+}
+/* 
+.hero-button a:before {
+  position: absolute;
+  content: "";
+  z-index: -1;
+  right: 0;
+  bottom: 0;
+  left: inherit;
+  top: inherit;
+  width: 26px;
+  height: 22px;
+  background: linear-gradient(
+    320deg,
+    rgb(95, 183, 255),
+    rgb(185, 72, 185)
+  );
+  border-radius: 25px 0 0 0;
+  transition: 0.9s;
+} */
+
+
