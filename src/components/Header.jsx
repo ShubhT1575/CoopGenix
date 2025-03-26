@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ConnectWallet from "./ConnectWallet";
 import { useAccount, useChainId } from "wagmi";
+import Logo from '/coopgenix.svg'
 import { useDispatch, useSelector } from "react-redux";
 import {
   setDashboardData,
@@ -111,13 +112,16 @@ function Header() {
 
           <div className="items-nav">
             <div className="header-logo">
-              <NavLink
-                to="#"
-                className=""
-                style={{color: "white"}}
-              >
-                ⚡ DecentraNext
-              </NavLink>
+              <div className="logo">
+                                    <a href="#">
+                                      <img
+                                        src={Logo}
+                                        style={{ height: "50px" }}
+                                        alt="Logo"
+                                      />
+                                      {/* <h2>CoopGenix</h2> */}
+                                    </a>
+                                  </div>
             </div>
             <div className="nav-menu">
               <NavLink

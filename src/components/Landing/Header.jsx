@@ -78,7 +78,7 @@ export default function Header() {
                         </li>
                       </ul>
                     </div>
-                    <div className="">
+                    <div className=" d-none d-lg-flex">
                       <ul className="list-wrap">
                         {/* <li className="header-login hero-button">
                           <a className="btn123 btn2" href="/SignIn">

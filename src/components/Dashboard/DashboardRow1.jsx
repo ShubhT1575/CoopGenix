@@ -79,7 +79,7 @@ function DashboardRow1() {
         <div className="col-sm-12 col-lg-12">
           <div>
             <div className="card custom-card school-card glow-box">
-              <div className="card-body d-flex gap-2 justify-content-between flex-wrap">
+              <div className="card-body d-flex gap-2 justify-content-evenly flex-wrap">
                 <div className="">
                   <div className="card custom-card school-card glow-box width-box">
                     <div className="card-body d-flex gap-2 justify-content-between">

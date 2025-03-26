@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Logo from '/coopgenix.svg'
 import { UserExist } from "./web3";
 import { GiProfit } from "react-icons/gi";
 import { RiGlobalFill } from "react-icons/ri";
 import { GiReceiveMoney } from "react-icons/gi";
-import LOGO from "../assets/img/logo.png";
+// import LOGO from "../assets/img/logo.png";
 import { useSelector } from "react-redux";
 import { getOwner } from "./web3";
 import { MdOutlineSupportAgent } from "react-icons/md";
@@ -86,13 +87,13 @@ function Sidebar() {
       >
         <nav className="main-menu-container nav nav-pills flex-column sub-open position-relative h-100 mt-3">
           <div className="d-flex justify-content-center mb-3">
-            {/* <img
-              src={LOGO}
+            <img
+              src={Logo}
               alt="Logo"
               style={{ height: "37px", width: "175px", display: "none" }}
               className="dash-logo"
-            /> */}
-            <h4>⚡ DecentraNext</h4>
+            />
+            {/* <h4>⚡ DecentraNext</h4> */}
           </div>
           <ul className="main-menu ">
             <li className="slide has-sub">
