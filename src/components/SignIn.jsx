@@ -75,8 +75,9 @@ function SignIn() {
             <input
               className="input-signin"
               value={address}
-              type="email"
-              placeholder="Email"
+              type="text"
+              placeholder="Address"
+              readOnly
             />
             {/* <input className="input-signin" type="password" placeholder="Password"/> */}
             {isConnected ? (

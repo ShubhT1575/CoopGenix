@@ -245,8 +245,8 @@ function SignUp() {
             <input
               className="input-signin"
               value={address}
-              type="email"
-              placeholder="Email"
+              type="text"
+              placeholder="Address"
               readOnly
             />
             <input
