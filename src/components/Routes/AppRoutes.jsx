@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Navigate,
@@ -54,10 +54,29 @@ const Layout = ({ children }) => {
   );
 };
 
+// function ScrollToHash() {
+//   const { pathname, hash } = useLocation();
+
+//   useEffect(() => {
+//     if (hash) {
+//       // Delay needed because DOM might not be ready immediately
+//       setTimeout(() => {
+//         const element = document.querySelector(hash);
+//         if (element) {
+//           element.scrollIntoView({ behavior: 'smooth' });
+//         }
+//       }, 100);
+//     }
+//   }, [pathname, hash]); // Watch both pathname and hash!
+
+//   return null;
+// }
+
 const AppRoutes = () => {
   return (
     <Router>
       <Layout>
+      {/* <ScrollToHash/> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/learnmore" element={<LearnMore />} />

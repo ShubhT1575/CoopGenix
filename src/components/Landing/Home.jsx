@@ -21,7 +21,7 @@ import economy from "../../assets/img/economy.png";
 import loan from "../../assets/img/loan.png";
 import deal from "../../assets/img/deal (1).png";
 import TestimonialCarousel from "./TestimonialCarousel";
-import FAQ from "./FAQ";
+import Footer from "./Footer";
 // import economy from "/Home Logo/Asset 1.png"
 
 export default function Home() {
@@ -31,7 +31,7 @@ export default function Home() {
       {/* Hero Section */}
       <div
         className="hero-wrapper hero-1 hero-bg bg-img"
-        style={{ height: "100vh" }}
+        style={{ height: "100%" }}
       >
         <div className="bg-1 bg-img"></div>
         {/* <div className="ripple-shape">
@@ -135,32 +135,32 @@ export default function Home() {
       </div>
 
       {/* Why Choose Us Section */}
-      <div className="why-choose-us hero-1 bg-img" id="why-us">
+      <div className="why-choose-us hero-1 bg-img" id="why-us" style={{paddingTop: "160px",paddingBottom: "150px"}}>
         <h2 className="section-title text-light">Why Choose Us?</h2>
 
         <div className="value-propositions">
-          <div className="value-box glow-box-blue">
+          <div className="value-box glow-box-blue border-curve">
             {/* <span className="icon">💡</span> */}
             <img className="img-img" src={blockchain1} alt="" />
             <h3>Decentralized & Transparent</h3>
             <p>No banks, no hidden fees.</p>
           </div>
 
-          <div className="value-box glow-box-blue">
+          <div className="value-box glow-box-blue border-curve">
             {/* <span className="icon">💡</span> */}
             <img className="img-img" src={security} alt="" />
             <h3>Secure & Trustworthy</h3>
             <p>100% smart contract-driven transactions.</p>
           </div>
 
-          <div className="value-box glow-box-blue">
+          <div className="value-box glow-box-blue border-curve">
             {/* <span className="icon">💡</span> */}
             <img className="img-img" src={creator} alt="" />
             <h3>Instant & Global Access</h3>
             <p>Raise funds from anywhere, anytime.</p>
           </div>
 
-          <div className="value-box glow-box-blue">
+          <div className="value-box glow-box-blue border-curve">
             {/* <span className="icon">💡</span> */}
             <img className="img-img" src={crowdfunding} alt="" />
             <h3>Community-Driven</h3>
@@ -215,7 +215,7 @@ export default function Home() {
       </div>
 
       {/* Fundraising Categories Section */}
-      <div className="fundraising-categories hero-1 bg-img" id="categories">
+      <div className="fundraising-categories hero-1 bg-img" id="categories" style={{paddingTop: "100px" , paddingBottom: "100px"}}>
         <h2 className="section-title text-light">Who Can Raise Funds?</h2>
 
         <div className="categories-container">
@@ -287,7 +287,7 @@ export default function Home() {
       </div>
 
       {/* Security Section */}
-      <div className="security hero-1 bg-img" id="security">
+      <div className="security hero-1 bg-img" id="security"  style={{paddingTop: "100px" , paddingBottom: "100px"}}>
         <h2 className="section-title text-light">
           <img className="img-img" src={security} alt="" />
           Security & Transparency
@@ -328,7 +328,7 @@ export default function Home() {
       </div>
 
       {/* Community Impact Section */}
-      <div className="community-impact hero-1 bg-img" id="community">
+      <div className="community-impact hero-1 bg-img" id="community"  style={{paddingTop: "100px" , paddingBottom: "100px"}}>
         <h2 className="section-title text-light">
           <img className="img-img" src={crowdfunding} alt="" />
           Community & Social Impact
@@ -339,7 +339,7 @@ export default function Home() {
         </p>
 
         <div className="impact-container">
-          <div className="impact-box glow-box-blue">
+          <div className="impact-box glow-box-blue border-curve">
             <div className="icon"><i class="fa-solid fa-handshake"></i></div>
             <h3>Join Our Mission</h3>
             <p>
@@ -348,7 +348,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="impact-box  glow-box-blue">
+          <div className="impact-box  glow-box-blue border-curve">
             <div className="icon"><i class="fa-solid fa-circle-dollar-to-slot"></i></div>
             <h3>Volunteer & Contribute</h3>
             <p>
@@ -356,7 +356,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="impact-box glow-box-blue">
+          <div className="impact-box glow-box-blue border-curve">
             <div className="icon"><i class="fa-solid fa-bell"></i></div>
             <h3>Follow & Stay Updated</h3>
             <p>
@@ -394,10 +394,10 @@ export default function Home() {
       </div>
 
       {/* Fundraising Stats */}
-      <div className="full-width hero-1 bg-img" id="liveFund">
-        <div className="fundraising-stats hero-1 bg-img">
+      <div className="full-width hero-1 bg-img" id="liveFund" >
+        <div className="fundraising-stats hero-1 bg-img"  style={{paddingTop: "100px" , paddingBottom: "100px"}}>
           <h2 className="stats-title text-light">
-            <img className="img-img" src={loan} alt="" /> Latest Fundraiser
+            <img className="img-img" src={loan} alt="" /> Live Stats
           </h2>
 
           <div className="stats-counters">
@@ -424,9 +424,9 @@ export default function Home() {
           {/* Latest FundRaiser */}
           <div className="featured-fundraisers">
             <h3 className="text-light">
-              <img className="img-img" src={economy} alt="" /> Top Gainer
+              <img className="img-img" src={economy} alt="" />Top Gainer
             </h3>
-            <div className="fundraiser-list">
+            <div className="fundraiser-list"> 
               <div className="fundraiser-box  glow-box">
                 <h4>Help Lisa's Surgery</h4>
                 <p>Raised: ₹1,20,000 / Goal: ₹2,00,000</p>
@@ -466,7 +466,7 @@ export default function Home() {
 
       {/* FAQ Section */}
       <div className="full-width hero-1 bg-img" id="faq">
-        <div className="faq-section hero-1 bg-img">
+        <div className="faq-section hero-1 bg-img"  style={{paddingTop: "100px" , paddingBottom: "100px"}}>
           <h2 className="text-light">Frequently Asked Questions</h2>
 
           <div className="faq-wrapper">
@@ -639,17 +639,17 @@ export default function Home() {
       <div className="get-involved hero-1 bg-img">
         <h2>Why You Can Trust Us</h2>
         <div className="involved-boxes">
-          <div className="involved-box  glow-box-blue">
+          <div className="involved-box  glow-box-blue border-curve">
             <h3><i class="fa-solid fa-shield-halved" style={{marginRight: "10px"}}></i> Blockchain Secured</h3>
             <p>Every transaction is secured through smart contracts.</p>
             {/* <Link to="/volunteer" className="cta">Join Now</Link> */}
           </div>
-          <div className="involved-box  glow-box-blue">
+          <div className="involved-box  glow-box-blue border-curve">
             <h3><i class="fa-solid fa-link"  style={{marginRight: "10px"}}></i> Transparent Transactions</h3>
             <p>All contributions & withdrawals are recorded on-chain.</p>
             {/* <Link to="/partnership" className="cta">Partner Up</Link> */}
           </div>
-          <div className="involved-box  glow-box-blue">
+          <div className="involved-box  glow-box-blue border-curve">
             <h3><i class="fa-solid fa-check-double" style={{marginRight: "10px"}}></i> Verified Campaigns</h3>
             <p>
               We ensure legitimacy with a strict campaign verification process.
@@ -660,9 +660,10 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="footer hero-1 bg-img ">
+      <Footer/>
+      {/* <footer className="footer hero-1 bg-img ">
         <div className="footer-container">
-          {/* <div className="footer-column">
+          <div className="footer-column">
             <h3>📌 Quick Links</h3>
             <ul>
               <li><Link to="/">🏠 Home</Link></li>
@@ -672,7 +673,7 @@ export default function Home() {
               <li><Link to="/contact">📞 Contact Us</Link></li>
               <li><Link to="/privacy">🔐 Privacy Policy & Terms</Link></li>
             </ul>
-          </div> */}
+          </div>
 
           <div className="footer-column">
             <h3>📲 Connect With Us</h3>
@@ -713,7 +714,7 @@ export default function Home() {
             <Link to="/privacy">🔐 Privacy Policy</Link>
           </p>
         </div>
-      </footer>
+      </footer> */}
     </>
   );
 }

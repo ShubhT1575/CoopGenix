@@ -4,6 +4,15 @@
   background: #5e00d0 !important;
 } */
 
+html {
+  scroll-behavior: smooth !important;
+}
+
+/* body{
+  background: white !important;
+} */
+
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -12,7 +21,7 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: #f95192;
+  background: #9504a8;
   color: white;
   border: none;
   border-radius: 50%;

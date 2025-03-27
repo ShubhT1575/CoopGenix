@@ -4061,6 +4061,8 @@ label {
 
 .hero-bg{
   background-image: url("../../../assets/img/badsh.png") !important;
+  /* position: fixed !important; */
+  min-height: 1000px;
 }
 
 .hero-1 {
@@ -4071,6 +4073,7 @@ label {
   background-repeat: no-repeat;
   overflow: hidden;
   height: max-content;
+  /* padding-top: 160px !important; */
 }
 
 /* .bg-1 {

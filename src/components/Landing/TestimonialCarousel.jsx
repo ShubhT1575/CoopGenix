@@ -37,7 +37,7 @@ const TestimonialCarousel = () => {
         ‹
       </button>
 
-      <div className="testimonial-container glow-box-blue relative w-full overflow-hidden">
+      <div className="testimonial-container glow-box-blue border-curve relative w-full overflow-hidden">
         {testimonials.map((testimonial, index) => (
           <div
             key={index}

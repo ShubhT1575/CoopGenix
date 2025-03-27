@@ -98,6 +98,10 @@
   padding: 0;
 }
 
+.border-curve{
+  border-radius: 14px !important; /* Increase to match the border width */
+}
+
 /* body{
     background: linear-gradient(90deg, #5e00d0, #b300ff);
   } */
