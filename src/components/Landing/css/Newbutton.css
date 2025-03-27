@@ -1590,7 +1590,7 @@ td {
 
 .involved-boxes {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   gap: 20px;
   flex-wrap: wrap;
 }
@@ -1600,7 +1600,7 @@ td {
   padding: 20px;
   border-radius: 10px;
   text-align: center;
-  width: 30%;
+  width: 25%;
   border: 2px solid var(--glow-border);
   box-shadow: 0px 0px 10px var(--glow-border);
   min-width: 350px !important;
