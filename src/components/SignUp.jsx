@@ -4,6 +4,7 @@ import "../style/SignUp.css";
 import { useAccount, useChainId, useConnect } from "wagmi";
 import { Link } from "react-router-dom";
 import LOGO from "../assets/img/logo.png";
+import Logo from "/coopgenix.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { getAddressbyRefrralId } from "../API/Api.js";
 import {
@@ -237,10 +238,13 @@ function SignUp() {
         <div className="hero-sign">
           {/* <!-- Sign In Section --> */}
           <div className="auth-section">
-            <h1 className="brand-name">CoopUnion</h1>
+            <a href="/">
+              <img src={Logo} style={{ height: "50px" }} alt="Logo" />
+              {/* <h2>CoopGenix</h2> */}
+            </a>
             <h2 className="h2">Sign Up</h2>
             <p className="welcome-msg text-light">
-            Join CoopUnion today! Experience the future of financial freedom.
+              Join CoopUnion today! Experience the future of financial freedom.
             </p>
             <input
               className="input-signin"
@@ -267,10 +271,9 @@ function SignUp() {
             {isConnected ? (
               <button
                 className="button-signin"
-                onClick={()=>Register(
-                  refFromUrl ? refFromUrl : inputRef,
-                  packageValue
-                )}
+                onClick={() =>
+                  Register(refFromUrl ? refFromUrl : inputRef, packageValue)
+                }
               >
                 Register
               </button>
@@ -283,22 +286,26 @@ function SignUp() {
             <div className="web3-buttons">
               <ConnectWallet />
               <div className="d-flex justify-content-center">
-                      <p className=" mt-3 mb-0 d-flex align-items-center justify-content-center gap-2 text-light">
-                        Already have an account?{"  "}
-                        <div
-                          className="text-success badge bg-white-transparent rounded-pill d-flex align-items-center fs-11 me-0 ms-2 mb-0 "
-                          style={{
-                            width: "fit-content",
-                            height: "fit-content",
-                            cursor: "pointer",
-                          }}
-                        >
-                          <Link to="/SignIn" className="text-primary" style={{fontSize: "15px"}}>
-                            Sign In
-                          </Link>
-                        </div>
-                      </p>
-                    </div>
+                <p className=" mt-3 mb-0 d-flex align-items-center justify-content-center gap-2 text-light">
+                  Already have an account?{"  "}
+                  <div
+                    className="text-success badge bg-white-transparent rounded-pill d-flex align-items-center fs-11 me-0 ms-2 mb-0 "
+                    style={{
+                      width: "fit-content",
+                      height: "fit-content",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <Link
+                      to="/SignIn"
+                      className="text-primary"
+                      style={{ fontSize: "15px" }}
+                    >
+                      Sign In
+                    </Link>
+                  </div>
+                </p>
+              </div>
               {/* <button className="button-signin" onclick="connectMetaMask()"><i className="fab fa-ethereum"></i> MetaMask</button>
             <button className="button-signin" onclick="connectWalletConnect()"><i className="fas fa-link"></i> WalletConnect</button> */}
             </div>

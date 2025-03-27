@@ -8,6 +8,7 @@ import LOGO from "../assets/img/logo.png";
 import { useAccount, useChainId } from "wagmi";
 import { useDispatch, useSelector } from "react-redux";
 import { setWalletDetails } from "../Redux/Slice";
+import Logo from "/coopgenix.svg";
 
 function SignIn() {
   // const address = "0xf0c90d0e550afa5c4d557a7bebfb89b1ea4d97f8";
@@ -66,7 +67,10 @@ function SignIn() {
         <div className="hero-sign">
           {/* <!-- Sign In Section --> */}
           <div className="auth-section">
-            <h1 className="brand-name">CoopUnion</h1>
+            <a href="/">
+              <img src={Logo} style={{ height: "50px" }} alt="Logo" />
+              {/* <h2>CoopGenix</h2> */}
+            </a>
             <h2 className="h2">Sign In</h2>
             <p className="welcome-msg text-light">
               Welcome back! Unlock your rewards and continue your journey with
