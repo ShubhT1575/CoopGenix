@@ -20,6 +20,8 @@ import crowdfunding from "../../assets/img/crowdfunding.png";
 import economy from "../../assets/img/economy.png";
 import loan from "../../assets/img/loan.png";
 import deal from "../../assets/img/deal (1).png";
+import TestimonialCarousel from "./TestimonialCarousel";
+import FAQ from "./FAQ";
 // import economy from "/Home Logo/Asset 1.png"
 
 export default function Home() {
@@ -104,7 +106,7 @@ export default function Home() {
             </p>
           </div>
           <div className="about-principles">
-            <div className="principle">
+            <div className="principle glow-box">
               <span className="emoji">🔍</span>
               <h3>Transparency</h3>
               <p>
@@ -112,7 +114,7 @@ export default function Home() {
                 the community.
               </p>
             </div>
-            <div className="principle">
+            <div className="principle glow-box">
               <span className="emoji">🌍</span>
               <h3>Community Growth</h3>
               <p>
@@ -120,7 +122,7 @@ export default function Home() {
                 sustainable development.
               </p>
             </div>
-            <div className="principle">
+            <div className="principle glow-box">
               <span className="emoji">🔗</span>
               <h3>Secure & Fair Transactions</h3>
               <p>
@@ -137,28 +139,28 @@ export default function Home() {
         <h2 className="section-title text-light">Why Choose Us?</h2>
 
         <div className="value-propositions">
-          <div className="value-box">
+          <div className="value-box glow-box-blue">
             {/* <span className="icon">💡</span> */}
             <img className="img-img" src={blockchain1} alt="" />
             <h3>Decentralized & Transparent</h3>
             <p>No banks, no hidden fees.</p>
           </div>
 
-          <div className="value-box">
+          <div className="value-box glow-box-blue">
             {/* <span className="icon">💡</span> */}
             <img className="img-img" src={security} alt="" />
             <h3>Secure & Trustworthy</h3>
             <p>100% smart contract-driven transactions.</p>
           </div>
 
-          <div className="value-box">
+          <div className="value-box glow-box-blue">
             {/* <span className="icon">💡</span> */}
             <img className="img-img" src={creator} alt="" />
             <h3>Instant & Global Access</h3>
             <p>Raise funds from anywhere, anytime.</p>
           </div>
 
-          <div className="value-box">
+          <div className="value-box glow-box-blue">
             {/* <span className="icon">💡</span> */}
             <img className="img-img" src={crowdfunding} alt="" />
             <h3>Community-Driven</h3>
@@ -172,7 +174,7 @@ export default function Home() {
             Traditional vs. Decentralized Crowdfunding
           </h3>
           <div className="overflow" style={{ overflow: "auto" }}>
-            <table style={{ color: "white" }}>
+            <table className="glow-box" style={{ color: "white" }}>
               <thead>
                 <tr>
                   <th>Feature</th>
@@ -217,28 +219,28 @@ export default function Home() {
         <h2 className="section-title text-light">Who Can Raise Funds?</h2>
 
         <div className="categories-container">
-          <div className="category-box">
-            <span className="icon">🔥</span>
+          <div className="category-box glow-box">
+            <span className="icon"><i class="fa-solid fa-truck-medical" style={{fontSize: "35px"}}></i></span>
             <h3>Medical Emergencies</h3>
           </div>
 
-          <div className="category-box">
-            <span className="icon">🎓</span>
+          <div className="category-box glow-box">
+            <span className="icon"><i class="fa-solid fa-graduation-cap"></i></span>
             <h3>Education & Scholarships</h3>
           </div>
 
-          <div className="category-box">
-            <span className="icon">🚀</span>
+          <div className="category-box glow-box">
+            <span className="icon"><i class="fa-solid fa-lightbulb"></i></span>
             <h3>Startups & Business Ideas</h3>
           </div>
 
-          <div className="category-box">
-            <span className="icon">🌱</span>
+          <div className="category-box glow-box">
+            <span className="icon"><i class="fa-solid fa-building-ngo"></i></span>
             <h3>Non-Profits & Charity</h3>
           </div>
 
-          <div className="category-box">
-            <span className="icon">🌍</span>
+          <div className="category-box glow-box">
+            <span className="icon"><i class="fa-solid fa-people-group"></i></span>
             <h3>Community Projects</h3>
           </div>
         </div>
@@ -250,11 +252,11 @@ export default function Home() {
           Success Stories & Testimonials
         </h2>
 
-        <div className="testimonial-carousel">
+        {/* <div className="testimonial-carousel">
           <button className="carousel-btn prev-btn">‹</button>
 
           <div className="testimonial-container">
-            <div className="testimonial-box active">
+            <div className="testimonial-box ">
               <p className="testimonial-text">
                 💬 "Thanks to this platform, I raised ₹5,00,000 for my medical
                 treatment in just 3 days!"
@@ -262,7 +264,7 @@ export default function Home() {
               <h3 className="testimonial-user">– Real User</h3>
             </div>
 
-            <div className="testimonial-box">
+            <div className="testimonial-box active">
               <p className="testimonial-text">
                 💬 "I got the funds I needed for my startup within a week.
                 Life-changing!"
@@ -280,7 +282,8 @@ export default function Home() {
           </div>
 
           <button className="carousel-btn next-btn">›</button>
-        </div>
+        </div> */}
+        <TestimonialCarousel />
       </div>
 
       {/* Security Section */}
@@ -295,8 +298,8 @@ export default function Home() {
         </p>
 
         <div className="security-container">
-          <div className="security-box">
-            <div className="icon">🔒</div>
+          <div className="security-box glow-box">
+            <div className="icon"><i class="fa-solid fa-lock"></i></div>
             <h3>Smart Contract-Based Transactions</h3>
             <p>
               No middlemen, instant & automated fund transfers with full
@@ -304,8 +307,8 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="security-box">
-            <div className="icon">📜</div>
+          <div className="security-box glow-box">
+            <div className="icon"><i class="fa-solid fa-file-contract"></i></div>
             <h3>Full Fund Traceability</h3>
             <p>
               Every transaction is recorded on the blockchain, ensuring
@@ -313,8 +316,8 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="security-box">
-            <div className="icon">✅</div>
+          <div className="security-box glow-box">
+            <div className="icon"><i class="fa-solid fa-wallet"></i></div>
             <h3>Customizable Wallets</h3>
             <p>
               Users can change creator & liquidity wallets anytime for
@@ -336,8 +339,8 @@ export default function Home() {
         </p>
 
         <div className="impact-container">
-          <div className="impact-box">
-            <div className="icon">👥</div>
+          <div className="impact-box glow-box-blue">
+            <div className="icon"><i class="fa-solid fa-handshake"></i></div>
             <h3>Join Our Mission</h3>
             <p>
               Help people raise funds for meaningful causes and be a part of
@@ -345,16 +348,16 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="impact-box">
-            <div className="icon">📢</div>
+          <div className="impact-box  glow-box-blue">
+            <div className="icon"><i class="fa-solid fa-circle-dollar-to-slot"></i></div>
             <h3>Volunteer & Contribute</h3>
             <p>
               Make an impact by donating, volunteering, or spreading awareness.
             </p>
           </div>
 
-          <div className="impact-box">
-            <div className="icon">📲</div>
+          <div className="impact-box glow-box-blue">
+            <div className="icon"><i class="fa-solid fa-bell"></i></div>
             <h3>Follow & Stay Updated</h3>
             <p>
               Connect with us on social media and stay inspired by real impact
@@ -424,7 +427,7 @@ export default function Home() {
               <img className="img-img" src={economy} alt="" /> Top Gainer
             </h3>
             <div className="fundraiser-list">
-              <div className="fundraiser-box">
+              <div className="fundraiser-box  glow-box">
                 <h4>Help Lisa's Surgery</h4>
                 <p>Raised: ₹1,20,000 / Goal: ₹2,00,000</p>
                 <div className="progress-bar">
@@ -435,7 +438,7 @@ export default function Home() {
                 </Link>
               </div>
 
-              <div className="fundraiser-box">
+              <div className="fundraiser-box  glow-box">
                 <h4>College Fees for Arjun</h4>
                 <p>Raised: ₹80,000 / Goal: ₹1,50,000</p>
                 <div className="progress-bar">
@@ -446,7 +449,7 @@ export default function Home() {
                 </Link>
               </div>
 
-              <div className="fundraiser-box">
+              <div className="fundraiser-box  glow-box">
                 <h4>Save the Forests</h4>
                 <p>Raised: ₹50,000 / Goal: ₹1,00,000</p>
                 <div className="progress-bar">
@@ -469,13 +472,22 @@ export default function Home() {
           <div className="faq-wrapper">
             <div className="faq-category">
               <h3>General Questions</h3>
-              <div className="faq-container">
+              <div className="faq-container" id="generalQuestionsAccordion">
                 <div className="faq-box">
-                  <div className="faq-question">
-                    <h3>How does CoopGenix work?</h3>
-                    <span className="faq-toggle">+</span>
+                  <div
+                    className="faq-question accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#howItWorks"
+                  >
+                    <h3 style={{textAlign: "left"}}>How does CoopGenix work?</h3>
+                    <span className="faq-toggle ms-auto">+</span>
                   </div>
-                  <p className="faq-answer">
+                  <p
+                    className="faq-answer accordion-collapse collapse"
+                    id="howItWorks"
+                    data-bs-parent="#generalQuestionsAccordion"
+                  >
                     CoopGenix is a decentralized crowdfunding platform based on
                     blockchain technology. It allows users to start fundraisers,
                     contribute to causes, and withdraw funds seamlessly without
@@ -484,22 +496,40 @@ export default function Home() {
                 </div>
 
                 <div className="faq-box">
-                  <div className="faq-question">
-                    <h3>Are there any hidden fees?</h3>
-                    <span className="faq-toggle">+</span>
+                  <div
+                    className="faq-question accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#hiddenFees"
+                  >
+                    <h3 style={{textAlign: "left"}}>Are there any hidden fees?</h3>
+                    <span className="faq-toggle ms-auto">+</span>
                   </div>
-                  <p className="faq-answer">
+                  <p
+                    className="faq-answer accordion-collapse collapse"
+                    id="hiddenFees"
+                    data-bs-parent="#generalQuestionsAccordion"
+                  >
                     No hidden fees! We operate transparently with minimal smart
                     contract fees for blockchain transactions.
                   </p>
                 </div>
 
                 <div className="faq-box">
-                  <div className="faq-question">
-                    <h3>Can anyone start a fundraiser?</h3>
-                    <span className="faq-toggle">+</span>
+                  <div
+                    className="faq-question accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#startFundraiser"
+                  >
+                    <h3 style={{textAlign: "left"}}>Can anyone start a fundraiser?</h3>
+                    <span className="faq-toggle ms-auto">+</span>
                   </div>
-                  <p className="faq-answer">
+                  <p
+                    className="faq-answer accordion-collapse collapse"
+                    id="startFundraiser"
+                    data-bs-parent="#generalQuestionsAccordion"
+                  >
                     Yes! Anyone with a genuine need or cause can start a
                     fundraiser and receive community support.
                   </p>
@@ -509,24 +539,42 @@ export default function Home() {
 
             <div className="faq-category">
               <h3>Security & Withdrawals</h3>
-              <div className="faq-container">
+              <div className="faq-container" id="securityAccordion">
                 <div className="faq-box">
-                  <div className="faq-question">
-                    <h3>Is my donation secure?</h3>
-                    <span className="faq-toggle">+</span>
+                <div
+                    className="faq-question accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#donationSecure"
+                  >
+                    <h3 style={{textAlign: "left"}}>Is my donation secure?</h3>
+                    <span className="faq-toggle ms-auto">+</span>
                   </div>
-                  <p className="faq-answer">
+                  <p
+                    className="faq-answer accordion-collapse collapse"
+                    id="donationSecure"
+                    data-bs-parent="#securityAccordion"
+                  >
                     Yes! Every transaction is secured using blockchain
                     technology, ensuring transparency and security.
                   </p>
                 </div>
 
                 <div className="faq-box">
-                  <div className="faq-question">
-                    <h3>How do I withdraw funds?</h3>
-                    <span className="faq-toggle">+</span>
+                <div
+                    className="faq-question accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#withdrawFunds"
+                  >
+                    <h3 style={{textAlign: "left"}}>How do I withdraw funds?</h3>
+                    <span className="faq-toggle ms-auto">+</span>
                   </div>
-                  <p className="faq-answer">
+                  <p
+                    className="faq-answer accordion-collapse collapse"
+                    id="withdrawFunds"
+                    data-bs-parent="#securityAccordion"
+                  >
                     Withdrawals are processed through smart contracts. Once your
                     campaign reaches the desired amount, you can request a
                     withdrawal instantly.
@@ -534,11 +582,20 @@ export default function Home() {
                 </div>
 
                 <div className="faq-box">
-                  <div className="faq-question">
-                    <h3>Can I track my contributions?</h3>
-                    <span className="faq-toggle">+</span>
+                <div
+                    className="faq-question accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#trackContributions"
+                  >
+                    <h3 style={{textAlign: "left"}}>Can I track my contributions?</h3>
+                    <span className="faq-toggle ms-auto">+</span>
                   </div>
-                  <p className="faq-answer">
+                  <p
+                    className="faq-answer accordion-collapse collapse"
+                    id="trackContributions"
+                    data-bs-parent="#securityAccordion"
+                  >
                     Absolutely! Every transaction is recorded on the blockchain,
                     making it fully traceable.
                   </p>
@@ -546,6 +603,7 @@ export default function Home() {
               </div>
             </div>
           </div>
+          {/* <FAQ/> */}
         </div>
       </div>
 
@@ -553,22 +611,22 @@ export default function Home() {
       <div className="get-involved hero-1 bg-img" id="getInvolved">
         <h2>Get Involved & Make an Impact</h2>
         <div className="involved-boxes">
-          <div className="involved-box">
-            <h3>🤝 Become a Volunteer</h3>
+          <div className="involved-box  glow-box">
+            <h3><i class="fa-solid fa-handshake-simple" style={{marginRight: "10px"}}></i> Become a Volunteer</h3>
             <p>Help us spread awareness & support fundraisers.</p>
             <Link to="/volunteer" className="cta">
               Join Now
             </Link>
           </div>
-          <div className="involved-box">
-            <h3>🏛️ Partner With Us</h3>
+          <div className="involved-box glow-box">
+            <h3><i class="fa-solid fa-building-columns"  style={{marginRight: "10px"}}></i> Partner With Us</h3>
             <p>Collaborate with us to amplify social impact.</p>
             <Link to="/partnership" className="cta">
               Partner Up
             </Link>
           </div>
-          <div className="involved-box">
-            <h3>💰 Start Your Own Campaign</h3>
+          <div className="involved-box glow-box">
+            <h3><i class="fa-solid fa-sack-dollar" style={{marginRight: "10px"}}></i> Start Your Own Campaign</h3>
             <p>Launch your fundraiser & receive community support.</p>
             <Link to="/create-campaign" className="cta">
               Start Fundraising
@@ -581,18 +639,18 @@ export default function Home() {
       <div className="get-involved hero-1 bg-img">
         <h2>Why You Can Trust Us</h2>
         <div className="involved-boxes">
-          <div className="involved-box">
-            <h3>🔒 Blockchain Secured</h3>
+          <div className="involved-box  glow-box-blue">
+            <h3><i class="fa-solid fa-shield-halved" style={{marginRight: "10px"}}></i> Blockchain Secured</h3>
             <p>Every transaction is secured through smart contracts.</p>
             {/* <Link to="/volunteer" className="cta">Join Now</Link> */}
           </div>
-          <div className="involved-box">
-            <h3>🔗 Transparent Transactions</h3>
+          <div className="involved-box  glow-box-blue">
+            <h3><i class="fa-solid fa-link"  style={{marginRight: "10px"}}></i> Transparent Transactions</h3>
             <p>All contributions & withdrawals are recorded on-chain.</p>
             {/* <Link to="/partnership" className="cta">Partner Up</Link> */}
           </div>
-          <div className="involved-box">
-            <h3>🏅 Verified Campaigns</h3>
+          <div className="involved-box  glow-box-blue">
+            <h3><i class="fa-solid fa-check-double" style={{marginRight: "10px"}}></i> Verified Campaigns</h3>
             <p>
               We ensure legitimacy with a strict campaign verification process.
             </p>

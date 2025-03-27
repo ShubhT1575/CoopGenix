@@ -733,7 +733,18 @@ td {
 /* Active Testimonial */
 .testimonial-box.active {
   display: block;
-  animation: fadeIn 0.8s ease-in-out;
+  animation: slideInFromLeft 0.5s ease-in-out;
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* Testimonial Text */
@@ -1373,7 +1384,7 @@ td {
   font-size: 1.4rem;
   color: var(--text-color);
   margin-top: 10px;
-  display: none;
+  /* display: none; */
   transition: all 0.3s ease;
 }
 
