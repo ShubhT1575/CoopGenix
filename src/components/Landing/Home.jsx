@@ -107,7 +107,7 @@ export default function Home() {
           </div>
           <div className="about-principles">
             <div className="principle glow-box">
-              <span className="emoji">🔍</span>
+              <span className="emoji"><i class="fa-solid fa-magnifying-glass"></i></span>
               <h3>Transparency</h3>
               <p>
                 All transactions are open and verifiable, fostering trust within
@@ -115,7 +115,7 @@ export default function Home() {
               </p>
             </div>
             <div className="principle glow-box">
-              <span className="emoji">🌍</span>
+              <span className="emoji"><i class="fa-solid fa-arrow-up-right-dots"></i></span>
               <h3>Community Growth</h3>
               <p>
                 Empowering individuals through mutual support, ensuring
@@ -123,7 +123,7 @@ export default function Home() {
               </p>
             </div>
             <div className="principle glow-box">
-              <span className="emoji">🔗</span>
+              <span className="emoji"><i class="fa-solid fa-fingerprint"></i></span>
               <h3>Secure & Fair Transactions</h3>
               <p>
                 Decentralized and tamper-proof transactions, ensuring fairness
