@@ -81,7 +81,7 @@ export default function Home() {
                       <li>
                         <Link to={"/SignIn"}>
                           <button className="buttons">
-                            <span class="boxx">Sign In</span>
+                            <span className="boxx">Sign In</span>
                           </button>
                         </Link>
                       </li>
@@ -107,7 +107,7 @@ export default function Home() {
           </div>
           <div className="about-principles">
             <div className="principle glow-box">
-              <span className="emoji"><i class="fa-solid fa-magnifying-glass"></i></span>
+              <span className="emoji"><i className="fa-solid fa-magnifying-glass"></i></span>
               <h3>Transparency</h3>
               <p>
                 All transactions are open and verifiable, fostering trust within
@@ -115,7 +115,7 @@ export default function Home() {
               </p>
             </div>
             <div className="principle glow-box">
-              <span className="emoji"><i class="fa-solid fa-arrow-up-right-dots"></i></span>
+              <span className="emoji"><i className="fa-solid fa-arrow-up-right-dots"></i></span>
               <h3>Community Growth</h3>
               <p>
                 Empowering individuals through mutual support, ensuring
@@ -123,7 +123,7 @@ export default function Home() {
               </p>
             </div>
             <div className="principle glow-box">
-              <span className="emoji"><i class="fa-solid fa-fingerprint"></i></span>
+              <span className="emoji"><i className="fa-solid fa-fingerprint"></i></span>
               <h3>Secure & Fair Transactions</h3>
               <p>
                 Decentralized and tamper-proof transactions, ensuring fairness
@@ -220,27 +220,27 @@ export default function Home() {
 
         <div className="categories-container">
           <div className="category-box glow-box">
-            <span className="icon"><i class="fa-solid fa-truck-medical" style={{fontSize: "35px"}}></i></span>
+            <span className="icon"><i className="fa-solid fa-truck-medical" style={{fontSize: "35px"}}></i></span>
             <h3>Medical Emergencies</h3>
           </div>
 
           <div className="category-box glow-box">
-            <span className="icon"><i class="fa-solid fa-graduation-cap"></i></span>
+            <span className="icon"><i className="fa-solid fa-graduation-cap"></i></span>
             <h3>Education & Scholarships</h3>
           </div>
 
           <div className="category-box glow-box">
-            <span className="icon"><i class="fa-solid fa-lightbulb"></i></span>
+            <span className="icon"><i className="fa-solid fa-lightbulb"></i></span>
             <h3>Startups & Business Ideas</h3>
           </div>
 
           <div className="category-box glow-box">
-            <span className="icon"><i class="fa-solid fa-building-ngo"></i></span>
+            <span className="icon"><i className="fa-solid fa-building-ngo"></i></span>
             <h3>Non-Profits & Charity</h3>
           </div>
 
           <div className="category-box glow-box">
-            <span className="icon"><i class="fa-solid fa-people-group"></i></span>
+            <span className="icon"><i className="fa-solid fa-people-group"></i></span>
             <h3>Community Projects</h3>
           </div>
         </div>
@@ -299,7 +299,7 @@ export default function Home() {
 
         <div className="security-container">
           <div className="security-box glow-box">
-            <div className="icon"><i class="fa-solid fa-lock"></i></div>
+            <div className="icon"><i className="fa-solid fa-lock"></i></div>
             <h3>Smart Contract-Based Transactions</h3>
             <p>
               No middlemen, instant & automated fund transfers with full
@@ -308,7 +308,7 @@ export default function Home() {
           </div>
 
           <div className="security-box glow-box">
-            <div className="icon"><i class="fa-solid fa-file-contract"></i></div>
+            <div className="icon"><i className="fa-solid fa-file-contract"></i></div>
             <h3>Full Fund Traceability</h3>
             <p>
               Every transaction is recorded on the blockchain, ensuring
@@ -317,7 +317,7 @@ export default function Home() {
           </div>
 
           <div className="security-box glow-box">
-            <div className="icon"><i class="fa-solid fa-wallet"></i></div>
+            <div className="icon"><i className="fa-solid fa-wallet"></i></div>
             <h3>Customizable Wallets</h3>
             <p>
               Users can change creator & liquidity wallets anytime for
@@ -340,7 +340,7 @@ export default function Home() {
 
         <div className="impact-container">
           <div className="impact-box glow-box-blue border-curve">
-            <div className="icon"><i class="fa-solid fa-handshake"></i></div>
+            <div className="icon"><i className="fa-solid fa-handshake"></i></div>
             <h3>Join Our Mission</h3>
             <p>
               Help people raise funds for meaningful causes and be a part of
@@ -349,7 +349,7 @@ export default function Home() {
           </div>
 
           <div className="impact-box  glow-box-blue border-curve">
-            <div className="icon"><i class="fa-solid fa-circle-dollar-to-slot"></i></div>
+            <div className="icon"><i className="fa-solid fa-circle-dollar-to-slot"></i></div>
             <h3>Volunteer & Contribute</h3>
             <p>
               Make an impact by donating, volunteering, or spreading awareness.
@@ -357,7 +357,7 @@ export default function Home() {
           </div>
 
           <div className="impact-box glow-box-blue border-curve">
-            <div className="icon"><i class="fa-solid fa-bell"></i></div>
+            <div className="icon"><i className="fa-solid fa-bell"></i></div>
             <h3>Follow & Stay Updated</h3>
             <p>
               Connect with us on social media and stay inspired by real impact
@@ -612,21 +612,21 @@ export default function Home() {
         <h2>Get Involved & Make an Impact</h2>
         <div className="involved-boxes">
           <div className="involved-box  glow-box">
-            <h3><i class="fa-solid fa-handshake-simple" style={{marginRight: "10px"}}></i> Become a Volunteer</h3>
+            <h3><i className="fa-solid fa-handshake-simple" style={{marginRight: "10px"}}></i> Become a Volunteer</h3>
             <p>Help us spread awareness & support fundraisers.</p>
             <Link to="/volunteer" className="cta">
               Join Now
             </Link>
           </div>
           <div className="involved-box glow-box">
-            <h3><i class="fa-solid fa-building-columns"  style={{marginRight: "10px"}}></i> Partner With Us</h3>
+            <h3><i className="fa-solid fa-building-columns"  style={{marginRight: "10px"}}></i> Partner With Us</h3>
             <p>Collaborate with us to amplify social impact.</p>
             <Link to="/partnership" className="cta">
               Partner Up
             </Link>
           </div>
           <div className="involved-box glow-box">
-            <h3><i class="fa-solid fa-sack-dollar" style={{marginRight: "10px"}}></i> Start Your Own Campaign</h3>
+            <h3><i className="fa-solid fa-sack-dollar" style={{marginRight: "10px"}}></i> Start Your Own Campaign</h3>
             <p>Launch your fundraiser & receive community support.</p>
             <Link to="/create-campaign" className="cta">
               Start Fundraising
@@ -640,17 +640,17 @@ export default function Home() {
         <h2>Why You Can Trust Us</h2>
         <div className="involved-boxes">
           <div className="involved-box  glow-box-blue border-curve">
-            <h3><i class="fa-solid fa-shield-halved" style={{marginRight: "10px"}}></i> Blockchain Secured</h3>
+            <h3><i className="fa-solid fa-shield-halved" style={{marginRight: "10px"}}></i> Blockchain Secured</h3>
             <p>Every transaction is secured through smart contracts.</p>
             {/* <Link to="/volunteer" className="cta">Join Now</Link> */}
           </div>
           <div className="involved-box  glow-box-blue border-curve">
-            <h3><i class="fa-solid fa-link"  style={{marginRight: "10px"}}></i> Transparent Transactions</h3>
+            <h3><i className="fa-solid fa-link"  style={{marginRight: "10px"}}></i> Transparent Transactions</h3>
             <p>All contributions & withdrawals are recorded on-chain.</p>
             {/* <Link to="/partnership" className="cta">Partner Up</Link> */}
           </div>
           <div className="involved-box  glow-box-blue border-curve">
-            <h3><i class="fa-solid fa-check-double" style={{marginRight: "10px"}}></i> Verified Campaigns</h3>
+            <h3><i className="fa-solid fa-check-double" style={{marginRight: "10px"}}></i> Verified Campaigns</h3>
             <p>
               We ensure legitimacy with a strict campaign verification process.
             </p>
