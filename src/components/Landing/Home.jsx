@@ -57,12 +57,12 @@ export default function Home() {
                   <span className="word">X</span>
                 </h1>
                 <div className="row justify-content-center">
-                  <div className="col-lg-8">
+                  <div className="col-lg-12">
                     <div
                       className="pt-3 text-light text-center"
                       style={{ textAlign: "justify" }}
                     >
-                      <h1>The World’s Most Powerful Community System</h1>
+                      <h1 style={{fontSize: "3.5rem"}}>The World’s Most Powerful Community System</h1>
                       Empowering Communities, One Contribution at a Time! A
                       decentralized, trust-driven platform where members
                       contribute, support, and grow together—ensuring financial
@@ -428,35 +428,38 @@ export default function Home() {
             </h3>
             <div className="fundraiser-list"> 
               <div className="fundraiser-box  glow-box">
-                <h4>Help Lisa's Surgery</h4>
+              <div className="icon"><i class="fa-solid fa-user-shield"></i></div>
+                <h4>#22345</h4>
                 <p>Raised: ₹1,20,000 / Goal: ₹2,00,000</p>
                 <div className="progress-bar">
                   <div style={{ width: "60%" }}></div>
                 </div>
                 <Link to="/campaign/1" className="cta-btn">
-                  Donate Now
+                  Join Now
                 </Link>
               </div>
 
               <div className="fundraiser-box  glow-box">
-                <h4>College Fees for Arjun</h4>
+              <div className="icon"><i class="fa-solid fa-user-shield"></i></div>
+                <h4>#22365</h4>
                 <p>Raised: ₹80,000 / Goal: ₹1,50,000</p>
                 <div className="progress-bar">
                   <div style={{ width: "53%" }}></div>
                 </div>
                 <Link to="/campaign/2" className="cta-btn">
-                  Donate Now
+                Join Now
                 </Link>
               </div>
 
               <div className="fundraiser-box  glow-box">
-                <h4>Save the Forests</h4>
+              <div className="icon"><i class="fa-solid fa-user-shield"></i></div>
+                <h4>#27645</h4>
                 <p>Raised: ₹50,000 / Goal: ₹1,00,000</p>
                 <div className="progress-bar">
                   <div style={{ width: "50%" }}></div>
                 </div>
                 <Link to="/campaign/3" className="cta-btn">
-                  Donate Now
+                Join Now
                 </Link>
               </div>
             </div>

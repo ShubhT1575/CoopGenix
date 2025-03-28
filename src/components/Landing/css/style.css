@@ -726,6 +726,7 @@ label {
   -webkit-transform: translateX(101%);
   -ms-transform: translateX(101%);
   transform: translateX(101%);
+  
 }
 
 .mobile-menu .navbar-collapse {
@@ -767,6 +768,7 @@ label {
   opacity: 0;
   visibility: hidden;
   background: rgba(0, 0, 0, 0.5);
+  /* transition: left 1s ease-in-out !important; */
 }
 
 .mobile-menu-visible .menu-backdrop {
@@ -775,18 +777,20 @@ label {
 }
 
 .mobile-menu .menu-box {
-  position: absolute;
+  position: fixed;
   left: 0px;
   top: 0px;
-  width: 100%;
-  height: 100%;
+  width: 60%;
+  height: 100vh;
   max-height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
+  z-index: 1000 !important;
   background: var(--tg-secondary-color);
   padding: 0px 0px;
   z-index: 5;
   box-shadow: -9px 0 14px 0px rgb(0 0 0 / 6%);
+  transition: left 1s ease-in-out !important;
 }
 
 .mobile-menu-visible .mobile-menu .menu-box {
@@ -924,12 +928,14 @@ label {
 
 .mobile-menu .social-links ul {
   display: flex;
+  flex-direction: column;
   position: relative;
   text-align: center;
   padding: 30px 20px 20px;
-  align-items: center;
+  align-items: start;
   justify-content: center;
   flex-wrap: wrap;
+  gap: 20px;
 }
 
 .mobile-menu .social-links li {
@@ -939,12 +945,15 @@ label {
 }
 
 .mobile-menu .social-links li a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
+  /* display: flex;
+  align-items: start;
+  justify-content: center; */
+  /* width: 40px; */
   height: 40px;
+  color: white !important;
   position: relative;
+  padding: 5px 10px;
+  white-space: nowrap;
   line-height: 32px;
   font-size: 16px;
   color: var(--tg-heading-font-color);
@@ -4383,7 +4392,7 @@ label {
 
 @media (max-width: 575px) {
   .hero-style1 {
-    padding: 250px 0 80px;
+    padding: 180px 0 80px;
     
   }
 }

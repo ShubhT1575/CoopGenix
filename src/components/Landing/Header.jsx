@@ -3,6 +3,7 @@ import Logo from '/coopgenix.svg'
 import { Link } from "react-router-dom";
 export default function Header() {
   const [isSticky, setIsSticky] = useState(false);
+  const [isOpen,setIsOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,6 +23,14 @@ export default function Header() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const handleClick = () =>{
+    if(isOpen){
+      setIsOpen(false)
+    }else{
+      setIsOpen(true)
+    }
+  }
   return (
 
     <>
@@ -82,25 +91,26 @@ export default function Header() {
                       </ul>
                     </div>
                   
-                    {/* <div className="mobile-nav-toggler">
+                    <div className="mobile-nav-toggler" onClick={handleClick}>
                       <i className="fas fa-bars"></i>
-                    </div> */}
+                    </div>
                   </nav>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        {/* <div className="mobile-menu">
+        <div className="mobile-menu" style={isOpen ? { display: "contents" } : {}}
+        >
           <nav className="menu-box">
-            <div className="close-btn">
+            <div className="close-btn" onClick={handleClick}>
               <i className="fas fa-times"></i>
             </div>
             <div className="nav-logo">
               <a href="index.html">
                 <img
-                  src="assets/img/logo/logo.png"
-                  style={{height: "35px"}}
+                  src={Logo}
+                  style={{ height: "50px" }}
                   alt="Logo"
                 />
               </a>
@@ -108,47 +118,36 @@ export default function Header() {
             <div className="menu-outer"></div>
             <div className="social-links">
               <ul className="clearfix list-wrap">
-                <li>
-                  <a href="#">
-                    <i className="fab fa-facebook-f"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                    >
-                      <path
-                        d="M10.0596 7.34522L15.8879 0.570312H14.5068L9.44607 6.45287L5.40411 0.570312H0.742188L6.85442 9.46578L0.742188 16.5703H2.12338L7.4676 10.3581L11.7362 16.5703H16.3981L10.0593 7.34522H10.0596ZM8.16787 9.54415L7.54857 8.65836L2.62104 1.61005H4.74248L8.71905 7.29827L9.33834 8.18405L14.5074 15.5779H12.386L8.16787 9.54449V9.54415Z"
-                        fill="currentColor"
-                      ></path>
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fab fa-instagram"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fab fa-linkedin-in"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fab fa-youtube"></i>
-                  </a>
-                </li>
+                
+              <li onClick={handleClick}>
+                          <a href="#about" className="section-link">
+                            How It Works
+
+                          </a>
+                        </li>
+                        <li className="" onClick={handleClick}>
+                          <a href="#community">Community Contributions
+                          </a>
+
+                        </li>
+                        <li onClick={handleClick}>
+                          <a href="#liveFund">Success Stories</a>
+                        </li>
+                        <li onClick={handleClick}>
+                          <a href="#getInvolved">Get Involved</a>
+                        </li>
+                        <li onClick={handleClick}>
+                          <a href="#faq">FAQ</a>
+                        </li>
+                        <li onClick={handleClick}>
+                          <a href="#contact">Contact Us</a>
+                        </li>
+              
               </ul>
             </div>
           </nav>
-        </div> */}
-        {/* <div className="menu-backdrop"></div> */}
+        </div>
+        <div className="menu-backdrop" ></div>
       </header>
     </>
   );
