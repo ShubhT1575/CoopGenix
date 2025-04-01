@@ -36,16 +36,16 @@ const Footer = () => {
         <div className="footer-column connect-column">
           <h3 className="column-title">Connect with Us</h3>
           <div className="social-icons landing-social-icon">
-            <a href="#">
+            <a href="https://facebook.com/coopgenix" target="_blank">
               <i class="fab fa-facebook-f"></i>
             </a>
-            <a href="#">
+            <a href="https://x.com/coopgenix" target="_blank">
               <i class="fab fa-x"></i>
             </a>
-            <a href="#">
+            <a href="https://instagram.com/coopgenix" target="_blank">
               <i class="fab fa-instagram"></i>
             </a>
-            <a href="#">
+            <a href="https://youtube.com/@coopgenix" target="_blank">
               <i class="fab fa-youtube"></i>
             </a>
           </div>
@@ -54,9 +54,11 @@ const Footer = () => {
             <p><i class="fa-solid fa-phone"></i> +91-123-456-7890</p>
             <p><i class="fa-solid fa-location-dot"></i> Blockchain City, Web3 World</p>
           </div> */}
+          <a href="https://telegram.me/coopgenix" target="_blank">
           <button className="testimonial-submit btn btn-primary-gradient w-50" style={{alignSelf:"center"}}>
           Community Chat <i class="fa-solid fa-paper-plane"></i>
           </button>
+          </a>
         </div>
       </div>
 

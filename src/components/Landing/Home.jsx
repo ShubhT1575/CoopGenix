@@ -71,15 +71,15 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="hero-button mt-5">
-                  <Link to={"/SignUp"}>
+                  <Link to={"#"}>
                     <button className="buttons">
                       <span className="boxx">Start</span>
                     </button>
                   </Link>
-                  <div className="d-lg-none d-flex">
+                  <div className="">
                     <ul className="list-wrap">
                       <li>
-                        <Link to={"/SignIn"}>
+                        <Link to={"#"}>
                           <button className="buttons">
                             <span className="boxx">Sign In</span>
                           </button>
@@ -100,34 +100,29 @@ export default function Home() {
           <div className="about-content">
             <h2>Key Principles</h2>
             <p>
-              CoopGenix operates on a cooperative funding model where members
-              uplift each other. Funds are distributed transparently, ensuring
-              fairness, security, and community-driven empowerment.
+            The World's First Community-Driven System
             </p>
           </div>
           <div className="about-principles">
             <div className="principle glow-box">
               <span className="emoji"><i className="fa-solid fa-magnifying-glass"></i></span>
-              <h3>Transparency</h3>
+              <h3>Beyond Earnings – A Financial Revolution</h3>
               <p>
-                All transactions are open and verifiable, fostering trust within
-                the community.
+              Coopgenix isn’t just about rewards; it’s about breaking financial barriers and empowering individuals with a self-sustaining, debt-free model.
               </p>
             </div>
             <div className="principle glow-box">
               <span className="emoji"><i className="fa-solid fa-arrow-up-right-dots"></i></span>
-              <h3>Community Growth</h3>
+              <h3>Earn, Multiply & Reinvest Seamlessly</h3>
               <p>
-                Empowering individuals through mutual support, ensuring
-                sustainable development.
+              Our smart contract ensures continuous financial growth by auto-reinvesting a portion of rewards, creating unstoppable earning cycles.
               </p>
             </div>
             <div className="principle glow-box">
               <span className="emoji"><i className="fa-solid fa-fingerprint"></i></span>
-              <h3>Secure & Fair Transactions</h3>
+              <h3>The Power of Unified Prosperity</h3>
               <p>
-                Decentralized and tamper-proof transactions, ensuring fairness
-                for all members.
+              Unlike traditional financial systems, Coopgenix transforms contribution fees into community-driven wealth, ensuring everyone prospers together.
               </p>
             </div>
           </div>
@@ -171,10 +166,10 @@ export default function Home() {
         {/* Comparison Table */}
         <div className="comparison-table">
           <h3 className="text-light">
-            Traditional vs. Decentralized Crowdfunding
+          Coopgenix - The Smartest Way to Grow Together
           </h3>
           <div className="overflow" style={{ overflow: "auto" }}>
-            <table className="glow-box" style={{ color: "white" }}>
+            {/* <table className="glow-box" style={{ color: "white" }}>
               <thead>
                 <tr>
                   <th>Feature</th>
@@ -209,14 +204,23 @@ export default function Home() {
                   <td>Fully Transparent & Immutable</td>
                 </tr>
               </tbody>
-            </table>
+            </table> */}
+          <iframe 
+    src="https://www.youtube.com/embed/iht2aiIXsZQ?autoplay=1&mute=1" 
+    width="800" 
+    height="450" 
+    frameborder="0" 
+    allow="autoplay; encrypted-media" 
+    allowfullscreen>
+</iframe>
+
           </div>
         </div>
       </div>
 
       {/* Fundraising Categories Section */}
       <div className="fundraising-categories hero-1 bg-img" id="categories" style={{paddingTop: "100px" , paddingBottom: "100px"}}>
-        <h2 className="section-title text-light">Who Can Raise Funds?</h2>
+        <h2 className="section-title text-light">Start For Your Purpose</h2>
 
         <div className="categories-container">
           <div className="category-box glow-box">
@@ -300,28 +304,25 @@ export default function Home() {
         <div className="security-container">
           <div className="security-box glow-box">
             <div className="icon"><i className="fa-solid fa-lock"></i></div>
-            <h3>Smart Contract-Based Transactions</h3>
+            <h3>Ultimate Security & Unmatched Transparency</h3>
             <p>
-              No middlemen, instant & automated fund transfers with full
-              security.
+            Immutable Blockchain Security – Transactions are cryptographically secured and permanently recorded, ensuring a tamper-proof and fraud-resistant ecosystem.
             </p>
           </div>
 
           <div className="security-box glow-box">
             <div className="icon"><i className="fa-solid fa-file-contract"></i></div>
-            <h3>Full Fund Traceability</h3>
+            <h3>Real-Time Financial Visibility</h3>
             <p>
-              Every transaction is recorded on the blockchain, ensuring
-              transparency.
+            Every contribution and reward is instantly verifiable, fostering absolute trust and financial clarity within the community.
             </p>
           </div>
 
           <div className="security-box glow-box">
             <div className="icon"><i className="fa-solid fa-wallet"></i></div>
-            <h3>Customizable Wallets</h3>
+            <h3>Trustless & Autonomous System</h3>
             <p>
-              Users can change creator & liquidity wallets anytime for
-              flexibility.
+            Powered by smart contracts, eliminating intermediaries, ensuring fair distribution, and guaranteeing full transparency at all times. 
             </p>
           </div>
         </div>
@@ -350,24 +351,23 @@ export default function Home() {
 
           <div className="impact-box  glow-box-blue border-curve">
             <div className="icon"><i className="fa-solid fa-circle-dollar-to-slot"></i></div>
-            <h3>Volunteer & Contribute</h3>
+            <h3>Empowering Financial Freedom</h3>
             <p>
-              Make an impact by donating, volunteering, or spreading awareness.
+            Breaking barriers to wealth by providing a transparent, opportunity-driven system that uplifts lives and secures futures.
             </p>
           </div>
 
           <div className="impact-box glow-box-blue border-curve">
             <div className="icon"><i className="fa-solid fa-bell"></i></div>
-            <h3>Follow & Stay Updated</h3>
+            <h3>Stronger Together</h3>
             <p>
-              Connect with us on social media and stay inspired by real impact
-              stories.
+            A thriving ecosystem where collective growth fuels individual success, fostering trust, unity, and long-term financial stability.
             </p>
           </div>
         </div>
 
         <div className="cta-container">
-          <Link to="/signup" className="cta-button">
+          <Link to="https://telegram.me/coopgenixcommunity" className="cta-button">
             Join the Community
           </Link>
         </div>
@@ -381,7 +381,7 @@ export default function Home() {
             Difference?
           </h2>
           <p className="cta-description">
-            Start Your Fundraiser or Contribute Today!
+          Take the First Step to Make a Difference Today
           </p>
 
           <div className="cta-buttons">
@@ -403,9 +403,9 @@ export default function Home() {
           <div className="stats-counters">
             <div className="counter-box">
               <h3 className="counter" id="totalRaised">
-                ₹0
+                $ 0
               </h3>
-              <p>Total Reward Generated</p>
+              <p>Total Reward</p>
             </div>
             <div className="counter-box">
               <h3 className="counter" id="activeCampaigns">
@@ -615,24 +615,24 @@ export default function Home() {
         <h2>Get Involved & Make an Impact</h2>
         <div className="involved-boxes">
           <div className="involved-box  glow-box">
-            <h3><i className="fa-solid fa-handshake-simple" style={{marginRight: "10px"}}></i> Become a Volunteer</h3>
-            <p>Help us spread awareness & support fundraisers.</p>
-            <Link to="/volunteer" className="cta">
+            <h3><i className="fa-solid fa-handshake-simple" style={{marginRight: "10px"}}></i>Join the Movement</h3>
+            <p>Be part of a thriving community dedicated to financial empowerment and positive change worldwide.</p>
+            <Link to="/" className="cta">
               Join Now
             </Link>
           </div>
           <div className="involved-box glow-box">
-            <h3><i className="fa-solid fa-building-columns"  style={{marginRight: "10px"}}></i> Partner With Us</h3>
-            <p>Collaborate with us to amplify social impact.</p>
-            <Link to="/partnership" className="cta">
-              Partner Up
+            <h3><i className="fa-solid fa-building-columns"  style={{marginRight: "10px"}}></i>Contribute & Earn</h3>
+            <p>Support the network while benefiting from structured rewards that promote long-term financial growth and stability.</p>
+            <Link to="/" className="cta">
+            Join Now
             </Link>
           </div>
           <div className="involved-box glow-box">
-            <h3><i className="fa-solid fa-sack-dollar" style={{marginRight: "10px"}}></i> Start Your Own Campaign</h3>
-            <p>Launch your fundraiser & receive community support.</p>
-            <Link to="/create-campaign" className="cta">
-              Start Fundraising
+            <h3><i className="fa-solid fa-sack-dollar" style={{marginRight: "10px"}}></i>Empower Others</h3>
+            <p>Share opportunities, educate, and uplift communities by fostering a sustainable, transparent, and rewarding ecosystem.</p>
+            <Link to="/" className="cta">
+            Join Now
             </Link>
           </div>
         </div>
@@ -640,22 +640,22 @@ export default function Home() {
 
       {/* Why You Can Trust Us */}
       <div className="get-involved hero-1 bg-img">
-        <h2>Why You Can Trust Us</h2>
+        <h2>Coopgenix -  A Revolution in Community Rewards</h2>
         <div className="involved-boxes">
           <div className="involved-box  glow-box-blue border-curve">
-            <h3><i className="fa-solid fa-shield-halved" style={{marginRight: "10px"}}></i> Blockchain Secured</h3>
-            <p>Every transaction is secured through smart contracts.</p>
+            <h3><i className="fa-solid fa-shield-halved" style={{marginRight: "10px"}}></i>Decentralized & Transparent</h3>
+            <p>Built on blockchain, ensuring fair, automated, and trustless reward distribution for every member</p>
             {/* <Link to="/volunteer" className="cta">Join Now</Link> */}
           </div>
           <div className="involved-box  glow-box-blue border-curve">
-            <h3><i className="fa-solid fa-link"  style={{marginRight: "10px"}}></i> Transparent Transactions</h3>
-            <p>All contributions & withdrawals are recorded on-chain.</p>
+            <h3><i className="fa-solid fa-link"  style={{marginRight: "10px"}}></i>12 Packages Opportunity</h3>
+            <p>Unlock endless opportunities with our 12-tier packages—begin your journey today for only $5</p>
             {/* <Link to="/partnership" className="cta">Partner Up</Link> */}
           </div>
           <div className="involved-box  glow-box-blue border-curve">
-            <h3><i className="fa-solid fa-check-double" style={{marginRight: "10px"}}></i> Verified Campaigns</h3>
+            <h3><i className="fa-solid fa-check-double" style={{marginRight: "10px"}}></i>4 Algorithmic Rewards</h3>
             <p>
-              We ensure legitimacy with a strict campaign verification process.
+            Earn Rewards From: Block 499%, Global $948,726, Referral 57%, Promise 200%—maximize your potential earnings!
             </p>
             {/* <Link to="/create-campaign" className="cta">Start Fundraising</Link> */}
           </div>

@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Logo from '/coopgenix.svg'
 import { Link } from "react-router-dom";
+import { Button, Input, Modal,Select } from "antd";
+// import Select from "react-select";
+import TextArea from "antd/es/input/TextArea";
+import toast from "react-hot-toast";
 export default function Header() {
   const [isSticky, setIsSticky] = useState(false);
   const [isOpen,setIsOpen] = useState(false);
@@ -31,6 +35,45 @@ export default function Header() {
       setIsOpen(true)
     }
   }
+
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const showLoading = () => {
+    setOpen(true);
+    setLoading(true);
+
+    // Simple loading mock. You should add cleanup logic in real world.
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  };
+
+  const modalClose = ()=>{
+
+    setLoading(true);
+
+    // Simple loading mock. You should add cleanup logic in real world.
+    setTimeout(() => {
+      setLoading(false);
+      setOpen(false);
+      toast.success("We will contact you soon !!");
+    }, 2000);
+  }
+
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState({});
+
+  useEffect(() => {
+    fetch(
+      "https://valid.layercode.workers.dev/list/countries?format=select&flags=true&value=code"
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setCountries(data.countries);
+        setSelectedCountry(data.userSelectValue);
+      });
+  }, []);
   return (
 
     <>
@@ -86,7 +129,7 @@ export default function Header() {
                           <a href="#faq">FAQ</a>
                         </li>
                         <li>
-                          <a href="#contact">Contact Us</a>
+                          <a href="#" onClick={showLoading}>Contact Us</a>
                         </li>
                       </ul>
                     </div>
@@ -149,6 +192,29 @@ export default function Header() {
         </div>
         <div className="menu-backdrop" ></div>
       </header>
+
+      <Modal
+        title={<p className="text-light">Contact Us</p>}
+        footer={
+          <Button type="primary" onClick={modalClose}>
+            Submit
+          </Button>
+        }
+        loading={loading}
+        open={open}
+        onCancel={() => setOpen(false)}
+      >
+        <Input type="text" placeholder="Name" style={{marginBottom: "10px"}}/>
+        <Input type="email" placeholder="Email" style={{marginBottom: "10px"}}/>
+        <Input type="tel" placeholder="Mobile No." style={{marginBottom: "10px"}}/>
+        <TextArea rows={4} placeholder="Message" maxLength={6} style={{marginBottom: "10px"}}/>
+        <Select
+        className="w-100"
+      options={countries}
+      value={selectedCountry}
+      onChange={(selectedOption) => setSelectedCountry(selectedOption)}
+    />
+      </Modal>
     </>
   );
 }
