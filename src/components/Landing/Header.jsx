@@ -183,7 +183,7 @@ export default function Header() {
                           <a href="#faq">FAQ</a>
                         </li>
                         <li onClick={handleClick}>
-                          <a href="#contact">Contact Us</a>
+                          <a href="#" onClick={showLoading}>Contact Us</a>
                         </li>
               
               </ul>
@@ -207,13 +207,13 @@ export default function Header() {
         <Input type="text" placeholder="Name" style={{marginBottom: "10px"}}/>
         <Input type="email" placeholder="Email" style={{marginBottom: "10px"}}/>
         <Input type="tel" placeholder="Mobile No." style={{marginBottom: "10px"}}/>
-        <TextArea rows={4} placeholder="Message" maxLength={6} style={{marginBottom: "10px"}}/>
         <Select
-        className="w-100"
+        className="w-100 mb-2"
       options={countries}
       value={selectedCountry}
       onChange={(selectedOption) => setSelectedCountry(selectedOption)}
     />
+        <TextArea rows={4} placeholder="Message" maxLength={6} style={{marginBottom: "10px"}}/>
       </Modal>
     </>
   );
