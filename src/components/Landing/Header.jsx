@@ -46,7 +46,7 @@ export default function Header() {
     // Simple loading mock. You should add cleanup logic in real world.
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 100);
   };
 
   const modalClose = ()=>{
@@ -110,21 +110,21 @@ export default function Header() {
                         </li> */}
                         <li>
                           <a href="#about" className="section-link">
-                            How It Works
+                          About Coopgenix
 
                           </a>
                         </li>
                         <li className="">
-                          <a href="#community">Community Contributions
+                          <a href="#community">Social Impact
                           </a>
 
                         </li>
                         <li>
-                          <a href="#liveFund">Success Stories</a>
+                          <a href="#liveFund">Live States</a>
                         </li>
-                        <li>
+                        {/* <li>
                           <a href="#getInvolved">Get Involved</a>
-                        </li>
+                        </li> */}
                         <li>
                           <a href="#faq">FAQ</a>
                         </li>
@@ -163,21 +163,18 @@ export default function Header() {
               <ul className="clearfix list-wrap">
                 
               <li onClick={handleClick}>
-                          <a href="#about" className="section-link">
-                            How It Works
+              <a href="#about" className="section-link">
+                          About Coopgenix
 
                           </a>
                         </li>
                         <li className="" onClick={handleClick}>
-                          <a href="#community">Community Contributions
-                          </a>
+                        <a href="#community">Social Impact
+                        </a>
 
                         </li>
-                        <li onClick={handleClick}>
-                          <a href="#liveFund">Success Stories</a>
-                        </li>
-                        <li onClick={handleClick}>
-                          <a href="#getInvolved">Get Involved</a>
+                        <li>
+                          <a href="#liveFund">Live States</a>
                         </li>
                         <li onClick={handleClick}>
                           <a href="#faq">FAQ</a>

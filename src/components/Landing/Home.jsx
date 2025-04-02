@@ -95,7 +95,7 @@ export default function Home() {
       </div>
 
       {/* About Us Section */}
-      <div className="about-us hero-1 bg-img" id="about">
+      <div className="about-us hero-1 bg-img" id="">
         <div className="about-container">
           <div className="about-content">
             <h2>Key Principles</h2>
@@ -105,7 +105,7 @@ export default function Home() {
           </div>
           <div className="about-principles">
             <div className="principle glow-box">
-              <span className="emoji"><i className="fa-solid fa-magnifying-glass"></i></span>
+              <span className="emoji"><i class="fa-solid fa-dna"></i></span>
               <h3>Beyond Earnings – A Financial Revolution</h3>
               <p>
               Coopgenix isn’t just about rewards; it’s about breaking financial barriers and empowering individuals with a self-sustaining, debt-free model.
@@ -119,7 +119,7 @@ export default function Home() {
               </p>
             </div>
             <div className="principle glow-box">
-              <span className="emoji"><i className="fa-solid fa-fingerprint"></i></span>
+              <span className="emoji"><i class="fa-brands fa-superpowers"></i></span>
               <h3>The Power of Unified Prosperity</h3>
               <p>
               Unlike traditional financial systems, Coopgenix transforms contribution fees into community-driven wealth, ensuring everyone prospers together.
@@ -155,7 +155,7 @@ export default function Home() {
             <p>Raise funds from anywhere, anytime.</p>
           </div>
 
-          <div className="value-box glow-box-blue border-curve">
+          <div className="value-box glow-box-blue border-curve" id="about">
             {/* <span className="icon">💡</span> */}
             <img className="img-img" src={crowdfunding} alt="" />
             <h3>Community-Driven</h3>
@@ -164,57 +164,18 @@ export default function Home() {
         </div>
 
         {/* Comparison Table */}
-        <div className="comparison-table">
+        <div className="comparison-table" >
           <h3 className="text-light">
           Coopgenix - The Smartest Way to Grow Together
           </h3>
-          <div className="overflow" style={{ overflow: "auto" }}>
-            {/* <table className="glow-box" style={{ color: "white" }}>
-              <thead>
-                <tr>
-                  <th>Feature</th>
-                  <th>Traditional</th>
-                  <th>Decentralized</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Middlemen</td>
-                  <td>Required (Banks, Platforms)</td>
-                  <td>No Middlemen (Direct P2P)</td>
-                </tr>
-                <tr>
-                  <td>Fees</td>
-                  <td>High Processing Fees</td>
-                  <td>Minimal to Zero Fees</td>
-                </tr>
-                <tr>
-                  <td>Security</td>
-                  <td>Vulnerable to Fraud</td>
-                  <td>Blockchain-Powered Security</td>
-                </tr>
-                <tr>
-                  <td>Access</td>
-                  <td>Limited to Certain Countries</td>
-                  <td>Global Access, No Restrictions</td>
-                </tr>
-                <tr>
-                  <td>Transparency</td>
-                  <td>Opaque Systems</td>
-                  <td>Fully Transparent & Immutable</td>
-                </tr>
-              </tbody>
-            </table> */}
-          <iframe 
+          <div className="video-container">
+  <iframe 
     src="https://www.youtube.com/embed/iht2aiIXsZQ?autoplay=1&mute=1" 
-    width="800" 
-    height="450" 
-    frameborder="0" 
+    frameBorder="0" 
     allow="autoplay; encrypted-media" 
-    allowfullscreen>
-</iframe>
-
-          </div>
+    allowFullScreen>
+  </iframe>
+</div>
         </div>
       </div>
 
@@ -293,7 +254,7 @@ export default function Home() {
       {/* Security Section */}
       <div className="security hero-1 bg-img" id="security"  style={{paddingTop: "100px" , paddingBottom: "100px"}}>
         <h2 className="section-title text-light">
-          <img className="img-img" src={security} alt="" />
+          {/* <img className="img-img" src={security} alt="" /> */}
           Security & Transparency
         </h2>
         <p className="section-description">
@@ -331,7 +292,7 @@ export default function Home() {
       {/* Community Impact Section */}
       <div className="community-impact hero-1 bg-img" id="community"  style={{paddingTop: "100px" , paddingBottom: "100px"}}>
         <h2 className="section-title text-light">
-          <img className="img-img" src={crowdfunding} alt="" />
+          {/* <img className="img-img" src={crowdfunding} alt="" /> */}
           Community & Social Impact
         </h2>
         <p className="section-description">
@@ -358,7 +319,7 @@ export default function Home() {
           </div>
 
           <div className="impact-box glow-box-blue border-curve">
-            <div className="icon"><i className="fa-solid fa-bell"></i></div>
+            <div className="icon"><i class="fa-solid fa-hand-fist"></i></div>
             <h3>Stronger Together</h3>
             <p>
             A thriving ecosystem where collective growth fuels individual success, fostering trust, unity, and long-term financial stability.
@@ -377,7 +338,8 @@ export default function Home() {
       <div className="full-width hero-1 bg-img">
         <div className="cta-section">
           <h2 className="cta-title text-light">
-            <img className="img-img" src={deal} alt="" /> Ready to Make a
+            {/* <img className="img-img" src={deal} alt="" />  */}
+            Ready to Make a
             Difference?
           </h2>
           <p className="cta-description">
@@ -397,7 +359,8 @@ export default function Home() {
       <div className="full-width hero-1 bg-img" id="liveFund" >
         <div className="fundraising-stats hero-1 bg-img"  style={{paddingTop: "100px" , paddingBottom: "100px"}}>
           <h2 className="stats-title text-light">
-            <img className="img-img" src={loan} alt="" /> Live Stats
+              {/* <img className="img-img" src={loan} alt="" />  */}
+            Live Stats
           </h2>
 
           <div className="stats-counters">
@@ -424,7 +387,8 @@ export default function Home() {
           {/* Latest FundRaiser */}
           <div className="featured-fundraisers">
             <h3 className="text-light">
-              <img className="img-img" src={economy} alt="" />Top Gainer
+              {/* <img className="img-img" src={economy} alt="" /> */}
+              Top Gainer
             </h3>
             <div className="fundraiser-list"> 
               <div className="fundraiser-box  glow-box">
@@ -648,12 +612,12 @@ export default function Home() {
             {/* <Link to="/volunteer" className="cta">Join Now</Link> */}
           </div>
           <div className="involved-box  glow-box-blue border-curve">
-            <h3><i className="fa-solid fa-link"  style={{marginRight: "10px"}}></i>12 Packages Opportunity</h3>
+            <h3><i className="fa-solid fa-cubes"  style={{marginRight: "10px"}}></i>12 Packages Opportunity</h3>
             <p>Unlock endless opportunities with our 12-tier packages—begin your journey today for only $5</p>
             {/* <Link to="/partnership" className="cta">Partner Up</Link> */}
           </div>
           <div className="involved-box  glow-box-blue border-curve">
-            <h3><i className="fa-solid fa-check-double" style={{marginRight: "10px"}}></i>4 Algorithmic Rewards</h3>
+            <h3><i className="fa-solid fa-chart-diagram" style={{marginRight: "10px"}}></i>4 Algorithmic Rewards</h3>
             <p>
             Earn Rewards From: Block 499%, Global $948,726, Referral 57%, Promise 200%—maximize your potential earnings!
             </p>
