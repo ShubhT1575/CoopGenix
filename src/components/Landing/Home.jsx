@@ -73,7 +73,7 @@ export default function Home() {
                 <div className="hero-button mt-5">
                   <Link to={"#"}>
                     <button className="buttons">
-                      <span className="boxx">Start</span>
+                      <span className="boxx">Join Now</span>
                     </button>
                   </Link>
                   <div className="">
@@ -81,7 +81,7 @@ export default function Home() {
                       <li>
                         <Link to={"#"}>
                           <button className="buttons">
-                            <span className="boxx">Sign In</span>
+                            <span className="boxx">Login</span>
                           </button>
                         </Link>
                       </li>
