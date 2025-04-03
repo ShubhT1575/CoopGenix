@@ -9,17 +9,19 @@ import {
   // setWalletDetails,
 } from "../Redux/Slice";
 import { getUser } from "../API/Api";
-import { getUSDT } from "./web3";
-import { Link, NavLink } from "react-router-dom";
+// import { getUSDT } from "./web3";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { UserExist } from "./web3";
 
 function Header() {
   const dispatch = useDispatch();
   const chainId = useChainId();
-  // const {address} = useAccount();
-  const wallet = useSelector((state) => state.coreCrowd.wallet);
-  const address = wallet?.walletAddress;
+  const {address} = useAccount();
+  // const wallet = useSelector((state) => state.coreCrowd.wallet);
+  // const address = wallet?.walletAddress;
   const [accessAdress, setAccessAddress] = useState("");
   const { connector, isConnected, status, isDisconnected } = useAccount();
+  const navigate = useNavigate()
 
   useEffect(() => {
     const res = new URLSearchParams(window.location.search);
@@ -73,19 +75,32 @@ function Header() {
     // window.open("/pdf/CoreCrowd.pdf", "_blank");
   };
 
-  useEffect(() => {
-    if (address)
-      getUSDT().then((res) => {
-        console.log(res);
-        dispatch(
-          setTokenData({
-            address: res?.address,
-            decimals: res?.decimals,
-            symbol: res?.symbol,
+  // useEffect(() => {
+  //   if (address)
+  //     getUSDT().then((res) => {
+  //       console.log(res);
+  //       dispatch(
+  //         setTokenData({
+  //           address: res?.address,
+  //           decimals: res?.decimals,
+  //           symbol: res?.symbol,
+  //         })
+  //       );
+  //     });
+  // }, [address]);
+
+    useEffect(() => {
+      if (address) {
+        UserExist(address)
+          .then((res) => {
+            if (!res) navigate("/SignIn");
           })
-        );
-      });
-  }, [address]);
+          .catch((e) => {
+            console.log(e);
+            navigate("/SignIn");
+          });
+      }
+    }, [address]);
 
   return (
     <header

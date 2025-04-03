@@ -37,13 +37,14 @@ export const tokenApprove = async (amt, TokenAddress, tokenDecimal) => {
   return receipt;
 };
 
-export const buyPackage = async (ref, amt, tokenDecimal) => {
-  console.log(ref, amt, tokenDecimal, ":::::buypackage");
+export const JoinPlan = async (amt,ref) => {
+  // console.log(ref, amt, tokenDecimal, ":::::buypackage");
   const result = await writeContract(config, {
     abi: ContractABI,
     address: ContractAddress,
     functionName: "joinPlan",
-    args: [ref, (amt * Number("1e" + tokenDecimal)).toString()],
+    args: [ref],
+    value: amt
   });
   console.log(result, "result");
   const receipt = await waitForTransactionReceipt(config, {
@@ -89,6 +90,23 @@ export const UserExist = async (address) => {
   }
 };
 
+export const getTotalPol = async (usdAmt) => {
+  // console.log(usdAmt,"usd")
+  let result;
+  try {
+    result = await readContract(config, {
+      abi: ContractABI,
+      address: ContractAddress,
+      functionName: "getTotalPOLCoin",
+      args: [usdAmt],
+    });
+    return result;
+  } catch (error) {
+    console.log("Error checking if user exists:", error);
+    return false;
+  }
+};
+
 export const UserData = async (address) => {
   let data;
   try {
@@ -119,7 +137,7 @@ export const UpgradeAmount = async (amt, tokenDecimal) => {
   return receipt;
 };
 
-export const getOwner = async () => {
+export const GetOwner = async () => {
   const result = await readContract(config, {
     abi: ContractABI,
     address: ContractAddress,

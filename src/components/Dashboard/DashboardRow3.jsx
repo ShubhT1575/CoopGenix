@@ -2,7 +2,7 @@ import ApexChart from "../Chart/Radar";
 import React, { useEffect, useState } from "react";
 import ConnectWallet from "../ConnectWallet.jsx";
 import "../../style/SignUp.css";
-import { buyPackage, checkAllowance, tokenApprove } from "../web3.js";
+import { checkAllowance, tokenApprove } from "../web3.js";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 // import { TokenAddress } from "../Config.js";

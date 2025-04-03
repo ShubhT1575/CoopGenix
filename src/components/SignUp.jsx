@@ -8,10 +8,12 @@ import Logo from "/coopgenix.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { getAddressbyRefrralId } from "../API/Api.js";
 import {
-  buyPackage,
   checkAllowance,
-  getOwner,
+  GetOwner,
+  getTotalPol,
+  // getOwner,
   getUSDT,
+  JoinPlan,
   registration,
   tokenApprove,
   UserExist,
@@ -32,7 +34,7 @@ function SignUp() {
   const chainId = useChainId();
   const { address, isConnected } = useAccount();
 
-  const [packageValue, setPackageValue] = useState("");
+  const [packageValue, setPackageValue] = useState("5");
   const [inputRef, setInputRef] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [refFromUrl, setRefFromUrl] = useState(false);
@@ -112,33 +114,29 @@ function SignUp() {
   };
 
   const Register = async (refAddress, amt) => {
-    console.log(refAddress, amt);
     try {
       setIsLoading(true);
-      // if (!address) {
-      //   setIsLoading(false);
-      //   return toast.error("Please connect wallet");
-      // }
-
-      // if (!isChecked) {
-      //   setIsLoading(false);
-      //   return toast.error(
-      //     "You must accept the Terms and Conditions to Register."
-      //   );
-      // }
-      if (!refAddress) {
+      if (!address) {
         setIsLoading(false);
-        return toast.error("Enter Referal Address Value");
+        return toast.error("Please connect wallet");
       }
+      // if (!isCheckedYes && !isCheckedNo) {
+      //   setIsLoading(false);
+      //   return toast.error("Please select checkbox !");
+      // }
+      // if(!refAddress){
+      //   setIsLoading(false);
+      //   return toast.error("Sponsor Id Required");
+      // }
       if (!packageValue) {
         setIsLoading(false);
         return toast.error("Enter Package Value");
       }
-      if (amt < 25) {
-        setIsLoading(false);
-        toast.error("Please Enter an Package Amount Greater Than $ 25");
-        return;
-      }
+      // if (amt >= 60) {
+      //   setIsLoading(false);
+      //   toast.error("Please Enter an Register Amount Greater Than 60");
+      //   return;
+      // }
 
       const isUserExist = await UserExist(address);
       if (isUserExist) {
@@ -146,31 +144,73 @@ function SignUp() {
         setIsLoading(false);
         return;
       }
-      let getRefAddress;
-      if (refAddress) {
-        getRefAddress = await UserExist(refAddress);
-        if (!getRefAddress) {
-          setIsLoading(false);
-          toast.error("Invalid Referral Address");
-          return;
-        }
+      
+      // let getRefAddress;
+      // if (refAddress) {
+        //   getRefAddress = await getAddressbyRefrralId(refAddress);
+        //   if (getRefAddress?.data?.status != 200) {
+          //     setIsLoading(false);
+          //     toast.error(getRefAddress?.data?.message);
+          //     return;
+          //   }
+          // }
+          
+          const ownerAddress = await GetOwner();
+          console.log(ownerAddress,"sssss")
+
+      const refAddressSet = !refAddress ? ownerAddress : refAddress;
+
+      console.log(refAddressSet, "ref::::");
+
+      // const response = await fetchSponsorAdd(refAddressSet);
+      // console.log(response,"response")
+
+    //  if(response)
+    //  {
+      const isValidRef = await UserExist(refAddressSet);
+
+      if (!isValidRef) {
+        setIsLoading(false);
+        toast.error("Invalid Sponsor Id");
+        return;
       }
+    // }else{
+    //   setIsLoading(false);
+    //   toast.error("Invalid Sponsor Id");
+    //   return;
+    // }
 
-      const Tokaddress = await getUSDT();
-      const Taddress = Tokaddress.address;
-      const tokenDecimals = Tokaddress.decimals;
-      console.log(Taddress, Tokaddress, "::::123");
+    let realAmt = 5*1e18;
+    // if(amt === 1){
+    //   realAmt = 5*1e18;
+    // }
+    // if(amt === 2){
+    //   realAmt = 25*1e18
+    // }
+    console.log(realAmt,"realAmt")
 
-      const balance = await getBalance(config, {
-        address: address,
-        token: Taddress,
-      });
+    const bal = await getTotalPol(realAmt)
 
-      // console.log(balance, "//////////////////");
+    let increasedAmt = bal + (bal * BigInt(1)) / BigInt(100);
 
-      const walletBalance = parseFloat(balance.formatted);
+    // console.log(increasedAmt,"incc")
+    
+    // console.log("xxx")
 
-      // console.log(walletBalance, amt, Taddress, "..............bal");
+      
+      // const Tokaddress = await getUSDT();
+      // const Taddress = Tokaddress.address;
+      // console.log(Taddress, "::::123");
+      // const tokenDecimals = Tokaddress.decimals;
+      
+      // console.log(Taddress, Tokaddress, "::::123");
+
+      // const balance = await getBalance(config, {
+      //   address: address,
+      //   token: Taddress,
+      // });
+
+      // const walletBalance = parseFloat(bal.formatted);
 
       // if (walletBalance < amt) {
       //   console.log(walletBalance, amt);
@@ -179,20 +219,25 @@ function SignUp() {
       //   return;
       // }
 
-      console.log("a a");
-      const allowance = await checkAllowance(address, Taddress);
-      console.log("a a4ll", allowance);
+      // if (!isChecked) {
+      //   setIsLoading(false);
+      //   return toast.error(
+      //     "You must accept the Terms and Conditions to Register."
+      //   );
+      // }
+      // console.log("a a");
+
+      // const allowance = await checkAllowance(address, Taddress);
+      // console.log("a a4");
       let appRes;
-      // console.log(tokenDecimals, amt, "::::tokenS");
-      if (amt > allowance / Number("1e" + tokenDecimals)) {
-        appRes = await appToken(convertToVin(amt), Taddress, tokenDecimals);
-      } else {
-        appRes = true;
-      }
-      console.log("here");
+
+      // if (amt > allowance / Number("1e" + tokenDecimals)) {
+      //   appRes = await appToken(amt, Taddress, tokenDecimals);
+      // } else {
+      // }
+      appRes = true;
       if (appRes) {
-        const buy = registration(address, refAddress, convertToVin(amt));
-        console.log(buy, "buyy");
+        const buy = JoinPlan(increasedAmt,refAddressSet);
         await toast.promise(buy, {
           loading: "Buying...",
           success: "Success!",
@@ -202,11 +247,11 @@ function SignUp() {
           setTimeout(() => {
             navigate("/Dashboard");
             setIsLoading(false);
-          }, 4000);
+          }, 2000);
         }
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
       toast.error("An error occurred during the registration process.");
       setIsLoading(false);
     }

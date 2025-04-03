@@ -7,7 +7,7 @@ import { RiGlobalFill } from "react-icons/ri";
 import { GiReceiveMoney } from "react-icons/gi";
 // import LOGO from "../assets/img/logo.png";
 import { useSelector } from "react-redux";
-import { getOwner } from "./web3";
+// import { getOwner } from "./web3";
 import { MdOutlineSupportAgent } from "react-icons/md";
 import { useAccount } from "wagmi";
 import economy from "../../src/assets/img/economy.png";
@@ -45,14 +45,14 @@ function Sidebar() {
     }
   }, [address]);
 
-  const useOwner = async () => {
-    const owner = await getOwner();
-    setOwner(owner);
-  };
+  // const useOwner = async () => {
+  //   const owner = await getOwner();
+  //   setOwner(owner);
+  // };
 
-  useEffect(() => {
-    useOwner();
-  }, []);
+  // useEffect(() => {
+  //   useOwner();
+  // }, []);
 
   function closeSidebar() {
     const side = document.getElementById("sidebar");
