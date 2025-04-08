@@ -26,6 +26,7 @@ function DashboardRow1() {
   const { address } = useAccount();
   const [dashboard, setDashboard] = useState();
   const dispatch = useDispatch();
+  const [blockDataMap, setBlockDataMap] = useState({});
 
   async function fetchData(address) {
     try {
@@ -98,20 +99,21 @@ function DashboardRow1() {
         setIsLoading(false);
       }
     };
-
+    
     const getBlockData = async (packageId) => {
       try {
         const response = await axios.get(apiUrl + "/uwn", {
           params: {
             user: address,
-            packageId : packageId
+            packageId: packageId
           },
         });
-  
+    
         if (response?.status === 200) {
-          setDashboard(response?.data);
-          dispatch(setUserDetails(response?.data))
-          console.log(response?.data, "ressss");
+          setBlockDataMap(prev => ({
+            ...prev,
+            [packageId]: response.data.mergedRecords
+          }));
         }
       } catch (error) {
         console.log(error);
@@ -149,6 +151,10 @@ function DashboardRow1() {
     fetchPackageStatus(address);
     }
   }, [address]);
+
+  const shouldBePurple = (records, poolId, place) => {
+    return records?.some(item => item.poolId === poolId && item.place === place);
+  };
 
   const renderActivateButton = (blockId) => {
     if (loading) {
@@ -226,6 +232,37 @@ function DashboardRow1() {
     { id: 19, code: "#12345", amount1: "$3404404", amount2: "$34044" },
     { id: 20, code: "#12345", amount1: "$3404404", amount2: "$34044" },
   ];
+
+  useEffect(() => {
+  const fetchAllBlockData = async () => {
+    try {
+      const results = await Promise.all(
+        blocks.map(async (block) => {
+          const response = await axios.get(apiUrl + "/uwn", {
+            params: {
+              user: address,
+              packageId: block.id,
+            },
+          });
+          return { packageId: block.id, records: response?.data?.mergedRecords || [] };
+        })
+      );
+
+      const newDataMap = {};
+      results.forEach(({ packageId, records }) => {
+        newDataMap[packageId] = records;
+      });
+
+      setBlockDataMap(newDataMap);
+    } catch (error) {
+      console.error("Failed to fetch block data:", error);
+    }
+  };
+
+  if (blocks?.length > 0 && address) {
+    fetchAllBlockData();
+  }
+}, [blocks, address]);
 
   return (
     <>
@@ -526,31 +563,52 @@ function DashboardRow1() {
             >
        
        <>
-      {blocks.map((block) => (
-        <div className="col-sm-12 col-md-12 col-lg-4" key={block.id}>
-          <div className="card custom-card crm-card">
-            <div className="card-body">
-              <div className="reward-box glow-box">
-                <h5>Block {block.id}</h5>
-                <div className="block-box">
-                  {[...Array(8)].map((_, i) => (
-                    <div className="small-box" key={i}>{i + 1}</div>
-                  ))}
-                </div>
-                <div className="box-btn-content">
-                  <div className="package-package">Value {block.value}</div>
-                  <div className="Potential-Reward">Reward {block.reward}</div>
-                </div>
-                <div className="box-btn-content content-2">
-                  <div className="activate-button">
-                    {renderActivateButton(block.id)}
+       {blocks.map((block) => {
+  const blockRecords = blockDataMap[block.id]; // this is packageId
+  return (
+    <div className="col-sm-12 col-md-12 col-lg-4" key={block.id}>
+      <div className="card custom-card crm-card">
+        <div className="card-body">
+          <div className="reward-box glow-box">
+            <h5>Block {block.id}</h5>
+            <div className="block-box">
+              {[...Array(8)].map((_, i) => {
+                // Mapping 8 small boxes to combinations of poolId and place
+                // First 2 boxes: poolId 1 place 1 & 2
+                // Next 2: poolId 2 place 1 & 2 and so on...
+                const poolId = Math.floor(i / 2) + 1; // 1 to 4
+                const place = (i % 2) + 1;            // 1 or 2
+                const isPurple = shouldBePurple(blockRecords, poolId, place);
+
+                return (
+                  <div
+                    className="small-box"
+                    key={i}
+                    style={{
+                      backgroundColor: isPurple ? 'purple' : undefined,
+                      color: isPurple ? '#fff' : undefined,
+                    }}
+                  >
+                    {i + 1}
                   </div>
-                </div>
+                );
+              })}
+            </div>
+            <div className="box-btn-content">
+              <div className="package-package">Value {block.value}</div>
+              <div className="Potential-Reward">Reward {block.reward}</div>
+            </div>
+            <div className="box-btn-content content-2">
+              <div className="activate-button">
+                {renderActivateButton(block.id)}
               </div>
             </div>
           </div>
         </div>
-      ))}
+      </div>
+    </div>
+  );
+})}
     </>
             </div>
           </div>
