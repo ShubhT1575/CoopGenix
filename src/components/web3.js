@@ -44,7 +44,44 @@ export const JoinPlan = async (amt,ref) => {
     address: ContractAddress,
     functionName: "joinPlan",
     args: [ref],
-    value: amt
+    // value: amt,
+    value: 0
+  });
+  console.log(result, "result");
+  const receipt = await waitForTransactionReceipt(config, {
+    hash: result,
+  });
+  console.log(receipt, "receipt");
+  return receipt;
+};
+
+export const BuyMatrix = async (amt,packageId) => {
+  // console.log(ref, amt, tokenDecimal, ":::::buypackage");
+  const result = await writeContract(config, {
+    abi: ContractABI,
+    address: ContractAddress,
+    functionName: "buyMatrix",
+    args: [packageId],
+    // value: amt,
+    value: 0
+  });
+  console.log(result, "result");
+  const receipt = await waitForTransactionReceipt(config, {
+    hash: result,
+  });
+  console.log(receipt, "receipt");
+  return receipt;
+};
+
+export const getLastMatrix = async (amt,packageId) => {
+  // console.log(ref, amt, tokenDecimal, ":::::buypackage");
+  const result = await writeContract(config, {
+    abi: ContractABI,
+    address: ContractAddress,
+    functionName: "buyMatrix",
+    args: [packageId],
+    // value: amt,
+    value: 0
   });
   console.log(result, "result");
   const receipt = await waitForTransactionReceipt(config, {
@@ -84,6 +121,39 @@ export const UserExist = async (address) => {
       args: [address],
     });
     return result;
+  } catch (error) {
+    console.log("Error checking if user exists:", error);
+    return false;
+  }
+};
+
+export const MatrixAmount = async (packageId) => {
+  let result;
+  try {
+    result = await readContract(config, {
+      abi: ContractABI,
+      address: ContractAddress,
+      functionName: "matrixPackage",
+      args: [packageId],
+    });
+    return result;
+  } catch (error) {
+    console.log("Error checking if user exists:", error);
+    return false;
+  }
+};
+
+
+export const getPackInfo = async (address,packageId) => {
+  let result;
+  try {
+    result = await readContract(config, {
+      abi: ContractABI,
+      address: ContractAddress,
+      functionName: "getPackageInfo",
+      args: [address,packageId],
+    });
+    return result[2];
   } catch (error) {
     console.log("Error checking if user exists:", error);
     return false;

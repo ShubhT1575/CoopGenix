@@ -171,7 +171,7 @@ function DashboardRow3() {
     try {
       const response = await axios.get(apiUrl + "/user-info", {
         params: {
-          address: address,
+          userId: address,
         },
       });
       console.log(response , "ressss")

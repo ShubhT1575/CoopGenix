@@ -15,7 +15,7 @@ export const getUser = async (address) => {
   try {
     const response = await axios.get(apiUrl + "/user-info", {
       params: {
-        address: address,
+        userId: address,
       },
     });
     return response;
@@ -28,7 +28,7 @@ export const getAddressbyRefrralId = async (referralId) => {
   try {
     const response = await axios.get(apiUrl + "/getAddressbyRefrralId", {
       params: {
-        referralId: referralId,
+        ref_id: referralId,
       },
     });
     return response;

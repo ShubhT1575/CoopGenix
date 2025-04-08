@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { UserData } from "../web3";
+import { BuyMatrix, getPackInfo, getTotalPol, MatrixAmount, UserData, UserExist } from "../web3";
 import { BiSolidUserAccount } from "react-icons/bi";
 import { GiLevelEndFlag } from "react-icons/gi";
 import { RiRefund2Line } from "react-icons/ri";
@@ -7,35 +7,202 @@ import { RiFundsBoxLine } from "react-icons/ri";
 import { RiExchangeFundsFill } from "react-icons/ri";
 import { useAccount } from "wagmi";
 import { cutAfterDecimal } from "../web3";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import deal from "../../assets/img/deal (1).png";
 import "../../style/Dashboard.css";
+import axios from "axios";
+import { apiUrl } from "../Config";
+import { setUserDetails } from "../../Redux/Dashdata";
+import toast from "react-hot-toast";
 
 function DashboardRow1() {
   const { tokenData } = useSelector((state) => state.coreCrowd);
-  const TokenAddress = tokenData?.address;
-  const tokenDecimals = tokenData?.decimals;
   const { wallet, dashboardData } = useSelector((state) => state.coreCrowd);
-  const { walletAddress } = wallet;
-  const { userId, referralId, refUserId, refReferralId, highestPool } =
-    dashboardData;
-  const address = walletAddress;
+  const { walletAddress, isConnected } = wallet;
+  const [isLoading, setIsLoading] = useState(false);
+  const [packageStatus, setPackageStatus] = useState({});
+  const [loading, setLoading] = useState(true);
+  const { address } = useAccount();
   const [dashboard, setDashboard] = useState();
+  const dispatch = useDispatch();
 
   async function fetchData(address) {
     try {
-      let data = await UserData(address);
-      setDashboard(data);
+      const response = await axios.get(apiUrl + "/user-info", {
+        params: {
+          userId: address,
+        },
+      });
+
+      if (response?.status === 200) {
+        setDashboard(response?.data);
+        dispatch(setUserDetails(response?.data))
+        console.log(response?.data, "ressss");
+      }
     } catch (error) {
-      setDashboard(false);
       console.log(error);
     }
   }
 
+    const buyMatrix = async (packageId) => {
+      try {
+        console.log("packageId ",packageId)
+        setIsLoading(true);
+        if (!address) {
+          setIsLoading(false);
+          return toast.error("Please connect wallet");
+        }
+       
+        const isUserExist = await UserExist(address);
+        if (!isUserExist) {
+          toast.error("You are not registered! Please Signup");
+          setIsLoading(false);
+          return;
+        }
+  
+        const mat_amount = await MatrixAmount(packageId);
+        
+        console.log("matrix_amount ",mat_amount)
+        let realAmt = mat_amount;
+     
+  
+      console.log(realAmt,"realAmt")
+  
+      const bal = await getTotalPol(realAmt)
+  
+      let increasedAmt = bal + (bal * BigInt(1)) / BigInt(100);
+  
+   
+        let appRes;
+  
+        appRes = true;
+        if (appRes) {
+          const buy = BuyMatrix(increasedAmt,packageId);
+          await toast.promise(buy, {
+            loading: "Activating Package...",
+            success: "Success!",
+            error: "Error",
+          });
+          if (buy) {
+            fetchPackageStatus(address);
+            // setTimeout(() => {
+            //   navigate("/Dashboard");
+            //   setIsLoading(false);
+            // }, 2000);
+          }
+        }
+      } catch (error) {
+        console.log(error.message);
+        toast.error("An error occurred during the registration process.");
+        setIsLoading(false);
+      }
+    };
+
+    const getBlockData = async (packageId) => {
+      try {
+        const response = await axios.get(apiUrl + "/uwn", {
+          params: {
+            user: address,
+            packageId : packageId
+          },
+        });
+  
+        if (response?.status === 200) {
+          setDashboard(response?.data);
+          dispatch(setUserDetails(response?.data))
+          console.log(response?.data, "ressss");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+
   useEffect(() => {
     if (address) fetchData(address);
   }, [address]);
+
+  const packageInfo = async (address,packageId) => {
+    try {
+      const isactive = await getPackInfo(address,packageId);
+      return isactive;
+    } catch (error) {
+      console.log(error.message);
+      toast.error("An error occurred during the get package process.");
+      return false;
+    }
+  };
+
+  const fetchPackageStatus = async (address) => {
+      
+    const status = {};
+    for (let i = 1; i <= 12; i++) {
+      status[i] = await packageInfo(address,i);
+    }
+    setPackageStatus(status);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if(address){
+    fetchPackageStatus(address);
+    }
+  }, [address]);
+
+  const renderActivateButton = (blockId) => {
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+    
+    if (!packageStatus[blockId]) {
+      return (
+        <button
+          type="button"
+          className="btn text-light"
+          style={{
+            background: `radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
+              radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
+              linear-gradient(135deg, #0d0d2b, #1b1b3a)`,
+          }}
+          onClick={() => buyMatrix(blockId)}
+        >
+          Activate
+        </button>
+      );
+    } else {
+      return (
+        <button
+          type="button"
+          className="btn text-light"
+          style={{
+            background: `radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
+              radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
+              linear-gradient(135deg, #0d0d2b, #1b1b3a)`,
+              visibility: 'hidden',
+          }}
+        >
+          Activate
+        </button>
+      );
+    }
+    // return null;
+  };
+
+  const blocks = [
+    { id: 1, value: "$5", reward: "12.8" },
+    { id: 2, value: "$15", reward: "38.4" },
+    { id: 3, value: "$45", reward: "115" },
+    { id: 4, value: "$135", reward: "345" },
+    { id: 5, value: "$405", reward: "1036" },
+    { id: 6, value: "$1215", reward: "3110" },
+    { id: 7, value: "$3645", reward: "9331" },
+    { id: 8, value: "$10935", reward: "27993" },
+    { id: 9, value: "$32805", reward: "83980" },
+    { id: 10, value: "$98415", reward: "251942" },
+    { id: 11, value: "$265245", reward: "755827" },
+    { id: 12, value: "$885735", reward: "2267481" },
+  ];
 
   const tableData = [
     { id: 1, code: "#12345", amount1: "$3404404", amount2: "$34044" },
@@ -63,18 +230,7 @@ function DashboardRow1() {
   return (
     <>
       <div className="row">
-        {/* 
-      <div class="user-strip">
-    <div>User ID: #123456</div>
-  <div>Sponsor ID: #123456</div>
-  <div>ID Date: #123456</div>
-    <div>Total Earnings: $5000</div>
-    <div>Earning Goal: $10000</div>
-    <div>Spot Wallet: $1200</div>
-  <button class="withdraw-btn">Claim</button>
-    <div>Reward Wallet: $800</div>
-    <button class="withdraw-btn">Withdraw</button>
-</div> */}
+    
 
         <div className="col-sm-12 col-lg-12">
           <div>
@@ -85,7 +241,7 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">User ID</span>
-                        <h6 className="mb-0 fw-semibold">{"$5000"}</h6>
+                        <h6 className="mb-0 fw-semibold">{dashboard?.userDetails?.userId || "Loading..."}</h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -100,7 +256,7 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Sponsor ID</span>
-                        <h6 className="mb-0 fw-semibold">{"$5000"}</h6>
+                        <h6 className="mb-0 fw-semibold">{dashboard?.userDetails?.referrerId || "Loading..."}</h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -115,7 +271,13 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">ID Date</span>
-                        <h6 className="mb-0 fw-semibold">{"$5000"}</h6>
+                        <h6 className="mb-0 fw-semibold">{dashboard?.userDetails?.createdAt
+    ? new Date(dashboard.userDetails.createdAt).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      })
+    : 'Loading...'}</h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -166,13 +328,7 @@ function DashboardRow1() {
                         <span className="text-primary1">
                           {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
                         </span>
-                        {/* <span
-                        className="text-info badge bg-success-transparent"
-                        style={{ cursor: "pointer", position: "absolute" , bottom: "15px" , right: "15px" }}
-                        // onClick={getDailyReward}
-                      >
-                        Claim
-                      </span> */}
+                      
                       </div>
                     </div>
                   </div>
@@ -240,7 +396,7 @@ function DashboardRow1() {
                   <div className="card-body d-flex gap-2 justify-content-between">
                     <div>
                       <span className="d-block mb-1">Direct Referral</span>
-                      <h6 className="mb-0 fw-semibold">{"#123456"}</h6>
+                      <h6 className="mb-0 fw-semibold">{dashboard?.userDetails?.directCount || "0"}</h6>
                     </div>
                     <div>
                       <span className="text-primary1">
@@ -258,7 +414,7 @@ function DashboardRow1() {
                   <div className="card-body d-flex gap-2 justify-content-between">
                     <div>
                       <span className="d-block mb-1">Referral Reward</span>
-                      <h6 className="mb-0 fw-semibold">{"$5000"}</h6>
+                      <h6 className="mb-0 fw-semibold">{dashboard?.sponsor_income || "0"}</h6>
                     </div>
                     <div>
                       <span className="text-primary1">
@@ -309,32 +465,7 @@ function DashboardRow1() {
 
           <div className="card custom-card crm-card glow-box">
             <div className="card-body">
-              {/* <div className="d-flex justify-content-between">
-                <div className="d-flex justify-content-between mb-2">
-                  <div className="p-2 border border-primary border-opacity-10 bg-primary-transparent rounded-pill">
-                    <span className="avatar avatar-md avatar-rounded bg-primary svg-white">
-                      <img
-                        src={deal}
-                        alt=""
-                        style={{ height: "22px", width: "22px" }}
-                      />
-                    </span>
-                  </div>
-                </div>
-                <div className="d-flex justify-content-end">
-                  <div className="loader-main"></div>
-                </div>
-              </div>
-              <div className="d-flex  flex-column mt-1 ">
-                <p className="flex-fill fs-14 mb-0">Sponsor ID</p>
-                <h5 className="mb-0 d-flex align-items-center">
-                  {refReferralId || "No Sponsor"}
-                </h5>
-              </div> */}
-              {/* <div
-                className="card custom-card overflow-hidden"
-                // style={{ height: "483px" }}
-              > */}
+         
               <div className="card-header justify-content-between">
                 <div className="card-title">Global Reward</div>
               </div>
@@ -393,735 +524,41 @@ function DashboardRow1() {
                 flexWrap: "wrap",
               }}
             >
-              {/* <div className="d-flex justify-content-between">
-                <div className="d-flex justify-content-between mb-2">
-                  <div className="p-2 border border-primary border-opacity-10 bg-primary-transparent rounded-pill">
-                    <span className="avatar avatar-md avatar-rounded bg-primary svg-white">
-                      <BiSolidUserAccount />
-                    </span>
-                  </div>
+       
+       <>
+      {blocks.map((block) => (
+        <div className="col-sm-12 col-md-12 col-lg-4" key={block.id}>
+          <div className="card custom-card crm-card">
+            <div className="card-body">
+              <div className="reward-box glow-box">
+                <h5>Block {block.id}</h5>
+                <div className="block-box">
+                  {[...Array(8)].map((_, i) => (
+                    <div className="small-box" key={i}>{i + 1}</div>
+                  ))}
                 </div>
-                <div className="d-flex"></div>
-              </div> */}
-              {/* <div className="d-flex  flex-column mt-1 ">
-                <p className="flex-fill fs-14 mb-0">User ID</p>
-                <h5 className="mb-0 d-flex align-items-center">
-                  {referralId || "No User"}
-                </h5>
-              </div> */}
-              <div className="col-sm-12 col-md-12 col-lg-4 ">
-                <div className="card custom-card crm-card ">
-                  <div className="card-body">
-                    {/*  */}
-                    <div class="reward-box glow-box">
-                      <h5>Block 1</h5>
-                      <div class="block-box">
-                        {/* <!-- 8 Small Boxes Inside Each Reward Box --> */}
-                        <div class="small-box">1</div>
-                        <div class="small-box">2</div>
-                        <div class="small-box">3</div>
-                        <div class="small-box">4</div>
-                        <div class="small-box">5</div>
-                        <div class="small-box">6</div>
-                        <div class="small-box">7</div>
-                        <div class="small-box">8</div>
-
-                        {/* <div class="activate-button">
-                          <button type="button" className="btn text-light" style={{background:`radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`}}>Activate</button>
-                        </div> */}
-                      </div>
-                      <div className="box-btn-content">
-                        <div class="package-package">Value $5</div>
-                        <div class="Potential-Reward">Reward 12.8</div>
-                      </div>
-                      <div className="box-btn-content content-2">
-                        <div class="activate-button">
-                          <button
-                            type="button"
-                            className="btn text-light"
-                            style={{
-                              background: `radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`,
-                            }}
-                          >
-                            Activate
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <div className="box-btn-content">
+                  <div className="package-package">Value {block.value}</div>
+                  <div className="Potential-Reward">Reward {block.reward}</div>
                 </div>
-              </div>
-              <div className="col-sm-12 col-md-12 col-lg-4 ">
-                <div className="card custom-card crm-card">
-                  <div className="card-body">
-                    {/*  */}
-                    <div class="reward-box glow-box">
-                      <h5>Block 2</h5>
-                      <div class="block-box">
-                        {/* <!-- 8 Small Boxes Inside Each Reward Box --> */}
-                        <div class="small-box">1</div>
-                        <div class="small-box">2</div>
-                        <div class="small-box">3</div>
-                        <div class="small-box">4</div>
-                        <div class="small-box">5</div>
-                        <div class="small-box">6</div>
-                        <div class="small-box">7</div>
-                        <div class="small-box">8</div>
-
-                        {/* <div class="activate-button">
-                          <button type="button" className="btn text-light" style={{background:`radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`}}>Activate</button>
-                        </div> */}
-                      </div>
-                      <div className="box-btn-content">
-                        <div class="package-package">Value $15</div>
-                        <div class="Potential-Reward">Reward 38.4</div>
-                      </div>
-                      <div className="box-btn-content content-2">
-                        <div class="activate-button">
-                          <button
-                            type="button"
-                            className="btn text-light"
-                            style={{
-                              background: `radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`,
-                            }}
-                          >
-                            Activate
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm-12 col-md-12 col-lg-4 ">
-                <div className="card custom-card crm-card">
-                  <div className="card-body">
-                    {/*  */}
-                    <div class="reward-box glow-box">
-                      <h5>Block 3</h5>
-                      <div class="block-box">
-                        {/* <!-- 8 Small Boxes Inside Each Reward Box --> */}
-                        <div class="small-box">1</div>
-                        <div class="small-box">2</div>
-                        <div class="small-box">3</div>
-                        <div class="small-box">4</div>
-                        <div class="small-box">5</div>
-                        <div class="small-box">6</div>
-                        <div class="small-box">7</div>
-                        <div class="small-box">8</div>
-
-                        {/* <div class="activate-button">
-                          <button type="button" className="btn text-light" style={{background:`radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`}}>Activate</button>
-                        </div> */}
-                      </div>
-                      <div className="box-btn-content">
-                        <div class="package-package">Value $45</div>
-                        <div class="Potential-Reward">Reward 115</div>
-                      </div>
-                      <div className="box-btn-content content-2">
-                        <div class="activate-button">
-                          <button
-                            type="button"
-                            className="btn text-light"
-                            style={{
-                              background: `radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`,
-                            }}
-                          >
-                            Activate
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm-12 col-md-12 col-lg-4 ">
-                <div className="card custom-card crm-card">
-                  <div className="card-body">
-                    {/*  */}
-                    <div class="reward-box glow-box">
-                      <h5>Block 4</h5>
-                      <div class="block-box">
-                        {/* <!-- 8 Small Boxes Inside Each Reward Box --> */}
-                        <div class="small-box">1</div>
-                        <div class="small-box">2</div>
-                        <div class="small-box">3</div>
-                        <div class="small-box">4</div>
-                        <div class="small-box">5</div>
-                        <div class="small-box">6</div>
-                        <div class="small-box">7</div>
-                        <div class="small-box">8</div>
-
-                        {/* <div class="activate-button">
-                          <button type="button" className="btn text-light" style={{background:`radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`}}>Activate</button>
-                        </div> */}
-                      </div>
-                      <div className="box-btn-content">
-                        <div class="package-package">Value $135</div>
-                        <div class="Potential-Reward">Reward 345</div>
-                      </div>
-                      <div className="box-btn-content content-2">
-                        <div class="activate-button">
-                          <button
-                            type="button"
-                            className="btn text-light"
-                            style={{
-                              background: `radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`,
-                            }}
-                          >
-                            Activate
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm-12 col-md-12 col-lg-4 ">
-                <div className="card custom-card crm-card">
-                  <div className="card-body">
-                    {/*  */}
-                    <div class="reward-box glow-box">
-                      <h5>Block 5</h5>
-                      <div class="block-box">
-                        {/* <!-- 8 Small Boxes Inside Each Reward Box --> */}
-                        <div class="small-box">1</div>
-                        <div class="small-box">2</div>
-                        <div class="small-box">3</div>
-                        <div class="small-box">4</div>
-                        <div class="small-box">5</div>
-                        <div class="small-box">6</div>
-                        <div class="small-box">7</div>
-                        <div class="small-box">8</div>
-
-                        {/* <div class="activate-button">
-                          <button type="button" className="btn text-light" style={{background:`radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`}}>Activate</button>
-                        </div> */}
-                      </div>
-                      <div className="box-btn-content">
-                        <div class="package-package">Value $405</div>
-                        <div class="Potential-Reward">Reward 1036</div>
-                      </div>
-                      <div className="box-btn-content content-2">
-                        <div class="activate-button">
-                          <button
-                            type="button"
-                            className="btn text-light"
-                            style={{
-                              background: `radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`,
-                            }}
-                          >
-                            Activate
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm-12 col-md-12 col-lg-4 ">
-                <div className="card custom-card crm-card">
-                  <div className="card-body">
-                    {/*  */}
-                    <div class="reward-box glow-box">
-                      <h5>Block 6</h5>
-                      <div class="block-box">
-                        {/* <!-- 8 Small Boxes Inside Each Reward Box --> */}
-                        <div class="small-box">1</div>
-                        <div class="small-box">2</div>
-                        <div class="small-box">3</div>
-                        <div class="small-box">4</div>
-                        <div class="small-box">5</div>
-                        <div class="small-box">6</div>
-                        <div class="small-box">7</div>
-                        <div class="small-box">8</div>
-
-                        {/* <div class="activate-button">
-                          <button type="button" className="btn text-light" style={{background:`radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`}}>Activate</button>
-                        </div> */}
-                      </div>
-                      <div className="box-btn-content">
-                        <div class="package-package">Value $1215</div>
-                        <div class="Potential-Reward">Reward 3110</div>
-                      </div>
-                      <div className="box-btn-content content-2">
-                        <div class="activate-button">
-                          <button
-                            type="button"
-                            className="btn text-light"
-                            style={{
-                              background: `radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`,
-                            }}
-                          >
-                            Activate
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm-12 col-md-12 col-lg-4 ">
-                <div className="card custom-card crm-card">
-                  <div className="card-body">
-                    {/*  */}
-                    <div class="reward-box glow-box">
-                      <h5>Block 7</h5>
-                      <div class="block-box">
-                        {/* <!-- 8 Small Boxes Inside Each Reward Box --> */}
-                        <div class="small-box">1</div>
-                        <div class="small-box">2</div>
-                        <div class="small-box">3</div>
-                        <div class="small-box">4</div>
-                        <div class="small-box">5</div>
-                        <div class="small-box">6</div>
-                        <div class="small-box">7</div>
-                        <div class="small-box">8</div>
-
-                        {/* <div class="activate-button">
-                          <button type="button" className="btn text-light" style={{background:`radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`}}>Activate</button>
-                        </div> */}
-                      </div>
-                      <div className="box-btn-content">
-                        <div class="package-package">Value $3645</div>
-                        <div class="Potential-Reward">Reward 9331</div>
-                      </div>
-                      <div className="box-btn-content content-2">
-                        <div class="activate-button">
-                          <button
-                            type="button"
-                            className="btn text-light"
-                            style={{
-                              background: `radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`,
-                            }}
-                          >
-                            Activate
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm-12 col-md-12 col-lg-4 ">
-                <div className="card custom-card crm-card">
-                  <div className="card-body">
-                    {/*  */}
-                    <div class="reward-box glow-box">
-                      <h5>Block 8</h5>
-                      <div class="block-box">
-                        {/* <!-- 8 Small Boxes Inside Each Reward Box --> */}
-                        <div class="small-box">1</div>
-                        <div class="small-box">2</div>
-                        <div class="small-box">3</div>
-                        <div class="small-box">4</div>
-                        <div class="small-box">5</div>
-                        <div class="small-box">6</div>
-                        <div class="small-box">7</div>
-                        <div class="small-box">8</div>
-
-                        {/* <div class="activate-button">
-                          <button type="button" className="btn text-light" style={{background:`radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`}}>Activate</button>
-                        </div> */}
-                      </div>
-                      <div className="box-btn-content">
-                        <div class="package-package">Value $10935</div>
-                        <div class="Potential-Reward">Reward 27993</div>
-                      </div>
-                      <div className="box-btn-content content-2">
-                        <div class="activate-button">
-                          <button
-                            type="button"
-                            className="btn text-light"
-                            style={{
-                              background: `radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`,
-                            }}
-                          >
-                            Activate
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm-12 col-md-12 col-lg-4 ">
-                <div className="card custom-card crm-card">
-                  <div className="card-body">
-                    {/*  */}
-                    <div class="reward-box glow-box">
-                      <h5>Block 9</h5>
-                      <div class="block-box">
-                        {/* <!-- 8 Small Boxes Inside Each Reward Box --> */}
-                        <div class="small-box">1</div>
-                        <div class="small-box">2</div>
-                        <div class="small-box">3</div>
-                        <div class="small-box">4</div>
-                        <div class="small-box">5</div>
-                        <div class="small-box">6</div>
-                        <div class="small-box">7</div>
-                        <div class="small-box">8</div>
-
-                        {/* <div class="activate-button">
-                          <button type="button" className="btn text-light" style={{background:`radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`}}>Activate</button>
-                        </div> */}
-                      </div>
-                      <div className="box-btn-content">
-                        <div class="package-package">Value $32805</div>
-                        <div class="Potential-Reward">Reward 83980</div>
-                      </div>
-                      <div className="box-btn-content content-2">
-                        <div class="activate-button">
-                          <button
-                            type="button"
-                            className="btn text-light"
-                            style={{
-                              background: `radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`,
-                            }}
-                          >
-                            Activate
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm-12 col-md-12 col-lg-4 ">
-                <div className="card custom-card crm-card">
-                  <div className="card-body">
-                    {/*  */}
-                    <div class="reward-box glow-box">
-                      <h5>Block 10</h5>
-                      <div class="block-box">
-                        {/* <!-- 8 Small Boxes Inside Each Reward Box --> */}
-                        <div class="small-box">1</div>
-                        <div class="small-box">2</div>
-                        <div class="small-box">3</div>
-                        <div class="small-box">4</div>
-                        <div class="small-box">5</div>
-                        <div class="small-box">6</div>
-                        <div class="small-box">7</div>
-                        <div class="small-box">8</div>
-
-                        {/* <div class="activate-button">
-                          <button type="button" className="btn text-light" style={{background:`radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`}}>Activate</button>
-                        </div> */}
-                      </div>
-                      <div className="box-btn-content">
-                        <div class="package-package">Value $98415</div>
-                        <div class="Potential-Reward">Reward 251942</div>
-                      </div>
-                      <div className="box-btn-content content-2">
-                        <div class="activate-button">
-                          <button
-                            type="button"
-                            className="btn text-light"
-                            style={{
-                              background: `radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`,
-                            }}
-                          >
-                            Activate
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm-12 col-md-12 col-lg-4 ">
-                <div className="card custom-card crm-card">
-                  <div className="card-body">
-                    {/*  */}
-                    <div class="reward-box glow-box">
-                      <h5>Block 11</h5>
-                      <div class="block-box">
-                        {/* <!-- 8 Small Boxes Inside Each Reward Box --> */}
-                        <div class="small-box">1</div>
-                        <div class="small-box">2</div>
-                        <div class="small-box">3</div>
-                        <div class="small-box">4</div>
-                        <div class="small-box">5</div>
-                        <div class="small-box">6</div>
-                        <div class="small-box">7</div>
-                        <div class="small-box">8</div>
-
-                        {/* <div class="activate-button">
-                          <button type="button" className="btn text-light" style={{background:`radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`}}>Activate</button>
-                        </div> */}
-                      </div>
-                      <div className="box-btn-content">
-                        <div class="package-package">Value $265245</div>
-                        <div class="Potential-Reward">Reward 755827</div>
-                      </div>
-                      <div className="box-btn-content content-2">
-                        <div class="activate-button">
-                          <button
-                            type="button"
-                            className="btn text-light"
-                            style={{
-                              background: `radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`,
-                            }}
-                          >
-                            Activate
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm-12 col-md-12 col-lg-4 ">
-                <div className="card custom-card crm-card">
-                  <div className="card-body">
-                    {/*  */}
-                    <div class="reward-box glow-box">
-                      <h5>Block 12</h5>
-                      <div class="block-box">
-                        {/* <!-- 8 Small Boxes Inside Each Reward Box --> */}
-                        <div class="small-box">1</div>
-                        <div class="small-box">2</div>
-                        <div class="small-box">3</div>
-                        <div class="small-box">4</div>
-                        <div class="small-box">5</div>
-                        <div class="small-box">6</div>
-                        <div class="small-box">7</div>
-                        <div class="small-box">8</div>
-
-                        {/* <div class="activate-button">
-                          <button type="button" className="btn text-light" style={{background:`radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`}}>Activate</button>
-                        </div> */}
-                      </div>
-                      <div className="box-btn-content">
-                        <div class="package-package">Value $885735</div>
-                        <div class="Potential-Reward">Reward 2267481</div>
-                      </div>
-                      <div className="box-btn-content content-2">
-                        <div class="activate-button">
-                          <button
-                            type="button"
-                            className="btn text-light"
-                            style={{
-                              background: `radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-                 radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-                 linear-gradient(135deg, #0d0d2b, #1b1b3a)`,
-                            }}
-                          >
-                            Activate
-                          </button>
-                        </div>
-                      </div>
-                    </div>
+                <div className="box-btn-content content-2">
+                  <div className="activate-button">
+                    {renderActivateButton(block.id)}
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        {/* <div className="col-sm-12 col-md-4 col-lg-4 ">
-          <div className="card custom-card crm-card">
-            <div className="card-body">
-              <div className="">
-                <div className="d-flex justify-content-between mb-2">
-                  <div className="p-2 border border-primary1 border-opacity-10 bg-primary1-transparent rounded-circle">
-                    <span className="avatar avatar-rounded avatar-md bg-primary1 svg-white">
-                      <GiLevelEndFlag />
-                    </span>
-                  </div>
-                </div>
-                <p className="flex-fill fs-14 mb-0">Level</p>
-              </div>
-              <div className="d-flex align-items-center justify-content-between mt-1">
-                <h5 className="mb-0 d-flex align-items-center">
-                  {" "}
-                  {(dashboard && Number(dashboard[2])) || 0}
-                </h5>
-              </div>
+      ))}
+    </>
             </div>
           </div>
-        </div> */}
+        </div>
+
+        
       </div>
-      {/* <div className="row">
-        <div className="col-sm-12 col-md-3 col-lg-3 ">
-          <div className="card custom-card crm-card">
-            <div className="card-body">
-              <div className="">
-                <div className="d-flex justify-content-between mb-2">
-                  <div className="p-2 border border-primary2 border-opacity-10 bg-primary2-transparent rounded-circle">
-                    <span className="avatar avatar-rounded avatar-md bg-primary2 svg-white">
-                      <RiExchangeFundsFill />
-                    </span>
-                  </div>
-                </div>
-                <p className="flex-fill fs-14 mb-0">Core Fund</p>
-              </div>
-              <div className="d-flex align-items-center justify-content-between mt-1">
-                <h5 className="mb-0 d-flex align-items-center">
-                  ${" "}
-                  {dashboard &&
-                    cutAfterDecimal(
-                      Number(dashboard[4]) / Number("1e" + tokenDecimals),
-                      2
-                    )}
-                </h5>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="col-sm-12 col-md-3 col-lg-3 ">
-          <div className="card custom-card crm-card">
-            <div className="card-body">
-              <div className="">
-                <div className="d-flex justify-content-between mb-2">
-                  <div className="p-2 border border-primary3 border-opacity-10 bg-primary3-transparent rounded-circle">
-                    <span className="avatar avatar-rounded avatar-md bg-primary3 svg-white">
-                      <RiFundsBoxLine />
-                    </span>
-                  </div>
-                </div>
-                <p className="flex-fill fs-14 mb-0">Fortune Fund</p>
-              </div>
-              <div className="d-flex align-items-center justify-content-between mt-1">
-                <h5 className="mb-0 d-flex align-items-center">
-                  ${" "}
-                  {dashboard &&
-                    cutAfterDecimal(
-                      Number(dashboard[5]) / Number("1e" + tokenDecimals),
-                      2
-                    )}
-                </h5>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="col-sm-12 col-md-3 col-lg-3 ">
-          <div className="card custom-card crm-card">
-            <div className="card-body">
-              <div className="">
-                <div className="d-flex justify-content-between mb-2">
-                  <div className="p-2 border border-secondary border-opacity-10 bg-secondary-transparent rounded-circle">
-                    <span className="avatar avatar-rounded avatar-md bg-secondary svg-white">
-                      <RiRefund2Line />
-                    </span>
-                  </div>
-                  <Link to="/Ranking">
-                    {highestPool?.poolNo && (
-                      <span
-                        className="text-primary4 badge bg-warning-transparent rounded-pill d-flex align-items-center fs-11 me-0 ms-2 mb-0 "
-                        style={{ height: "25px", cursor: "pointer" }}
-                      >
-                        G{highestPool?.poolNo * 10}
-                      </span>
-                    )}
-                  </Link>
-                </div>
-                <p className="flex-fill fs-14 mb-0">Global Fund</p>
-              </div>
-              <div className="d-flex align-items-center justify-content-between mt-1">
-                <h5 className="mb-0 d-flex align-items-center">
-                  ${" "}
-                  {dashboard &&
-                    cutAfterDecimal(
-                      Number(dashboard[6]) / Number("1e" + tokenDecimals),
-                      2
-                    )}
-                </h5>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="col-sm-12 col-md-3 col-lg-3 ">
-          <div className="card custom-card crm-card">
-            <div className="card-body">
-              <div className="">
-                <div className="d-flex justify-content-between mb-2">
-                  <div className="p-2 border border-primary1 border-opacity-10 bg-primary1-transparent rounded-circle">
-                    <span className="avatar avatar-rounded avatar-md bg-primary1 svg-white">
-                      <svg
-                        // className="side-menu__icon"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="icon icon-tabler icons-tabler-outline icon-tabler-businessplan"
-                      >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M16 6m-5 0a5 3 0 1 0 10 0a5 3 0 1 0 -10 0" />
-                        <path d="M11 6v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4" />
-                        <path d="M11 10v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4" />
-                        <path d="M11 14v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4" />
-                        <path d="M7 9h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
-                        <path d="M5 15v1m0 -8v1" />
-                      </svg>
-                    </span>
-                  </div>
-                </div>
-                <p className="flex-fill fs-14 mb-0">Return Fund</p>
-              </div>
-              <div className="d-flex align-items-center justify-content-between mt-1">
-                <h5 className="mb-0 d-flex align-items-center">
-                  {" "}
-                  ${" "}
-                  {dashboard &&
-                    Number(dashboard[7]) / Number("1e" + tokenDecimals)}
-                </h5>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
+     
     </>
   );
 }

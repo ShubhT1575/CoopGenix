@@ -8,12 +8,14 @@ import Logo from "/coopgenix.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { getAddressbyRefrralId } from "../API/Api.js";
 import {
+  BuyMatrix,
   checkAllowance,
   GetOwner,
   getTotalPol,
   // getOwner,
   getUSDT,
   JoinPlan,
+  MatrixAmount,
   registration,
   tokenApprove,
   UserExist,
@@ -158,27 +160,29 @@ function SignUp() {
           const ownerAddress = await GetOwner();
           console.log(ownerAddress,"sssss")
 
-      const refAddressSet = !refAddress ? ownerAddress : refAddress;
+     
+
+      const response = await getAddressbyRefrralId(refAddress);
+      console.log(response,"response")
+
+      const refAddressSet = !response?.data ? ownerAddress : response?.data;
 
       console.log(refAddressSet, "ref::::");
 
-      // const response = await fetchSponsorAdd(refAddressSet);
-      // console.log(response,"response")
-
-    //  if(response)
-    //  {
-      const isValidRef = await UserExist(refAddressSet);
+     if(response)
+     {
+      const isValidRef = await UserExist(response?.data);
 
       if (!isValidRef) {
         setIsLoading(false);
         toast.error("Invalid Sponsor Id");
         return;
       }
-    // }else{
-    //   setIsLoading(false);
-    //   toast.error("Invalid Sponsor Id");
-    //   return;
-    // }
+    }else{
+      setIsLoading(false);
+      toast.error("Invalid Sponsor Id");
+      return;
+    }
 
     let realAmt = 5*1e18;
     // if(amt === 1){
@@ -256,6 +260,8 @@ function SignUp() {
       setIsLoading(false);
     }
   };
+
+
 
   useEffect(() => {
     if (address) {

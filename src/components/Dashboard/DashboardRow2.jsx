@@ -7,17 +7,20 @@ import { cutAfterDecimal } from "../web3";
 import ConnectWallet from "../ConnectWallet";
 import { PiHandDepositBold } from "react-icons/pi";
 import { useAccount } from "wagmi";
+import { baseUrl } from "../Config";
+import toast from "react-hot-toast";
 
 function DashboardRow2() {
   const { isConnected } = useAccount()
   const [dashboard, setDashboard] = useState();
-  const { tokenData } = useSelector((state) => state.coreCrowd);
+  const { tokenData} = useSelector((state) => state.coreCrowd);
   const TokenAddress = tokenData?.address;
   const [teamData, setTeamData] = useState("");
   const [accessAddress, setAccessAddress] = useState("");
   const tokenDecimals = tokenData?.decimals;
   const [walletBal, setWalletBal] = useState("");
   const [packageValue, setPackageValue] = useState("");
+  const [referrallink, setreflink] = useState("");
   const { wallet, dashboardData } = useSelector((state) => state.coreCrowd);
   const {
     lapseLevel,
@@ -30,6 +33,7 @@ function DashboardRow2() {
   const address = walletAddress;
   const [isLoading, setIsLoading] = useState(false)
 
+  console.log("dashboardData ",dashboardData)
   async function fetchData() {
     try {
       let data = await UserData(address);
@@ -43,14 +47,23 @@ function DashboardRow2() {
     if (address) fetchData();
   }, [address]);
 
-  const handleInputChange = (event) => {
-    setPackageValue(event.target.value);
+  useEffect(() => {
+    setreflink(baseUrl+"/SignUp?ref="+dashboardData?.userDetails?.userId)
+  }, [dashboardData]);
+
+  const handleButtonClick = (event) => {
+    navigator.clipboard.writeText(referrallink).then(() => {
+      toast.success('Copied to clipboard!');
+    }).catch((err) => {
+      console.error('Clipboard error:', err);
+     
+    });
   };
 
 
-  const handleButtonClick = (value) => {
-    setPackageValue(value);
-  };
+  // const handleButtonClick = (value) => {
+  //   setPackageValue(value);
+  // };
 
 
   function getButtonClass(value) {
@@ -1151,12 +1164,11 @@ function DashboardRow2() {
               <div className="col-xl-12 p-0">
                 <div className="position-relative d-flex justify-content-center align-item-center">
                   <input
-                    type="number"
+                    type="text"
                     className="form-control w-75"
-                    id="signup-package"
+                    id="reflinkbtn"
                     placeholder="Referral Link"
-                    value={packageValue}
-                    onChange={handleInputChange}
+                    value={referrallink}
                     readOnly
                   />
                 </div>
@@ -1191,7 +1203,7 @@ function DashboardRow2() {
                     border: "none",
                   }}
                   className="btn btn-secondary-gradient w-100 text-light stakebtn"
-                  // onClick={() => Stake(packageValue)}
+                  onClick={handleButtonClick}
                   disabled={accessAddress}
                 >
                   Copy Link
