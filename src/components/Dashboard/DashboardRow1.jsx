@@ -262,7 +262,7 @@ function DashboardRow1() {
   if (blocks?.length > 0 && address) {
     fetchAllBlockData();
   }
-}, [blocks, address]);
+}, [address]);
 
   return (
     <>
