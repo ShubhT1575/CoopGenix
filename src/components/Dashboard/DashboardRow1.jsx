@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { BuyMatrix, getPackInfo, getTotalPol, MatrixAmount, UserData, UserExist } from "../web3";
+import {
+  BuyMatrix,
+  getPackInfo,
+  getTotalPol,
+  MatrixAmount,
+  UserData,
+  UserExist,
+} from "../web3";
 import { BiSolidUserAccount } from "react-icons/bi";
 import { GiLevelEndFlag } from "react-icons/gi";
 import { RiRefund2Line } from "react-icons/ri";
@@ -27,7 +34,8 @@ function DashboardRow1() {
   const [dashboard, setDashboard] = useState();
   const dispatch = useDispatch();
   const [blockDataMap, setBlockDataMap] = useState({});
-
+  const [globalupdownline, setGlobalupdownline] = useState([]);
+  const [udata, setUdata] = useState(0);
   async function fetchData(address) {
     try {
       const response = await axios.get(apiUrl + "/user-info", {
@@ -38,96 +46,103 @@ function DashboardRow1() {
 
       if (response?.status === 200) {
         setDashboard(response?.data);
-        dispatch(setUserDetails(response?.data))
-        console.log(response?.data, "ressss");
+        dispatch(setUserDetails(response?.data));
+        let datauu = response?.data?.global_upline_downline;
+        console.log(
+          response?.data?.global_upline_downline,
+          ":::::api data grlobal downline"
+        );
+        setGlobalupdownline(datauu);
       }
     } catch (error) {
       console.log(error);
     }
   }
 
-    const buyMatrix = async (packageId) => {
-      try {
-        console.log("packageId ",packageId)
-        setIsLoading(true);
-        if (!address) {
-          setIsLoading(false);
-          return toast.error("Please connect wallet");
-        }
-       
-        const isUserExist = await UserExist(address);
-        if (!isUserExist) {
-          toast.error("You are not registered! Please Signup");
-          setIsLoading(false);
-          return;
-        }
-  
-        const mat_amount = await MatrixAmount(packageId);
-        
-        console.log("matrix_amount ",mat_amount)
-        let realAmt = mat_amount;
-     
-  
-      console.log(realAmt,"realAmt")
-  
-      const bal = await getTotalPol(realAmt)
-  
-      let increasedAmt = bal + (bal * BigInt(1)) / BigInt(100);
-  
-   
-        let appRes;
-  
-        appRes = true;
-        if (appRes) {
-          const buy = BuyMatrix(increasedAmt,packageId);
-          await toast.promise(buy, {
-            loading: "Activating Package...",
-            success: "Success!",
-            error: "Error",
-          });
-          if (buy) {
-            fetchPackageStatus(address);
-            // setTimeout(() => {
-            //   navigate("/Dashboard");
-            //   setIsLoading(false);
-            // }, 2000);
-          }
-        }
-      } catch (error) {
-        console.log(error.message);
-        toast.error("An error occurred during the registration process.");
-        setIsLoading(false);
-      }
-    };
-    
-    const getBlockData = async (packageId) => {
-      try {
-        const response = await axios.get(apiUrl + "/uwn", {
-          params: {
-            user: address,
-            packageId: packageId
-          },
-        });
-    
-        if (response?.status === 200) {
-          setBlockDataMap(prev => ({
-            ...prev,
-            [packageId]: response.data.mergedRecords
-          }));
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  useEffect(() => {
+    console.log(globalupdownline, " updaetd globalupdownline");
+  }, [globalupdownline]);
 
+  const buyMatrix = async (packageId) => {
+    try {
+      console.log("packageId ", packageId);
+      setIsLoading(true);
+      if (!address) {
+        setIsLoading(false);
+        return toast.error("Please connect wallet");
+      }
+
+      const isUserExist = await UserExist(address);
+      if (!isUserExist) {
+        toast.error("You are not registered! Please Signup");
+        setIsLoading(false);
+        return;
+      }
+
+      const mat_amount = await MatrixAmount(packageId);
+
+      console.log("matrix_amount ", mat_amount);
+      let realAmt = mat_amount;
+
+      console.log(realAmt, "realAmt");
+
+      const bal = await getTotalPol(realAmt);
+
+      let increasedAmt = bal + (bal * BigInt(1)) / BigInt(100);
+
+      let appRes;
+
+      appRes = true;
+      if (appRes) {
+        const buy = BuyMatrix(increasedAmt, packageId);
+        await toast.promise(buy, {
+          loading: "Activating Package...",
+          success: "Success!",
+          error: "Error",
+        });
+        if (buy) {
+          fetchPackageStatus(address);
+          // setTimeout(() => {
+          //   navigate("/Dashboard");
+          //   setIsLoading(false);
+          // }, 2000);
+        }
+      }
+    } catch (error) {
+      console.log(error.message);
+      toast.error("An error occurred during the registration process.");
+      setIsLoading(false);
+    }
+  };
+
+  const getBlockData = async (packageId) => {
+    try {
+      const response = await axios.get(apiUrl + "/uwn", {
+        params: {
+          user: address,
+          packageId: packageId,
+        },
+      });
+
+      if (response?.status === 200) {
+        setBlockDataMap((prev) => ({
+          ...prev,
+          [packageId]: response.data.mergedRecords,
+        }));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     if (address) fetchData(address);
+    getUserData(address)
   }, [address]);
 
-  const packageInfo = async (address,packageId) => {
+  const packageInfo = async (address, packageId) => {
     try {
-      const isactive = await getPackInfo(address,packageId);
+      const isactive = await getPackInfo(address, packageId);
       return isactive;
     } catch (error) {
       console.log(error.message);
@@ -135,32 +150,46 @@ function DashboardRow1() {
       return false;
     }
   };
-
+  
+  const getUserData = async (address) => {
+    try {
+      const udata = await UserData(address);
+      const udaa = Number(udata?.[2])
+      if(udaa > 0){
+      setUdata(udaa/1e18);
+      }
+    } catch (error) {
+      console.log(error.message);
+      toast.error("An error occurred during the get package process.");
+      return false;
+    }
+  };
   const fetchPackageStatus = async (address) => {
-      
     const status = {};
     for (let i = 1; i <= 12; i++) {
-      status[i] = await packageInfo(address,i);
+      status[i] = await packageInfo(address, i);
     }
     setPackageStatus(status);
     setLoading(false);
   };
 
   useEffect(() => {
-    if(address){
-    fetchPackageStatus(address);
+    if (address) {
+      fetchPackageStatus(address);
     }
   }, [address]);
 
   const shouldBePurple = (records, poolId, place) => {
-    return records?.some(item => item.poolId === poolId && item.place === place);
+    return records?.some(
+      (item) => item.poolId === poolId && item.place === place
+    );
   };
 
   const renderActivateButton = (blockId) => {
     if (loading) {
       return <div>Loading...</div>;
     }
-    
+
     if (!packageStatus[blockId]) {
       return (
         <button
@@ -185,7 +214,7 @@ function DashboardRow1() {
             background: `radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
               radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
               linear-gradient(135deg, #0d0d2b, #1b1b3a)`,
-              visibility: 'hidden',
+            visibility: "hidden",
           }}
         >
           Activate
@@ -234,41 +263,56 @@ function DashboardRow1() {
   ];
 
   useEffect(() => {
-  const fetchAllBlockData = async () => {
-    try {
-      const results = await Promise.all(
-        blocks.map(async (block) => {
-          const response = await axios.get(apiUrl + "/uwn", {
-            params: {
-              user: address,
+    const fetchAllBlockData = async () => {
+      try {
+        const results = await Promise.all(
+          blocks.map(async (block) => {
+            const response = await axios.get(apiUrl + "/uwn", {
+              params: {
+                user: address,
+                packageId: block.id,
+              },
+            });
+            return {
               packageId: block.id,
-            },
-          });
-          return { packageId: block.id, records: response?.data?.mergedRecords || [] };
-        })
-      );
+              records: response?.data?.mergedRecords || [],
+            };
+          })
+        );
 
-      const newDataMap = {};
-      results.forEach(({ packageId, records }) => {
-        newDataMap[packageId] = records;
-      });
+        const newDataMap = {};
+        results.forEach(({ packageId, records }) => {
+          newDataMap[packageId] = records;
+        });
 
-      setBlockDataMap(newDataMap);
-    } catch (error) {
-      console.error("Failed to fetch block data:", error);
+        setBlockDataMap(newDataMap);
+      } catch (error) {
+        console.error("Failed to fetch block data:", error);
+      }
+    };
+
+    if (blocks?.length > 0 && address) {
+      fetchAllBlockData();
+    }
+  }, [address]);
+
+  let uplineEn = false;
+
+  const getRowStyle = (index,item) => {
+    if (item.user === address) {
+      uplineEn = true;
+      return { color: "#00FF00", fontWeight: "bold" };
+    } else if (!uplineEn) {
+      return { color: "#999999" };
+    } else {
+      return { color: "#FFA500" };
     }
   };
 
-  if (blocks?.length > 0 && address) {
-    fetchAllBlockData();
-  }
-}, [address]);
 
   return (
     <>
       <div className="row">
-    
-
         <div className="col-sm-12 col-lg-12">
           <div>
             <div className="card custom-card school-card glow-box">
@@ -278,7 +322,9 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">User ID</span>
-                        <h6 className="mb-0 fw-semibold">{dashboard?.userDetails?.userId || "Loading..."}</h6>
+                        <h6 className="mb-0 fw-semibold">
+                          {dashboard?.userDetails?.userId || "Loading..."}
+                        </h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -293,7 +339,9 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Sponsor ID</span>
-                        <h6 className="mb-0 fw-semibold">{dashboard?.userDetails?.referrerId || "Loading..."}</h6>
+                        <h6 className="mb-0 fw-semibold">
+                          {dashboard?.userDetails?.referrerId || "Loading..."}
+                        </h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -308,13 +356,17 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">ID Date</span>
-                        <h6 className="mb-0 fw-semibold">{dashboard?.userDetails?.createdAt
-    ? new Date(dashboard.userDetails.createdAt).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-      })
-    : 'Loading...'}</h6>
+                        <h6 className="mb-0 fw-semibold">
+                          {dashboard?.userDetails?.createdAt
+                            ? new Date(
+                                dashboard.userDetails.createdAt
+                              ).toLocaleDateString("en-US", {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                              })
+                            : "Loading..."}
+                        </h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -329,7 +381,7 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Total Earnings</span>
-                        <h6 className="mb-0 fw-semibold">{"$5000"}</h6>
+                        <h6 className="mb-0 fw-semibold">$ {dashboard?.totalincome || "0"}</h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -344,7 +396,7 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Earning Goal</span>
-                        <h6 className="mb-0 fw-semibold">{"$5000"}</h6>
+                        <h6 className="mb-0 fw-semibold">$ {dashboard?.earning_goal || "0"}</h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -359,13 +411,12 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Promise Reward</span>
-                        <h6 className="mb-0 fw-semibold">{"$5000"}</h6>
+                        <h6 className="mb-0 fw-semibold">$ {dashboard?.promise_reward || "0"}</h6>
                       </div>
                       <div>
                         <span className="text-primary1">
                           {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
                         </span>
-                      
                       </div>
                     </div>
                   </div>
@@ -375,19 +426,24 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Spot Wallet</span>
-                        <h6 className="mb-0 fw-semibold">{"$5000"}</h6>
+                        <h6 className="mb-0 fw-semibold">$ {dashboard?.spot_wallet || "0"}</h6>
                       </div>
                       <div>
                         <span className="text-primary1">
                           {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
                         </span>
                         <span
-                        className="text-info badge bg-success-transparent"
-                        style={{ cursor: "pointer", position: "absolute" , bottom: "15px" , right: "15px" }}
-                        // onClick={getDailyReward}
-                      >
-                        Claim
-                      </span>
+                          className="text-info badge bg-success-transparent"
+                          style={{
+                            cursor: "pointer",
+                            position: "absolute",
+                            bottom: "15px",
+                            right: "15px",
+                          }}
+                          // onClick={getDailyReward}
+                        >
+                          Claim
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -397,19 +453,24 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Reward Wallet</span>
-                        <h6 className="mb-0 fw-semibold">{"$5000"}</h6>
+                        <h6 className="mb-0 fw-semibold">$ {udata || "0"}</h6>
                       </div>
                       <div>
                         <span className="text-primary1">
                           {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
                         </span>
                         <span
-                        className="text-info badge bg-success-transparent"
-                        style={{ cursor: "pointer", position: "absolute" , bottom: "15px" , right: "8px" }}
-                        // onClick={getDailyReward}
-                      >
-                        Withdraw
-                      </span>
+                          className="text-info badge bg-success-transparent"
+                          style={{
+                            cursor: "pointer",
+                            position: "absolute",
+                            bottom: "15px",
+                            right: "8px",
+                          }}
+                          // onClick={getDailyReward}
+                        >
+                          Withdraw
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -433,7 +494,9 @@ function DashboardRow1() {
                   <div className="card-body d-flex gap-2 justify-content-between">
                     <div>
                       <span className="d-block mb-1">Direct Referral</span>
-                      <h6 className="mb-0 fw-semibold">{dashboard?.userDetails?.directCount || "0"}</h6>
+                      <h6 className="mb-0 fw-semibold">
+                         {dashboard?.userDetails?.directCount || "0"}
+                      </h6>
                     </div>
                     <div>
                       <span className="text-primary1">
@@ -451,7 +514,9 @@ function DashboardRow1() {
                   <div className="card-body d-flex gap-2 justify-content-between">
                     <div>
                       <span className="d-block mb-1">Referral Reward</span>
-                      <h6 className="mb-0 fw-semibold">{dashboard?.sponsor_income || "0"}</h6>
+                      <h6 className="mb-0 fw-semibold">
+                        $ {dashboard?.sponsor_income || "0"}
+                      </h6>
                     </div>
                     <div>
                       <span className="text-primary1">
@@ -469,7 +534,9 @@ function DashboardRow1() {
                   <div className="card-body d-flex gap-2 justify-content-between">
                     <div>
                       <span className="d-block mb-1">Reward Goal</span>
-                      <h6 className="mb-0 fw-semibold">{"$10000"}</h6>
+                      <h6 className="mb-0 fw-semibold">
+                      $ {dashboard?.reward_goal > 0 ? Number(dashboard.reward_goal).toFixed(2) : "0"}
+                      </h6>
                     </div>
                     <div>
                       <span className="text-primary1">
@@ -487,7 +554,7 @@ function DashboardRow1() {
                   <div className="card-body d-flex gap-2 justify-content-between">
                     <div>
                       <span className="d-block mb-1">Direct Volume</span>
-                      <h6 className="mb-0 fw-semibold">{"$1200"}</h6>
+                      <h6 className="mb-0 fw-semibold">$ {dashboard?.direct_volume || "0"}</h6>
                     </div>
                     <div>
                       <span className="text-primary1">
@@ -500,9 +567,8 @@ function DashboardRow1() {
             </div>
           </div>
 
-          <div className="card custom-card crm-card glow-box">
+          <div className="card custom-card crm-card glow-box" style={{overflowY:'scroll', maxHeight : '1300px'}}>
             <div className="card-body">
-         
               <div className="card-header justify-content-between">
                 <div className="card-title">Global Reward</div>
               </div>
@@ -519,29 +585,18 @@ function DashboardRow1() {
                       </tr>
                     </thead>
                     <tbody>
-                      {tableData.map((item) => (
-                        <tr key={item.id}>
-                          <td>{item.id}</td>
-                          <td style={{ color: "rgb(0, 119, 181)" }}>
-                            {item.code}
+                      {globalupdownline?.length&&globalupdownline.map((item, index) => {
+                       return  <tr key={item.uId}>
+                          <td style={getRowStyle(index, item)}>{item.uId}</td>
+                          <td style={getRowStyle(index, item)}>{item.userId}</td>
+                          <td style={getRowStyle(index, item)}>{(item.amount / 1e18).toFixed(6)}</td>
+                          <td style={getRowStyle(index, item)}>
+                            {item.amount > 0
+                              ? ((item.amount * 0.01) / 1e18).toFixed(6)
+                              : "0.000000"}
                           </td>
-                          <td>{item.amount1}</td>
-                          <td>{item.amount2}</td>
                         </tr>
-                      ))}
-                      <tr>
-                        <td style={{ fontWeight: "700" }}>{"Total"}</td>
-                        <td
-                          style={{
-                            color: "rgb(255, 255, 255)",
-                            fontWeight: "700",
-                          }}
-                        >
-                          {"Per Cycle"}
-                        </td>
-                        <td style={{ fontWeight: "700" }}>{"$68088080"}</td>
-                        <td style={{ fontWeight: "700" }}>{"$680880"}</td>
-                      </tr>
+                      })}
                     </tbody>
                   </table>
                 </div>
@@ -552,7 +607,9 @@ function DashboardRow1() {
         </div>
         <div className="col-sm-12 col-md-6 col-lg-6 ">
           <div className="card custom-card crm-card glow-box">
-          <h3 style={{textAlign: "center" , marginTop: "18px"}}>Block Reward</h3>
+            <h3 style={{ textAlign: "center", marginTop: "18px" }}>
+              Block Reward
+            </h3>
             <div
               className="card-body"
               style={{
@@ -561,62 +618,71 @@ function DashboardRow1() {
                 flexWrap: "wrap",
               }}
             >
-       
-       <>
-       {blocks.map((block) => {
-  const blockRecords = blockDataMap[block.id]; // this is packageId
-  return (
-    <div className="col-sm-12 col-md-12 col-lg-4" key={block.id}>
-      <div className="card custom-card crm-card">
-        <div className="card-body">
-          <div className="reward-box glow-box">
-            <h5>Block {block.id}</h5>
-            <div className="block-box">
-              {[...Array(8)].map((_, i) => {
-                // Mapping 8 small boxes to combinations of poolId and place
-                // First 2 boxes: poolId 1 place 1 & 2
-                // Next 2: poolId 2 place 1 & 2 and so on...
-                const poolId = Math.floor(i / 2) + 1; // 1 to 4
-                const place = (i % 2) + 1;            // 1 or 2
-                const isPurple = shouldBePurple(blockRecords, poolId, place);
+              <>
+                {blocks.map((block) => {
+                  const blockRecords = blockDataMap[block.id]; // this is packageId
+                  return (
+                    <div
+                      className="col-sm-12 col-md-12 col-lg-4"
+                      key={block.id}
+                    >
+                      <div className="card custom-card crm-card">
+                        <div className="card-body">
+                          <div className="reward-box glow-box">
+                            <h5>Block {block.id}</h5>
+                            <div className="block-box">
+                              {[...Array(8)].map((_, i) => {
+                                // Mapping 8 small boxes to combinations of poolId and place
+                                // First 2 boxes: poolId 1 place 1 & 2
+                                // Next 2: poolId 2 place 1 & 2 and so on...
+                                const poolId = Math.floor(i / 2) + 1; // 1 to 4
+                                const place = (i % 2) + 1; // 1 or 2
+                                const isPurple = shouldBePurple(
+                                  blockRecords,
+                                  poolId,
+                                  place
+                                );
 
-                return (
-                  <div
-                    className="small-box"
-                    key={i}
-                    style={{
-                      backgroundColor: isPurple ? 'purple' : undefined,
-                      color: isPurple ? '#fff' : undefined,
-                    }}
-                  >
-                    {i + 1}
-                  </div>
-                );
-              })}
-            </div>
-            <div className="box-btn-content">
-              <div className="package-package">Value {block.value}</div>
-              <div className="Potential-Reward">Reward {block.reward}</div>
-            </div>
-            <div className="box-btn-content content-2">
-              <div className="activate-button">
-                {renderActivateButton(block.id)}
-              </div>
+                                return (
+                                  <div
+                                    className="small-box"
+                                    key={i}
+                                    style={{
+                                      backgroundColor: isPurple
+                                        ? "purple"
+                                        : undefined,
+                                      color: isPurple ? "#fff" : undefined,
+                                    }}
+                                  >
+                                    {i + 1}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                            <div className="box-btn-content">
+                              <div className="package-package">
+                                Value {block.value}
+                              </div>
+                              <div className="Potential-Reward">
+                                Reward {block.reward}
+                              </div>
+                            </div>
+                            <div className="box-btn-content content-2">
+                              <div className="activate-button">
+                                {renderActivateButton(block.id)}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-})}
-    </>
-            </div>
-          </div>
-        </div>
-
-        
-      </div>
-     
     </>
   );
 }
