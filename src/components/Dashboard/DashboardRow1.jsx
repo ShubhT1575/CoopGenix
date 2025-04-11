@@ -579,8 +579,8 @@ function DashboardRow1() {
                       <tr>
                         <th scope="col">S.No.</th>
                         <th scope="col">User ID</th>
-                        <th scope="col">Earnings</th>
-                        <th scope="col">1% Reward</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Reward</th>
                         {/* <th scope="col">Time Stamp</th> */}
                       </tr>
                     </thead>
