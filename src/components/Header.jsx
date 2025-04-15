@@ -139,26 +139,28 @@ function Header() {
                                   </div>
             </div>
             <div className="nav-menu">
-              <NavLink
+              <Link
+              style={{color: "white"}}
                 to="/Dashboard"
                 className={({ isActive }) =>
                   isActive ? "nav-link active" : "nav-link"
                 }
               >
                 Dashboard
-              </NavLink>
+              </Link>
             </div>
             <div className="nav-menu">
-              <NavLink
+              <Link
+              style={{color: "white"}}
                 to="/WalkingRewards"
                 className={({ isActive }) =>
                   isActive ? "nav-link active" : "nav-link"
                 }
               >
                 Table
-              </NavLink>
+              </Link>
             </div>
-            <div className="nav-menu">
+            {/* <div className="nav-menu">
               <NavLink
                 to="#"
                 className={({ isActive }) =>
@@ -167,7 +169,7 @@ function Header() {
               >
                 List
               </NavLink>
-            </div>
+            </div> */}
             {/* <div className="nav-menu"></div> */}
           </div>
 
@@ -260,8 +262,9 @@ function Header() {
             <p className="text">View Plan</p>
           </button> */}
         </div>
-        <ul className="header-content-right">
+        <ul className="header-content-right gap-2">
           <ConnectWallet />
+          <div className="btn btn-primary-gradient" onClick={()=>navigate("/SignIn")}><i class="fa-solid fa-right-from-bracket"></i></div>
         </ul>
       </div>
     </header>

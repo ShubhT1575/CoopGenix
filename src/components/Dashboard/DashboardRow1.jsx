@@ -381,7 +381,7 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Total Earnings</span>
-                        <h6 className="mb-0 fw-semibold">$ {dashboard?.totalincome || "0"}</h6>
+                        <h6 className="mb-0 fw-semibold">$ {dashboard?.totalincome.toFixed(3) || "0"}</h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -589,11 +589,9 @@ function DashboardRow1() {
                        return  <tr key={item.uId}>
                           <td style={getRowStyle(index, item)}>{item.uId}</td>
                           <td style={getRowStyle(index, item)}>{item.userId}</td>
-                          <td style={getRowStyle(index, item)}>{(item.amount / 1e18).toFixed(6)}</td>
+                          <td style={getRowStyle(index, item)}>$ {(item.packageValue / 1e18)}</td>
                           <td style={getRowStyle(index, item)}>
-                            {item.amount > 0
-                              ? ((item.amount * 0.01) / 1e18).toFixed(6)
-                              : "0.000000"}
+                         $ {(item.amount / 1e18)}
                           </td>
                         </tr>
                       })}

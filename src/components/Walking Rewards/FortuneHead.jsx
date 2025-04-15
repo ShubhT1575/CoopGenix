@@ -18,7 +18,7 @@ function FortuneHead() {
           </ol>
         </nav> */}
         <h1 className="page-title fw-medium fs-18 mb-0 text-light">
-        Walking Rewards
+        Rewards
         </h1>
       </div>
     </div>

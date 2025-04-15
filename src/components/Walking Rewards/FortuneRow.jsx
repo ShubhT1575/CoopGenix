@@ -47,9 +47,9 @@ function CoreBody() {
   return (
     <div className="row">
       <div className="col-xl-12">
-        <div className="card custom-card overflow-hidden">
+        <div className="card custom-card overflow-hidden crm-card glow-box">
           <div className="card-header justify-content-between">
-            <div className="card-title">Walking Rewards Data</div>
+            <div className="card-title"> Rewards Data</div>
           </div>
 
           <div className="card-body active-tab">
@@ -117,7 +117,7 @@ function CoreBody() {
 
           <div className="card-footer pagination-body">
             <div className="d-flex align-items-center justify-content-between">
-              <div>Showing {directUser?.length || 0} Walking Rewards</div>
+              <div>Showing {directUser?.length || 0} Rewards</div>
               <div>
                 <nav
                   aria-label="Page navigation"
