@@ -22,6 +22,7 @@ import axios from "axios";
 import { apiUrl } from "../Config";
 import { setUserDetails } from "../../Redux/Dashdata";
 import toast from "react-hot-toast";
+import CountdownTimer from "../CountdownTimer";
 
 function DashboardRow1() {
   const { tokenData } = useSelector((state) => state.coreCrowd);
@@ -34,6 +35,7 @@ function DashboardRow1() {
   const [dashboard, setDashboard] = useState();
   const dispatch = useDispatch();
   const [blockDataMap, setBlockDataMap] = useState({});
+  const [timeDataMap, setTimeDataMap] = useState({});
   const [globalupdownline, setGlobalupdownline] = useState([]);
   const [udata, setUdata] = useState(0);
   async function fetchData(address) {
@@ -217,7 +219,7 @@ function DashboardRow1() {
             visibility: "hidden",
           }}
         >
-          Activate
+          
         </button>
       );
     }
@@ -276,16 +278,23 @@ function DashboardRow1() {
             return {
               packageId: block.id,
               records: response?.data?.mergedRecords || [],
+              time: response?.data?.expiry || 0
             };
           })
         );
 
         const newDataMap = {};
-        results.forEach(({ packageId, records }) => {
+        const timeStamp = {}
+        results.forEach(({ packageId, records , time }) => {
+          console.log(time, "time");
           newDataMap[packageId] = records;
+          timeStamp[packageId] = time
         });
 
         setBlockDataMap(newDataMap);
+        setTimeDataMap(timeStamp);
+        console.log(timeStamp, "timeStamp");
+        // console.log(blockDataMap, "blockDataMap");
       } catch (error) {
         console.error("Failed to fetch block data:", error);
       }
@@ -432,7 +441,7 @@ function DashboardRow1() {
                         <span className="text-primary1">
                           {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
                         </span>
-                        <span
+                        {/* <span
                           className="text-info badge bg-success-transparent"
                           style={{
                             cursor: "pointer",
@@ -443,7 +452,7 @@ function DashboardRow1() {
                           // onClick={getDailyReward}
                         >
                           Claim
-                        </span>
+                        </span> */}
                       </div>
                     </div>
                   </div>
@@ -619,6 +628,9 @@ function DashboardRow1() {
               <>
                 {blocks.map((block) => {
                   const blockRecords = blockDataMap[block.id]; // this is packageId
+                  const timeData = timeDataMap[block.id];
+                  // console.log(timeData , block.id, "timeData");
+                  // console.log(blockRecords, "blockRecordsxxxx");
                   return (
                     <div
                       className="col-sm-12 col-md-12 col-lg-4"
@@ -628,6 +640,7 @@ function DashboardRow1() {
                         <div className="card-body">
                           <div className="reward-box glow-box">
                             <h5>Block {block.id}</h5>
+                            {timeData !== 0 ? <span><CountdownTimer endTime={timeData} /></span> : ""}
                             <div className="block-box">
                               {[...Array(8)].map((_, i) => {
                                 // Mapping 8 small boxes to combinations of poolId and place
