@@ -629,8 +629,8 @@ function DashboardRow1() {
                 {blocks.map((block) => {
                   const blockRecords = blockDataMap[block.id]; // this is packageId
                   const timeData = timeDataMap[block.id];
-                  // console.log(timeData , block.id, "timeData");
-                  // console.log(blockRecords, "blockRecordsxxxx");
+                  console.log(timeData , block.id, "timeData");
+                  console.log(blockRecords, "blockRecordsxxxx");
                   return (
                     <div
                       className="col-sm-12 col-md-12 col-lg-4"
@@ -640,7 +640,9 @@ function DashboardRow1() {
                         <div className="card-body">
                           <div className="reward-box glow-box">
                             <h5>Block {block.id}</h5>
-                            {timeData !== 0 ? <span><CountdownTimer endTime={timeData} /></span> : ""}
+                            {timeData >= 0 ? (
+                                <span><CountdownTimer endTime={timeData * 1000} /></span>
+                              ) : ""}
                             <div className="block-box">
                               {[...Array(8)].map((_, i) => {
                                 // Mapping 8 small boxes to combinations of poolId and place
