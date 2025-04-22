@@ -545,7 +545,7 @@ function DashboardRow1() {
                     <div>
                       <span className="d-block mb-1">Referral Reward</span>
                       <h6 className="mb-0 fw-semibold">
-                        $ {dashboard?.sponsor_income || "0"}
+                         {dashboard?.sponsor_income || "0"}
                       </h6>
                     </div>
                     <div>
@@ -565,7 +565,7 @@ function DashboardRow1() {
                     <div>
                       <span className="d-block mb-1">Reward Goal</span>
                       <h6 className="mb-0 fw-semibold">
-                      $ {dashboard?.reward_goal > 0 ? Number(dashboard.reward_goal).toFixed(2) : "0"}
+                       {dashboard?.reward_goal > 0 ? Number(dashboard.reward_goal).toFixed(2) : "0"}
                       </h6>
                     </div>
                     <div>
