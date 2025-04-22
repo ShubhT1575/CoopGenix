@@ -4,6 +4,7 @@ import {
   getPackInfo,
   getTotalPol,
   MatrixAmount,
+  promiseReward,
   UserData,
   UserExist,
 } from "../web3";
@@ -38,7 +39,7 @@ function DashboardRow1() {
   const [timeDataMap, setTimeDataMap] = useState({});
   const [globalupdownline, setGlobalupdownline] = useState([]);
   const [udata, setUdata] = useState(0);
-  const [promiseReward, setPromiseReward] = useState(0);
+  const [promise, setPromise] = useState(0);
   async function fetchData(address) {
     try {
       const response = await axios.get(apiUrl + "/user-info", {
@@ -141,14 +142,13 @@ function DashboardRow1() {
   useEffect(() => {
     if (address) fetchData(address);
     getUserData(address)
-    promiseBalance(address)
+    promiseBalc(address)
   }, [address]);
 
-  const promiseBalance = async (address) => {
+  const promiseBalc = async (address) => {
     try {
       const respo = await promiseReward(address);
-      console.log("respo ",respo)
-      setPromiseReward(respo);
+      setPromise(Number(respo));
     } catch (error) {
       console.log(error.message);
       toast.error("An error occurred during the get package process.");
@@ -456,7 +456,7 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Spot Wallet</span>
-                        <h6 className="mb-0 fw-semibold"> {promiseReward || "0"}</h6>
+                        <h6 className="mb-0 fw-semibold"> {promise || "0"}</h6>
                       </div>
                       <div>
                         <span className="text-primary1">
