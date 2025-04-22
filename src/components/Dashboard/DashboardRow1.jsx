@@ -142,9 +142,27 @@ function DashboardRow1() {
     getUserData(address)
   }, [address]);
 
+  // const packageInfo = async (address, packageId) => {
+  //   try {
+  //     const isactive = await getPackInfo(address, packageId);
+  //     return isactive;
+  //   } catch (error) {
+  //     console.log(error.message);
+  //     toast.error("An error occurred during the get package process.");
+  //     return false;
+  //   }
+  // };
+
   const packageInfo = async (address, packageId) => {
     try {
-      const isactive = await getPackInfo(address, packageId);
+      const response = await axios.get(`${apiUrl}/getpackagestatus`, {
+        params: {
+          user: address,
+          packageId: packageId,
+        },
+      });
+  
+      const isactive = response.data?.isactive; // adjust based on actual response structure
       return isactive;
     } catch (error) {
       console.log(error.message);
