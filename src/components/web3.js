@@ -160,6 +160,22 @@ export const getPackInfo = async (address,packageId) => {
   }
 };
 
+export const promiseReward = async (address) => {
+  let result;
+  try {
+    result = await readContract(config, {
+      abi: ContractABI,
+      address: ContractAddress,
+      functionName: "promiseReward",
+      args: [address],
+    });
+    return result;
+  } catch (error) {
+    console.log("Error checking promise reward", error);
+    return false;
+  }
+};
+
 export const getTotalPol = async (usdAmt) => {
   // console.log(usdAmt,"usd")
   let result;

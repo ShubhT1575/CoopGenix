@@ -38,6 +38,7 @@ function DashboardRow1() {
   const [timeDataMap, setTimeDataMap] = useState({});
   const [globalupdownline, setGlobalupdownline] = useState([]);
   const [udata, setUdata] = useState(0);
+  const [promiseReward, setPromiseReward] = useState(0);
   async function fetchData(address) {
     try {
       const response = await axios.get(apiUrl + "/user-info", {
@@ -140,18 +141,20 @@ function DashboardRow1() {
   useEffect(() => {
     if (address) fetchData(address);
     getUserData(address)
+    promiseBalance(address)
   }, [address]);
 
-  // const packageInfo = async (address, packageId) => {
-  //   try {
-  //     const isactive = await getPackInfo(address, packageId);
-  //     return isactive;
-  //   } catch (error) {
-  //     console.log(error.message);
-  //     toast.error("An error occurred during the get package process.");
-  //     return false;
-  //   }
-  // };
+  const promiseBalance = async (address) => {
+    try {
+      const respo = await promiseReward(address);
+      console.log("respo ",respo)
+      setPromiseReward(respo);
+    } catch (error) {
+      console.log(error.message);
+      toast.error("An error occurred during the get package process.");
+      return false;
+    }
+  };
 
   const packageInfo = async (address, packageId) => {
     try {
@@ -408,7 +411,7 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Total Earnings</span>
-                        <h6 className="mb-0 fw-semibold">$ {dashboard?.totalincome.toFixed(3) || "0"}</h6>
+                        <h6 className="mb-0 fw-semibold"> {dashboard?.totalincome.toFixed(3) || "0"}</h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -423,7 +426,7 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Earning Goal</span>
-                        <h6 className="mb-0 fw-semibold">$ {dashboard?.earning_goal || "0"}</h6>
+                        <h6 className="mb-0 fw-semibold"> {dashboard?.earning_goal || "0"}</h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -438,7 +441,7 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Promise Reward</span>
-                        <h6 className="mb-0 fw-semibold">$ {dashboard?.promise_reward || "0"}</h6>
+                        <h6 className="mb-0 fw-semibold"> {dashboard?.promise_reward || "0"}</h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -453,7 +456,7 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Spot Wallet</span>
-                        <h6 className="mb-0 fw-semibold">$ {dashboard?.spot_wallet || "0"}</h6>
+                        <h6 className="mb-0 fw-semibold"> {promiseReward || "0"}</h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -480,7 +483,7 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Reward Wallet</span>
-                        <h6 className="mb-0 fw-semibold">$ {udata || "0"}</h6>
+                        <h6 className="mb-0 fw-semibold"> {udata || "0"}</h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -581,7 +584,7 @@ function DashboardRow1() {
                   <div className="card-body d-flex gap-2 justify-content-between">
                     <div>
                       <span className="d-block mb-1">Direct Volume</span>
-                      <h6 className="mb-0 fw-semibold">$ {dashboard?.direct_volume || "0"}</h6>
+                      <h6 className="mb-0 fw-semibold"> {dashboard?.direct_volume || "0"}</h6>
                     </div>
                     <div>
                       <span className="text-primary1">
@@ -616,7 +619,7 @@ function DashboardRow1() {
                        return  <tr key={item.uId}>
                           <td style={getRowStyle(index, item)}>{item.uId}</td>
                           <td style={getRowStyle(index, item)}>{item.userId}</td>
-                          <td style={getRowStyle(index, item)}>$ {(item.packageValue / 1e18)}</td>
+                          <td style={getRowStyle(index, item)}> {(item.packageValue / 1e18)}</td>
                           <td style={getRowStyle(index, item)}>
                          $ {(item.amount / 1e18)}
                           </td>
