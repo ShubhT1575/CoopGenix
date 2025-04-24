@@ -7,6 +7,7 @@ import {
   promiseReward,
   UserData,
   UserExist,
+  withdrawcoopinc,
 } from "../web3";
 import { BiSolidUserAccount } from "react-icons/bi";
 import { GiLevelEndFlag } from "react-icons/gi";
@@ -112,6 +113,28 @@ function DashboardRow1() {
           // }, 2000);
         }
       }
+    } catch (error) {
+      console.log(error.message);
+      toast.error("An error occurred during the registration process.");
+      setIsLoading(false);
+    }
+  };
+
+  const withdrawIncome = async () => {
+    try {
+      setIsLoading(true);
+      if (!address) {
+        setIsLoading(false);
+        return toast.error("Please connect wallet");
+      }
+
+
+        const wida = withdrawcoopinc();
+        await toast.promise(wida, {
+          loading: "Withdrawing Income...",
+          success: "Success!",
+          error: "Error",
+        });
     } catch (error) {
       console.log(error.message);
       toast.error("An error occurred during the registration process.");
@@ -441,7 +464,7 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Promise Reward</span>
-                        <h6 className="mb-0 fw-semibold"> {dashboard?.promise_reward || "0"}</h6>
+                        <h6 className="mb-0 fw-semibold"> {promise || "0"}</h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -455,8 +478,8 @@ function DashboardRow1() {
                   <div className="card custom-card school-card glow-box width-box">
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
-                        <span className="d-block mb-1">Spot Wallet</span>
-                        <h6 className="mb-0 fw-semibold"> {promise || "0"}</h6>
+                        <span className="d-block mb-1">Today Earning</span>
+                        <h6 className="mb-0 fw-semibold"> {dashboard?.todayBonus || "0"}</h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -479,31 +502,31 @@ function DashboardRow1() {
                   </div>
                 </div>
                 <div>
-                  <div className="card custom-card school-card glow-box width-box">
-                    <div className="card-body d-flex gap-2 justify-content-between">
-                      <div>
-                        <span className="d-block mb-1">Reward Wallet</span>
-                        <h6 className="mb-0 fw-semibold"> {udata || "0"}</h6>
-                      </div>
-                      <div>
-                        <span className="text-primary1">
-                          {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
-                        </span>
-                        <span
-                          className="text-info badge bg-success-transparent"
-                          style={{
-                            cursor: "pointer",
-                            position: "absolute",
-                            bottom: "15px",
-                            right: "8px",
-                          }}
-                          // onClick={getDailyReward}
-                        >
-                          Withdraw
-                        </span>
-                      </div>
+                <div className="card custom-card school-card glow-box width-box">
+                  <div className="card-body d-flex gap-2 justify-content-between">
+                    <div>
+                      <span className="d-block mb-1">Reward Wallet</span>
+                      <h6 className="mb-0 fw-semibold">{udata || "0"}</h6>
+                    </div>
+                    <div>
+                      <span className="text-primary1">
+                        {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
+                      </span>
+                      <span
+                        className="text-info badge bg-success-transparent"
+                        style={{
+                          cursor: "pointer",
+                          position: "absolute",
+                          bottom: "15px",
+                          right: "8px",
+                        }}
+                        onClick={withdrawIncome}
+                      >
+                        Withdraw
+                      </span>
                     </div>
                   </div>
+                </div>
                 </div>
               </div>
             </div>

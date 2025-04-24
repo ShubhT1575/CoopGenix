@@ -73,6 +73,21 @@ export const BuyMatrix = async (amt,packageId) => {
   return receipt;
 };
 
+export const withdrawcoopinc = async () => {
+  const result = await writeContract(config, {
+    abi: ContractABI,
+    address: ContractAddress,
+    functionName: "withdraw",
+    args: []
+  });
+  console.log(result, "result");
+  const receipt = await waitForTransactionReceipt(config, {
+    hash: result,
+  });
+  console.log(receipt, "receipt");
+  return receipt;
+};
+
 export const getLastMatrix = async (amt,packageId) => {
   // console.log(ref, amt, tokenDecimal, ":::::buypackage");
   const result = await writeContract(config, {

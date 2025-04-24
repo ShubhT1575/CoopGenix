@@ -49,7 +49,7 @@ function DashboardRow2() {
 
   useEffect(() => {
     setreflink(baseUrl+"/SignUp?ref="+dashboardData?.userDetails?.userId)
-  }, [dashboardData]);
+  }, [dashboardData]);  
 
   const handleButtonClick = (event) => {
     navigator.clipboard.writeText(referrallink).then(() => {
