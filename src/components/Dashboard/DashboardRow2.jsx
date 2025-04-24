@@ -45,7 +45,7 @@ function DashboardRow2() {
   }
   useEffect(() => {
     if (address) fetchData();
-  }, [address]);
+  }, [address]); 
 
   useEffect(() => {
     setreflink(baseUrl+"/SignUp?ref="+dashboardData?.userDetails?.userId)
