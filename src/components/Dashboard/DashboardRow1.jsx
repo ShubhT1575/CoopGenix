@@ -39,6 +39,8 @@ function DashboardRow1() {
   const [blockDataMap, setBlockDataMap] = useState({});
   const [timeDataMap, setTimeDataMap] = useState({});
   const [globalupdownline, setGlobalupdownline] = useState([]);
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+  const [withdrawAmount, setWithdrawAmount] = useState("");
   const [udata, setUdata] = useState(0);
   const [promise, setPromise] = useState(0);
   async function fetchData(address) {
@@ -121,23 +123,38 @@ function DashboardRow1() {
   };
 
   const withdrawIncome = async () => {
+    if (!address) return toast.error("Please connect wallet");
+  
+    const amount = parseFloat(withdrawAmount);
+  
+    if (!amount || amount <= 0) {
+      return toast.error("Please enter a valid amount greater than 0");
+    }
+  
+    if (amount > udata) {
+      return toast.error("Entered amount exceeds your withdrawable balance");
+    }
+  
     try {
       setIsLoading(true);
-      if (!address) {
-        setIsLoading(false);
-        return toast.error("Please connect wallet");
-      }
+  
+      const amountToSend = BigInt(amount * 1e18); // Convert to wei using BigInt
 
-
-        const wida = withdrawcoopinc();
-        await toast.promise(wida, {
-          loading: "Withdrawing Income...",
-          success: "Success!",
-          error: "Error",
-        });
+      const wida = withdrawcoopinc(amountToSend);
+  
+  
+      await toast.promise(wida, {
+        loading: "Withdrawing Income...",
+        success: "Success!",
+        error: "Error",
+      });
+  
+      setShowWithdrawModal(false);
+      setWithdrawAmount("");
     } catch (error) {
       console.log(error.message);
-      toast.error("An error occurred during the registration process.");
+      toast.error("An error occurred during withdrawal.");
+    } finally {
       setIsLoading(false);
     }
   };
@@ -520,7 +537,7 @@ function DashboardRow1() {
                           bottom: "15px",
                           right: "8px",
                         }}
-                        onClick={withdrawIncome}
+                        onClick={() => setShowWithdrawModal(true)}
                       >
                         Withdraw
                       </span>
@@ -608,6 +625,42 @@ function DashboardRow1() {
                     <div>
                       <span className="d-block mb-1">Direct Volume</span>
                       <h6 className="mb-0 fw-semibold"> {dashboard?.direct_volume || "0"}</h6>
+                    </div>
+                    <div>
+                      <span className="text-primary1">
+                        {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-sm-6 col-lg-6">
+              <div>
+                <div className="card custom-card school-card glow-box">
+                  <div className="card-body d-flex gap-2 justify-content-between">
+                    <div>
+                      <span className="d-block mb-1">Unity Reward</span>
+                      <h6 className="mb-0 fw-semibold"> 0</h6>
+                    </div>
+                    <div>
+                      <span className="text-primary1">
+                        {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-sm-6 col-lg-6">
+              <div>
+                <div className="card custom-card school-card glow-box">
+                  <div className="card-body d-flex gap-2 justify-content-between">
+                    <div>
+                      <span className="d-block mb-1">Self Team Bonus</span>
+                      <h6 className="mb-0 fw-semibold">{dashboard?.self_team_income || "0"}</h6>
                     </div>
                     <div>
                       <span className="text-primary1">
@@ -740,8 +793,69 @@ function DashboardRow1() {
           </div>
         </div>
       </div>
+
+      {showWithdrawModal && (
+  <div
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100vw",
+      height: "100vh",
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      zIndex: 1000,
+      padding: "20px", // for mobile spacing
+    }}
+  >
+    <div
+      style={{
+        width: "100%",
+        maxWidth: "500px",
+        background: "linear-gradient(135deg, #7b2ff7, #f107a3)",
+        padding: "30px",
+        borderRadius: "12px",
+        color: "#fff",
+        boxShadow: "0 5px 20px rgba(228, 212, 212, 0.87)",
+      }}
+    >
+      <h5 className="mb-3">Enter Amount to Withdraw</h5>
+      <input
+        type="number"
+        className="form-control mb-3"
+        placeholder="Enter amount"
+        value={withdrawAmount}
+        onChange={(e) => setWithdrawAmount(e.target.value)}
+        style={{
+          borderRadius: "8px",
+          backgroundColor: "#f8f9fa", // light input background
+          color: "#000",
+        }}
+      />
+      <div className="d-flex justify-content-end gap-2">
+        <button
+          className="btn btn-light"
+          onClick={() => {
+            setShowWithdrawModal(false);
+            setWithdrawAmount("");
+          }}
+        >
+          Cancel
+        </button>
+        <button className="btn btn-dark" onClick={withdrawIncome}>
+          Withdraw
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+
     </>
   );
+
 }
 
 export default DashboardRow1;

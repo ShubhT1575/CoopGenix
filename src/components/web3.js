@@ -73,12 +73,12 @@ export const BuyMatrix = async (amt,packageId) => {
   return receipt;
 };
 
-export const withdrawcoopinc = async () => {
+export const withdrawcoopinc = async (amount) => {
   const result = await writeContract(config, {
     abi: ContractABI,
     address: ContractAddress,
     functionName: "withdraw",
-    args: []
+    args: [amount]
   });
   console.log(result, "result");
   const receipt = await waitForTransactionReceipt(config, {
