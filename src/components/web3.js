@@ -44,8 +44,8 @@ export const JoinPlan = async (amt,ref) => {
     address: ContractAddress,
     functionName: "joinPlan",
     args: [ref],
-    // value: amt,
-    value: 0
+    value: amt
+    //value: 0
   });
   console.log(result, "result");
   const receipt = await waitForTransactionReceipt(config, {
@@ -62,8 +62,8 @@ export const BuyMatrix = async (amt,packageId) => {
     address: ContractAddress,
     functionName: "buyMatrix",
     args: [packageId],
-    // value: amt,
-    value: 0
+    value: amt
+    //value: 0
   });
   console.log(result, "result");
   const receipt = await waitForTransactionReceipt(config, {

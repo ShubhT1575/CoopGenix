@@ -95,7 +95,7 @@ function DashboardRow1() {
 
       const bal = await getTotalPol(realAmt);
 
-      let increasedAmt = bal + (bal * BigInt(1)) / BigInt(100);
+      let increasedAmt = bal + (bal * BigInt(2)) / BigInt(100);
 
       let appRes;
 
@@ -124,31 +124,30 @@ function DashboardRow1() {
 
   const withdrawIncome = async () => {
     if (!address) return toast.error("Please connect wallet");
-  
+
     const amount = parseFloat(withdrawAmount);
-  
+
     if (!amount || amount <= 0) {
       return toast.error("Please enter a valid amount greater than 0");
     }
-  
+
     if (amount > udata) {
       return toast.error("Entered amount exceeds your withdrawable balance");
     }
-  
+
     try {
       setIsLoading(true);
-  
+
       const amountToSend = BigInt(amount * 1e18); // Convert to wei using BigInt
 
       const wida = withdrawcoopinc(amountToSend);
-  
-  
+
       await toast.promise(wida, {
         loading: "Withdrawing Income...",
         success: "Success!",
         error: "Error",
       });
-  
+
       setShowWithdrawModal(false);
       setWithdrawAmount("");
     } catch (error) {
@@ -181,8 +180,8 @@ function DashboardRow1() {
 
   useEffect(() => {
     if (address) fetchData(address);
-    getUserData(address)
-    promiseBalc(address)
+    getUserData(address);
+    promiseBalc(address);
   }, [address]);
 
   const promiseBalc = async (address) => {
@@ -204,7 +203,7 @@ function DashboardRow1() {
           packageId: packageId,
         },
       });
-  
+
       const isactive = response.data?.isactive; // adjust based on actual response structure
       return isactive;
     } catch (error) {
@@ -213,13 +212,13 @@ function DashboardRow1() {
       return false;
     }
   };
-  
+
   const getUserData = async (address) => {
     try {
       const udata = await UserData(address);
-      const udaa = Number(udata?.[2])
-      if(udaa > 0){
-      setUdata(udaa/1e18);
+      const udaa = Number(udata?.[2]);
+      if (udaa > 0) {
+        setUdata(udaa / 1e18);
       }
     } catch (error) {
       console.log(error.message);
@@ -279,9 +278,7 @@ function DashboardRow1() {
               linear-gradient(135deg, #0d0d2b, #1b1b3a)`,
             visibility: "hidden",
           }}
-        >
-          
-        </button>
+        ></button>
       );
     }
     // return null;
@@ -339,17 +336,17 @@ function DashboardRow1() {
             return {
               packageId: block.id,
               records: response?.data?.mergedRecords || [],
-              time: response?.data?.expiry || 0
+              time: response?.data?.expiry || 0,
             };
           })
         );
 
         const newDataMap = {};
-        const timeStamp = {}
-        results.forEach(({ packageId, records , time }) => {
+        const timeStamp = {};
+        results.forEach(({ packageId, records, time }) => {
           console.log(time, "time");
           newDataMap[packageId] = records;
-          timeStamp[packageId] = time
+          timeStamp[packageId] = time;
         });
 
         setBlockDataMap(newDataMap);
@@ -368,7 +365,7 @@ function DashboardRow1() {
 
   let uplineEn = false;
 
-  const getRowStyle = (index,item) => {
+  const getRowStyle = (index, item) => {
     if (item.user === address) {
       uplineEn = true;
       return { color: "#00FF00", fontWeight: "bold" };
@@ -378,7 +375,6 @@ function DashboardRow1() {
       return { color: "#FFA500" };
     }
   };
-
 
   return (
     <>
@@ -451,7 +447,10 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Total Earnings</span>
-                        <h6 className="mb-0 fw-semibold"> {dashboard?.totalincome.toFixed(3) || "0"}</h6>
+                        <h6 className="mb-0 fw-semibold">
+                          {" "}
+                          {dashboard?.totalincome.toFixed(3) || "0"}
+                        </h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -466,7 +465,10 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Earning Goal</span>
-                        <h6 className="mb-0 fw-semibold"> {dashboard?.earning_goal || "0"}</h6>
+                        <h6 className="mb-0 fw-semibold">
+                          {" "}
+                          {dashboard?.earning_goal || "0"}
+                        </h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -496,7 +498,10 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Today Earning</span>
-                        <h6 className="mb-0 fw-semibold"> {dashboard?.todayBonus || "0"}</h6>
+                        <h6 className="mb-0 fw-semibold">
+                          {" "}
+                          {dashboard?.todayBonus || "0"}
+                        </h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -519,31 +524,31 @@ function DashboardRow1() {
                   </div>
                 </div>
                 <div>
-                <div className="card custom-card school-card glow-box width-box">
-                  <div className="card-body d-flex gap-2 justify-content-between">
-                    <div>
-                      <span className="d-block mb-1">Reward Wallet</span>
-                      <h6 className="mb-0 fw-semibold">{udata || "0"}</h6>
-                    </div>
-                    <div>
-                      <span className="text-primary1">
-                        {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
-                      </span>
-                      <span
-                        className="text-info badge bg-success-transparent"
-                        style={{
-                          cursor: "pointer",
-                          position: "absolute",
-                          bottom: "15px",
-                          right: "8px",
-                        }}
-                        onClick={() => setShowWithdrawModal(true)}
-                      >
-                        Withdraw
-                      </span>
+                  <div className="card custom-card school-card glow-box width-box">
+                    <div className="card-body d-flex gap-2 justify-content-between">
+                      <div>
+                        <span className="d-block mb-1">Reward Wallet</span>
+                        <h6 className="mb-0 fw-semibold">{udata || "0"}</h6>
+                      </div>
+                      <div>
+                        <span className="text-primary1">
+                          {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
+                        </span>
+                        <span
+                          className="text-info badge bg-success-transparent"
+                          style={{
+                            cursor: "pointer",
+                            position: "absolute",
+                            bottom: "15px",
+                            right: "8px",
+                          }}
+                          onClick={() => setShowWithdrawModal(true)}
+                        >
+                          Withdraw
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
                 </div>
               </div>
             </div>
@@ -552,6 +557,86 @@ function DashboardRow1() {
         {/* <div className="col-sm-6 col-lg-6">
          
         </div> */}
+
+        {/* // row for four box */}
+        <div className="col-sm-12 col-lg-12">
+        <div>
+            <div className="card custom-card school-card glow-box " style={{overflow: "hidden", paddingRight:"25px"}}>
+              <div className="card-body col-12 d-flex">
+                {/* Box 1: User ID */}
+                <div className="col-12 col-sm-6 col-lg-3 mx-1">
+                  <div className="card custom-card school-card glow-box ">
+                    <div className="card-body d-flex gap-2 justify-content-between">
+                      <div>
+                        <span className="d-block mb-1">Self Team Bonus</span>
+                        <h6 className="mb-0 fw-semibold">
+                          {dashboard?.self_team_income || "0"}
+                        </h6>
+                      </div>
+                      <div>
+                        <span className="text-primary1"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Box 2: Sponsor ID */}
+                <div className="col-12 col-sm-6 col-lg-3  mx-1">
+                  <div className="card custom-card school-card glow-box">
+                    <div className="card-body d-flex gap-2 justify-content-between">
+                      <div>
+                        <span className="d-block mb-1">Weekly Fund</span>
+                        <h6 className="mb-0 fw-semibold">
+                          {dashboard?.weeklyfund || "0"}
+                        </h6>
+                      </div>
+                      <div>
+                        <span className="text-primary1"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Box 3: ID Date */}
+                <div className="col-12 col-sm-6 col-lg-3  mx-1">
+                  <div className="card custom-card school-card glow-box">
+                    <div className="card-body d-flex gap-2 justify-content-between">
+                      <div>
+                        <span className="d-block mb-1">Unity Income</span>
+                        <h6 className="mb-0 fw-semibold">
+                        {Number(dashboard?.userDetails?.unity_income || 0).toFixed(2)}
+                        </h6>
+                      </div>
+                      <div>
+                        <span className="text-primary1"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Box 4: Total Earnings */}
+                <div className="col-12 col-sm-6 col-lg-3 mx-1">
+                  <div className="card custom-card school-card glow-box ">
+                    <div className="card-body d-flex gap-2 justify-content-between">
+                      <div>
+                        <span className="d-block mb-1">Direct Count</span>
+                        <h6 className="mb-0 fw-semibold">
+                          0
+                          {dashboard?.week_directs || "0"}
+                        </h6>
+                      </div>
+                      <div>
+                        <span className="text-primary1"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* // row for four box */}
 
         <div className="col-sm-12 col-md-6 col-lg-6 ">
           <div
@@ -565,7 +650,7 @@ function DashboardRow1() {
                     <div>
                       <span className="d-block mb-1">Direct Referral</span>
                       <h6 className="mb-0 fw-semibold">
-                         {dashboard?.userDetails?.directCount || "0"}
+                        {dashboard?.userDetails?.directCount || "0"}
                       </h6>
                     </div>
                     <div>
@@ -585,7 +670,7 @@ function DashboardRow1() {
                     <div>
                       <span className="d-block mb-1">Referral Reward</span>
                       <h6 className="mb-0 fw-semibold">
-                         {dashboard?.sponsor_income || "0"}
+                        {dashboard?.sponsor_income || "0"}
                       </h6>
                     </div>
                     <div>
@@ -605,7 +690,9 @@ function DashboardRow1() {
                     <div>
                       <span className="d-block mb-1">Reward Goal</span>
                       <h6 className="mb-0 fw-semibold">
-                       {dashboard?.reward_goal > 0 ? Number(dashboard.reward_goal).toFixed(2) : "0"}
+                        {dashboard?.reward_goal > 0
+                          ? Number(dashboard.reward_goal).toFixed(2)
+                          : "0"}
                       </h6>
                     </div>
                     <div>
@@ -624,7 +711,10 @@ function DashboardRow1() {
                   <div className="card-body d-flex gap-2 justify-content-between">
                     <div>
                       <span className="d-block mb-1">Direct Volume</span>
-                      <h6 className="mb-0 fw-semibold"> {dashboard?.direct_volume || "0"}</h6>
+                      <h6 className="mb-0 fw-semibold">
+                        {" "}
+                        {dashboard?.direct_volume || "0"}
+                      </h6>
                     </div>
                     <div>
                       <span className="text-primary1">
@@ -636,7 +726,7 @@ function DashboardRow1() {
               </div>
             </div>
 
-            <div className="col-sm-6 col-lg-6">
+            {/* <div className="col-sm-6 col-lg-6">
               <div>
                 <div className="card custom-card school-card glow-box">
                   <div className="card-body d-flex gap-2 justify-content-between">
@@ -646,34 +736,39 @@ function DashboardRow1() {
                     </div>
                     <div>
                       <span className="text-primary1">
-                        {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
+                        <img src={sponsor} alt="" style={{ width: "40px" }} />
                       </span>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
-            <div className="col-sm-6 col-lg-6">
+            {/* <div className="col-sm-6 col-lg-6">
               <div>
                 <div className="card custom-card school-card glow-box">
                   <div className="card-body d-flex gap-2 justify-content-between">
                     <div>
                       <span className="d-block mb-1">Self Team Bonus</span>
-                      <h6 className="mb-0 fw-semibold">{dashboard?.self_team_income || "0"}</h6>
+                      <h6 className="mb-0 fw-semibold">
+                        {dashboard?.self_team_income || "0"}
+                      </h6>
                     </div>
                     <div>
                       <span className="text-primary1">
-                        {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
+                        <img src={sponsor} alt="" style={{ width: "40px" }} />
                       </span>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
 
-          <div className="card custom-card crm-card glow-box" style={{overflowY:'scroll', maxHeight : '1300px'}}>
+          <div
+            className="card custom-card crm-card glow-box"
+            style={{ overflowY: "scroll", maxHeight: "1300px" }}
+          >
             <div className="card-body">
               <div className="card-header justify-content-between">
                 <div className="card-title">Global Reward</div>
@@ -691,16 +786,26 @@ function DashboardRow1() {
                       </tr>
                     </thead>
                     <tbody>
-                      {globalupdownline?.length&&globalupdownline.map((item, index) => {
-                       return  <tr key={item.uId}>
-                          <td style={getRowStyle(index, item)}>{item.uId}</td>
-                          <td style={getRowStyle(index, item)}>{item.userId}</td>
-                          <td style={getRowStyle(index, item)}> {(item.packageValue / 1e18)}</td>
-                          <td style={getRowStyle(index, item)}>
-                         $ {(item.amount / 1e18)}
-                          </td>
-                        </tr>
-                      })}
+                      {globalupdownline?.length &&
+                        globalupdownline.map((item, index) => {
+                          return (
+                            <tr key={item.uId}>
+                              <td style={getRowStyle(index, item)}>
+                                {item.uId}
+                              </td>
+                              <td style={getRowStyle(index, item)}>
+                                {item.userId}
+                              </td>
+                              <td style={getRowStyle(index, item)}>
+                                {" "}
+                                {item.packageValue / 1e18}
+                              </td>
+                              <td style={getRowStyle(index, item)}>
+                                $ {item.amount / 1e18}
+                              </td>
+                            </tr>
+                          );
+                        })}
                     </tbody>
                   </table>
                 </div>
@@ -726,7 +831,7 @@ function DashboardRow1() {
                 {blocks.map((block) => {
                   const blockRecords = blockDataMap[block.id]; // this is packageId
                   const timeData = timeDataMap[block.id];
-                  console.log(timeData , block.id, "timeData");
+                  console.log(timeData, block.id, "timeData");
                   console.log(blockRecords, "blockRecordsxxxx");
                   return (
                     <div
@@ -738,8 +843,12 @@ function DashboardRow1() {
                           <div className="reward-box glow-box">
                             <h5>Block {block.id}</h5>
                             {timeData >= 0 ? (
-                                <span><CountdownTimer endTime={timeData * 1000} /></span>
-                              ) : ""}
+                              <span>
+                                <CountdownTimer endTime={timeData * 1000} />
+                              </span>
+                            ) : (
+                              ""
+                            )}
                             <div className="block-box">
                               {[...Array(8)].map((_, i) => {
                                 // Mapping 8 small boxes to combinations of poolId and place
@@ -795,67 +904,64 @@ function DashboardRow1() {
       </div>
 
       {showWithdrawModal && (
-  <div
-    style={{
-      position: "fixed",
-      top: 0,
-      left: 0,
-      width: "100vw",
-      height: "100vh",
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      zIndex: 1000,
-      padding: "20px", // for mobile spacing
-    }}
-  >
-    <div
-      style={{
-        width: "100%",
-        maxWidth: "500px",
-        background: "linear-gradient(135deg, #7b2ff7, #f107a3)",
-        padding: "30px",
-        borderRadius: "12px",
-        color: "#fff",
-        boxShadow: "0 5px 20px rgba(228, 212, 212, 0.87)",
-      }}
-    >
-      <h5 className="mb-3">Enter Amount to Withdraw</h5>
-      <input
-        type="number"
-        className="form-control mb-3"
-        placeholder="Enter amount"
-        value={withdrawAmount}
-        onChange={(e) => setWithdrawAmount(e.target.value)}
-        style={{
-          borderRadius: "8px",
-          backgroundColor: "#f8f9fa", // light input background
-          color: "#000",
-        }}
-      />
-      <div className="d-flex justify-content-end gap-2">
-        <button
-          className="btn btn-light"
-          onClick={() => {
-            setShowWithdrawModal(false);
-            setWithdrawAmount("");
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
+            padding: "20px", // for mobile spacing
           }}
         >
-          Cancel
-        </button>
-        <button className="btn btn-dark" onClick={withdrawIncome}>
-          Withdraw
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-
-
+          <div
+            style={{
+              width: "100%",
+              maxWidth: "500px",
+              background: "linear-gradient(135deg, #7b2ff7, #f107a3)",
+              padding: "30px",
+              borderRadius: "12px",
+              color: "#fff",
+              boxShadow: "0 5px 20px rgba(228, 212, 212, 0.87)",
+            }}
+          >
+            <h5 className="mb-3">Enter Amount to Withdraw</h5>
+            <input
+              type="number"
+              className="form-control mb-3"
+              placeholder="Enter amount"
+              value={withdrawAmount}
+              onChange={(e) => setWithdrawAmount(e.target.value)}
+              style={{
+                borderRadius: "8px",
+                backgroundColor: "#f8f9fa", // light input background
+                color: "#000",
+              }}
+            />
+            <div className="d-flex justify-content-end gap-2">
+              <button
+                className="btn btn-light"
+                onClick={() => {
+                  setShowWithdrawModal(false);
+                  setWithdrawAmount("");
+                }}
+              >
+                Cancel
+              </button>
+              <button className="btn btn-dark" onClick={withdrawIncome}>
+                Withdraw
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
-
 }
 
 export default DashboardRow1;

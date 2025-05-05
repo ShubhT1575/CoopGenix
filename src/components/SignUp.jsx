@@ -195,7 +195,7 @@ function SignUp() {
 
     const bal = await getTotalPol(realAmt)
 
-    let increasedAmt = bal + (bal * BigInt(1)) / BigInt(100);
+    let increasedAmt = bal + (bal * BigInt(2)) / BigInt(100);
 
     // console.log(increasedAmt,"incc")
     
