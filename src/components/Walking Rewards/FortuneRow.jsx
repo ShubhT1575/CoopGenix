@@ -1,55 +1,239 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { apiUrl } from "../Config";
-import { useAccount } from "wagmi";
 import { useSelector } from "react-redux";
+
+const REPORT_OPTIONS = [
+  "Global Upline",
+  "Global Downline",
+  "Block Reward",
+  "Direct Referral",
+  "Self Team Bonus",
+  "Unity Bonus",
+  "Promise Reward",
+  "Package Report",
+  "Unity Leaderboard",
+];
 
 function CoreBody() {
   const { wallet } = useSelector((state) => state.coreCrowd);
-  const { walletAddress, isConnected } = wallet;
+  const { walletAddress } = wallet;
   const address = walletAddress;
-  const [directUser, setDirectUser] = useState([]);
+
+  const [reportType, setReportType] = useState("Direct Referral");
+  const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const handleNextPage = () => {
-    setCurrentPage((prevPage) =>
-      prevPage < totalPages ? prevPage + 1 : prevPage
-    );
-  };
-
-  const handlePreviousPage = () => {
-    setCurrentPage((prevPage) => (prevPage > 1 ? prevPage - 1 : prevPage));
+  const handleReportChange = (e) => {
+    setReportType(e.target.value);
+    setCurrentPage(1);
   };
 
   const getCoreIncome = async () => {
     try {
-      const response = await axios.get(apiUrl + "/getFortuneIncomeList", {
+      const response = await axios.get(apiUrl + "/getAllreport", {
         params: {
           address: address,
           page: currentPage,
+          type: reportType, // send type in request
         },
       });
-      // console.log(response, "]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]");
       if (response?.data?.status === 200) {
-        setDirectUser(response?.data?.data);
+        setData(response?.data?.data);
       } else {
-        setDirectUser([]);
+        setData([]);
       }
     } catch (error) {
-      console.error("Error fetching user data:", error.message);
+      console.error("Error fetching data:", error.message);
     }
   };
-  console;
+
   useEffect(() => {
     if (address) getCoreIncome();
-  }, [address, currentPage]);
+  }, [address, currentPage, reportType]);
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev));
+  };
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
+  };
+
+  // Header + Row mappings for dynamic rendering
+  const getTableHeaders = () => {
+    switch (reportType) {
+      case "Promise Reward":
+        return ["S.No", "Amount","Timestamp", "Hash"];
+      case "Package Report":
+        return ["S.No", "Package Amount", "Timestamp", "Hash"];
+      case "Global Upline":
+        return ["S.No", "Amount", "Level", "Timestamp", "Hash"];
+      case "Global Downline":
+        return ["S.No", "Amount", "Level", "Timestamp", "Hash"];
+      case "Self Team Bonus":
+        return ["S.No", "From", "Level", "Amount", "Timestamp", "Hash"];
+      case "Unity Bonus":
+        return ["Amount", "Unit", "Reward", "Share"];
+      case "Unity Leaderboard":
+        return ["Rank", "User ID", "Current Unit", "Expected Reward"];
+      case "Block Reward":
+        return ["S.No", "From", "Package", "Level","Amount", "Timestamp", "Hash"];
+      default:
+        return ["S.No", "From", "Level", "Amount", "Timestamp", "Hash"];
+    }
+  };
+
+  const renderTableRows = () => {
+    return data?.map((item, index) => {
+      switch (reportType) {
+        case "Promise Reward":
+          return (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>${(item?.amount / 1e18).toFixed(4)}</td>
+              <td>{new Date(item?.createdAt).toLocaleString()}</td>
+              <td>
+                <a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noopener noreferrer">
+                  {item?.txHash}
+                </a>
+              </td>
+            </tr>
+          );
+        case "Package Report":
+          return (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>${(item?.usdAmt / 1e18).toFixed(2)}</td>
+              <td>{new Date(item?.createdAt).toLocaleString()}</td>
+              <td>
+                <a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noopener noreferrer">
+                  {item?.txHash}
+                </a>
+              </td>
+            </tr>
+          );
+          case "Global Upline":
+            return (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>${(item?.amount / 1e18).toFixed(2)}</td>
+                <td>{item?.level}</td>
+                <td>{new Date(item?.createdAt).toLocaleString()}</td>
+                <td>
+                  <a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noopener noreferrer">
+                    {item?.txHash}
+                  </a>
+                </td>
+              </tr>
+            );
+            case "Global Downline":
+            return (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>${(item?.amount / 1e18).toFixed(2)}</td>
+                <td>{item?.level}</td>
+                <td>{new Date(item?.createdAt).toLocaleString()}</td>
+                <td>
+                  <a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noopener noreferrer">
+                    {item?.txHash}
+                  </a>
+                </td>
+              </tr>
+            );
+            case "Self Team Bonus":
+            return (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{item?.sender}</td>
+                <td>{item?.level}</td>
+                <td>${(item?.amount / 1e18).toFixed(2)}</td>
+                <td>{new Date(item?.createdAt).toLocaleString()}</td>
+                <td>
+                  <a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noopener noreferrer">
+                    {item?.txHash}
+                  </a>
+                </td>
+              </tr>
+            );
+            case "Direct Referral":
+            return (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{item?.sender}</td>
+                <td>{item?.level}</td>
+                <td>${(item?.amount / 1e18).toFixed(2)}</td>
+                <td>{new Date(item?.timestamp*1000).toLocaleString()}</td>
+                <td>
+                  <a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noopener noreferrer">
+                    {item?.txHash}
+                  </a>
+                </td>
+              </tr>
+            );
+            case "Block Reward":
+              return (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{item?.sender}</td>
+                  <td>{item?.packageId}</td>
+                  <td>{item?.poolId}</td>
+                  <td>${(item?.amount / 1e18).toFixed(2)}</td>
+                  <td>{new Date(item?.createdAt).toLocaleString()}</td>
+                  <td>
+                    <a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noopener noreferrer">
+                      {item?.txHash}
+                    </a>
+                  </td>
+                </tr>
+              );
+        case "Unity Leaderboard":
+          return (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{item?.userId}</td>
+              <td>{item?.currentUnit}</td>
+              <td>{item?.expectedReward}</td>
+            </tr>
+          );
+        default:
+          return (
+            <tr key={item._id}>
+              <td>{index + 1}</td>
+              <td>{item?.userDetails?.referralId}</td>
+              <td>
+                {item.user?.slice(0, 6)}...{item.user?.slice(-6)}
+              </td>
+              <td>
+                <a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noopener noreferrer">
+                  {item.txHash}
+                </a>
+              </td>
+              <td>${item?.amount}</td>
+              <td>{new Date(item?.timestamp).toLocaleString()}</td>
+              <td><span className="badge bg-success-transparent">success</span></td>
+            </tr>
+          );
+      }
+    });
+  };
+
   return (
     <div className="row">
       <div className="col-xl-12">
         <div className="card custom-card overflow-hidden crm-card glow-box">
           <div className="card-header justify-content-between">
-            <div className="card-title"> Rewards Data</div>
+            <div className="card-title">Rewards Data</div>
+            <select
+              className="form-select w-auto"
+              value={reportType}
+              onChange={handleReportChange}
+            >
+              {REPORT_OPTIONS.map((option) => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
           </div>
 
           <div className="card-body active-tab">
@@ -57,96 +241,43 @@ function CoreBody() {
               <table className="table table-bordered text-nowrap mb-0">
                 <thead>
                   <tr>
-                    <th scope="col">S.NO</th>
-                    <th scope="col">User ID</th>
-                    <th scope="col">Sender</th>
-                    <th scope="col">Transaction Hash</th>
-                    <th scope="col">Amount</th>
-                    {/* <th scope="col">Level</th> */}
-                    <th scope="col">Time Stamp</th>
-                    <th scope="col">Status</th>
+                    {getTableHeaders().map((header, idx) => (
+                      <th key={idx}>{header}</th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {directUser?.map((item, index) => {
-                    return (
-                      <tr key={item._id}>
-                        <td>{index + 1}</td>
-                        <td>{item?.userDetails?.referralId}</td>
-                        <td>
-                          <div className="d-flex">
-                            <div className="flex-1 ms-2">
-                              <p className="mb-0 fs-14"></p>
-                              <a href="#">
-                                {item.user?.slice(0, 6)}...
-                                {item.user?.slice(-6)}
-                              </a>
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                          <a
-                            href={`https://polygonscan.com/tx/${item.txHash}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: "rgb(0, 119, 181)" }}
-                          >
-                            {item.txHash}
-                          </a>
-                        </td>
-                        <td>$ {item.amount}</td>
-                        {/* <td>{item.level}</td> */}
-                        <td>{new Date(item.timestamp).toLocaleString()}</td>
-                        <td>
-                          <span className="badge bg-success-transparent">
-                            success
-                          </span>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                  {data?.length > 0 ? renderTableRows() : (
+                    <tr>
+                      <td colSpan={getTableHeaders().length} className="text-center">No Data Found.</td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
-              {directUser?.length === 0 && (
-                <div className=" w-100">
-                  <div className="w-100 text-center p-3">No Data Found.</div>
-                </div>
-              )}
             </div>
           </div>
 
           <div className="card-footer pagination-body">
             <div className="d-flex align-items-center justify-content-between">
-              <div>Showing {directUser?.length || 0} Rewards</div>
+              <div>Showing {data?.length || 0} Rewards</div>
               <div>
-                <nav
-                  aria-label="Page navigation"
-                  className="pagination-style-4"
+                <button
+                  className="btn btn-primary me-2"
+                  disabled={currentPage === 1}
+                  onClick={handlePreviousPage}
                 >
-                  <ul className="pagination mb-0">
-                    <button
-                      className="btn btn-primary page-item btn-pagination"
-                      style={{ marginRight: "10px" }}
-                      disabled={currentPage === 1}
-                      onClick={handlePreviousPage}
-                    >
-                      Prev
-                    </button>
-
-                    <button
-                      className="btn btn-success page-item btn-pagination"
-                      disabled={currentPage === totalPages}
-                      onClick={handleNextPage}
-                    >
-                      Next
-                    </button>
-                  </ul>
-                </nav>
+                  Prev
+                </button>
+                <button
+                  className="btn btn-success"
+                  disabled={currentPage === totalPages}
+                  onClick={handleNextPage}
+                >
+                  Next
+                </button>
               </div>
               <div>
-                <span>
-                  Page {currentPage} of {totalPages}
-                </span>
+                <span>Page {currentPage} of {totalPages}</span>
               </div>
             </div>
           </div>

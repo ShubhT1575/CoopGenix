@@ -157,7 +157,7 @@ function Header() {
                   isActive ? "nav-link active" : "nav-link"
                 }
               >
-                Table
+                Rewards
               </Link>
             </div>
             {/* <div className="nav-menu">

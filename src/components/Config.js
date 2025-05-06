@@ -269,7 +269,8 @@ export const TokenABI = [
 ];
 
 export const baseUrl = window.location.origin;
-export const apiUrl = "https://coopgenix.com/api";
+// export const apiUrl = "https://coopgenix.com/api";
+export const apiUrl = "http://localhost:8080/api";
 export const apiListUrl = "http://152.42.253.178:2090/api/list";
 
 // export const apiUrl = "https://corecrowd.io/api";
