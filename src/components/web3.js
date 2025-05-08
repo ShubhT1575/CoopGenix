@@ -142,6 +142,22 @@ export const UserExist = async (address) => {
   }
 };
 
+export const updatepoolexpiry = async (addresses, packageIds) => {
+  let result;
+  try {
+    result = await writeContract(config, {
+      abi: ContractABI,
+      address: ContractAddress,
+      functionName: "multiUpgradePool",
+      args: [addresses,packageIds],
+    });
+    return result;
+  } catch (error) {
+    console.log("Error checking if user exists:", error);
+    return false;
+  }
+};
+
 export const MatrixAmount = async (packageId) => {
   let result;
   try {
