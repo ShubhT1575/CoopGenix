@@ -4,7 +4,7 @@ import CoreHead from "./CoreHead";
 
 function CoreMain() {
   return (
-    <div className="main-content app-content" id="m-content" style={{background:"linear-gradient(to left, #004e92, #000428)"}}>
+    <div className="main-content app-content" id="m-content" style={{background:"black", marginLeft: "0"}}>
       <div className="container-fluid">
         <CoreHead />
         <CoreBody />

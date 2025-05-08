@@ -562,7 +562,7 @@ function DashboardRow1() {
         <div className="col-sm-12 col-lg-12">
         <div>
             <div className="card custom-card school-card glow-box " style={{overflow: "hidden", paddingRight:"25px"}}>
-              <div className="card-body col-12 d-flex">
+              <div className="card-body col-12 d-flex" style={{overflow: "auto"}}>
                 {/* Box 1: User ID */}
                 <div className="col-12 col-sm-6 col-lg-3 mx-1">
                   <div className="card custom-card school-card glow-box ">

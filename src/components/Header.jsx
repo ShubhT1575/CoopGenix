@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ConnectWallet from "./ConnectWallet";
 import { useAccount, useChainId } from "wagmi";
-import Logo from '/coopgenix.svg'
+import Logo from "/coopgenix.svg";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setDashboardData,
@@ -11,17 +11,17 @@ import {
 import { getUser } from "../API/Api";
 // import { getUSDT } from "./web3";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { UserExist } from "./web3";
+import { GetOwner, UserExist } from "./web3";
 
 function Header() {
   const dispatch = useDispatch();
   const chainId = useChainId();
-  const {address} = useAccount();
+  const { address } = useAccount();
   // const wallet = useSelector((state) => state.coreCrowd.wallet);
   // const address = wallet?.walletAddress;
   const [accessAdress, setAccessAddress] = useState("");
   const { connector, isConnected, status, isDisconnected } = useAccount();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const res = new URLSearchParams(window.location.search);
@@ -89,18 +89,35 @@ function Header() {
   //     });
   // }, [address]);
 
-    useEffect(() => {
-      if (address) {
-        UserExist(address)
-          .then((res) => {
-            if (!res) navigate("/SignIn");
-          })
-          .catch((e) => {
-            console.log(e);
-            navigate("/SignIn");
-          });
+  useEffect(() => {
+    if (address) {
+      UserExist(address)
+        .then((res) => {
+          if (!res) navigate("/SignIn");
+        })
+        .catch((e) => {
+          console.log(e);
+          navigate("/SignIn");
+        });
+    }
+  }, [address]);
+
+  const [showUpgrade, setShowUpgrade] = useState();
+  useEffect(() => {
+    const fetchOwner = async () => {
+      const owner = await GetOwner();
+      console.log("Owner Address", owner);
+  
+      if (address === owner) {
+        setShowUpgrade(true);
+      } else {
+        setShowUpgrade(false);
       }
-    }, [address]);
+    };
+  
+    fetchOwner();
+  }, [address]);
+  
 
   return (
     <header
@@ -128,19 +145,15 @@ function Header() {
           <div className="items-nav">
             <div className="header-logo">
               <div className="logo">
-                                    <a href="#">
-                                      <img
-                                        src={Logo}
-                                        style={{ height: "50px" }}
-                                        alt="Logo"
-                                      />
-                                      {/* <h2>CoopGenix</h2> */}
-                                    </a>
-                                  </div>
+                <a href="#">
+                  <img src={Logo} style={{ height: "50px" }} alt="Logo" />
+                  {/* <h2>CoopGenix</h2> */}
+                </a>
+              </div>
             </div>
             <div className="nav-menu">
               <Link
-              style={{color: "white"}}
+                style={{ color: "white" }}
                 to="/Dashboard"
                 className={({ isActive }) =>
                   isActive ? "nav-link active" : "nav-link"
@@ -151,7 +164,7 @@ function Header() {
             </div>
             <div className="nav-menu">
               <Link
-              style={{color: "white"}}
+                style={{ color: "white" }}
                 to="/WalkingRewards"
                 className={({ isActive }) =>
                   isActive ? "nav-link active" : "nav-link"
@@ -160,6 +173,21 @@ function Header() {
                 Rewards
               </Link>
             </div>
+            {showUpgrade ? (
+              <div className="nav-menu">
+                <Link
+                  style={{ color: "white" }}
+                  to="/StakingReward"
+                  className={({ isActive }) =>
+                    isActive ? "nav-link active" : "nav-link"
+                  }
+                >
+                  Charity Call
+                </Link>
+              </div>
+            ) : (
+              <></>
+            )}
             {/* <div className="nav-menu">
               <NavLink
                 to="#"
@@ -264,7 +292,12 @@ function Header() {
         </div>
         <ul className="header-content-right gap-2">
           <ConnectWallet />
-          <div className="btn btn-primary-gradient" onClick={()=>navigate("/SignIn")}><i class="fa-solid fa-right-from-bracket"></i></div>
+          <div
+            className="btn btn-primary-gradient"
+            onClick={() => navigate("/SignIn")}
+          >
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </div>
         </ul>
       </div>
     </header>
