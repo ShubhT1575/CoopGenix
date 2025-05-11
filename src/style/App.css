@@ -756,7 +756,7 @@ html {
   }
   [data-menu-position="scrollable"][data-nav-layout="horizontal"]
     .main-content {
-    margin-block-start: 0;
+    margin-block-start: 1rem;
   }
   [data-menu-position="scrollable"][data-nav-layout="horizontal"]
     .main-sidebar {
@@ -9508,7 +9508,7 @@ fieldset:disabled .btn-light.btn {
     rgb(var(--secondary-rgb)),
     #7289ff
   );
-  color: #fff !important;
+  color: #080512 !important;
   border: 0;
 }
 .btn.btn-secondary-gradient:hover {
@@ -10131,7 +10131,7 @@ fieldset:disabled .btn-light.btn {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   border: rgba(255, 255, 255, 0.2);
   position: relative;
-  margin-block-end: 1.5rem;
+  margin-block-end: 0.5rem;
   width: 100%;
 }
 .card.custom-card .card-header {
@@ -10151,7 +10151,8 @@ fieldset:disabled .btn-light.btn {
   position: relative;
   margin-block-end: 0;
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: 600;
+  color: #080512 !important;
 }
 .card.custom-card .card-header .card-title .subtitle {
   margin-block-end: 0;
@@ -10165,7 +10166,7 @@ fieldset:disabled .btn-light.btn {
 }
 .card.custom-card .card-body {
   padding: 1rem;
-  color: var(--default-text-color);
+  color: #080512;
 }
 .card.custom-card .card-link {
   font-size: 0.75rem;
@@ -10772,8 +10773,8 @@ fieldset:disabled .btn-light.btn {
 }
 .form-control {
   border-color: #0d6efd;
-  color: white !important;
-  background-color: #212529ba;
+  color: #fff !important;
+  background-color: darkblue !important;
   font-size: 0.8125rem;
   font-weight: var(--default-font-weight);
   line-height: 1.7;
@@ -26588,7 +26589,7 @@ input.error {
   width: 15rem;
   position: fixed;
   display: flex;
-  /* background: var(--menu-bg); */
+  /*background: darkblue;*/
   z-index: 9;
   align-items: center;
   justify-content: center;
@@ -31246,7 +31247,7 @@ ul.files-main-nav li div.filemanager-upgrade-storage img {
   color: var(--custom-white) !important;
 }
 .text-fixed-white {
-  color: #fff !important;
+  color: #080512 !important;
 }
 .text-fixed-black {
   color: #000 !important;

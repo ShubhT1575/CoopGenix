@@ -123,7 +123,7 @@ function Header() {
     <header
       className="app-header sticky glow-box glow-box-blue"
       id="header"
-      style={{ background: "black" }}
+      style={{ background: "darkblue" }}
     >
       <div className="main-header-container container-fluid align-items-center">
         <div className="header-content-left ">

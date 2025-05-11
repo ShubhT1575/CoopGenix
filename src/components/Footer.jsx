@@ -4,7 +4,7 @@ function Footer() {
   return (
     <div>
       <footer className="footer mt-auto py-3 text-center" 
-          style={{ background: "black" , padding: "0" , borderTop: "1px solid purple"}}
+          style={{ background: "darkblue" , padding: "0" , borderTop: "1px solid purple"}}
 
       >
         <div className="container">
@@ -17,7 +17,7 @@ function Footer() {
             <a href="#"><i class="fab fa-linkedin-in"></i></a>
             <a href="#"><i class="fab fa-telegram"></i></a>
         </div>
-        <p>&copy; 2025 <strong style={{color: "rgba(255, 0, 255, 0.8)"}}>CoopUnion</strong>. All Rights Reserved.</p>
+        <p>&copy; 2025 <strong style={{color: "rgba(255, 0, 255, 0.8)"}}>Coopgenix</strong>. All Rights Reserved.</p>
     </div>
         </div>
       </footer>

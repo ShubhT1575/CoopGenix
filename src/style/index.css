@@ -7393,6 +7393,8 @@ fieldset:disabled .btn {
 }
 .d-flex {
   display: flex !important;
+  flex-wrap: wrap;
+  align-content: normal;
 }
 .d-inline-flex {
   display: inline-flex !important;
@@ -8138,7 +8140,7 @@ fieldset:disabled .btn {
   gap: 0.25rem !important;
 }
 .gap-2 {
-  gap: 0.5rem !important;
+  gap: 0.2rem !important;
 }
 .gap-3 {
   gap: 1rem !important;
@@ -8232,9 +8234,11 @@ fieldset:disabled .btn {
 }
 .fw-semibold {
   font-weight: 600 !important;
+  color: #080512;
 }
 .fw-bold {
   font-weight: 700 !important;
+  color: #080512;
 }
 .fw-bolder {
   font-weight: bolder !important;

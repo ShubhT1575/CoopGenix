@@ -295,7 +295,7 @@ function SignUp() {
             </a>
             <h2 className="h2">Sign Up</h2>
             <p className="welcome-msg text-light">
-              Join CoopUnion today! Experience the future of financial freedom.
+              Join Coopgenix today! Experience the future of financial freedom.
             </p>
             <input
               className="input-signin"

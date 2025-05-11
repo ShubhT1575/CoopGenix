@@ -74,7 +74,7 @@ function SignIn() {
             <h2 className="h2">Sign In</h2>
             <p className="welcome-msg text-light">
               Welcome back! Unlock your rewards and continue your journey with
-              CoopUnion.
+              Coopgenix.
             </p>
             <input
               className="input-signin"
