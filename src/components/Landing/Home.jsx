@@ -96,7 +96,7 @@ export default function Home() {
     textShadow: "0 0 15px #FFD700",
     animation: "pulse 1.5s infinite"
   }}>
-    🚀 Launching At 5:00 PM — Time Left: {timeLeft}
+    🚀 Launching Tommorow 5:00 PM — Time Left: {timeLeft}
   </h2>
 </div>
                       <h1 style={{fontSize: "3.5rem"}}>The World’s Most Powerful Community System</h1>
