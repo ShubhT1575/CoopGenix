@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./css/style.css";
 import "./css/responsive.css";
 import "./css/default.css";
@@ -25,6 +25,33 @@ import Footer from "./Footer";
 // import economy from "/Home Logo/Asset 1.png"
 
 export default function Home() {
+
+  const [timeLeft, setTimeLeft] = useState("");
+
+  useEffect(() => {
+    const target = new Date();
+    target.setDate(target.getDate() + 1); // Add 1 day (24 hours)
+    target.setHours(17, 0, 0, 0); // Set to 5:00 PM
+
+    const timer = setInterval(() => {
+      const now = new Date();
+      const difference = target - now;
+
+      if (difference <= 0) {
+        setTimeLeft("🎉 Launching Now!");
+        clearInterval(timer);
+      } else {
+        const hours = String(Math.floor((difference / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+        const minutes = String(Math.floor((difference / (1000 * 60)) % 60)).padStart(2, '0');
+        const seconds = String(Math.floor((difference / 1000) % 60)).padStart(2, '0');
+
+        setTimeLeft(`${hours}:${minutes}:${seconds}`);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <>
       <Header />
@@ -62,6 +89,16 @@ export default function Home() {
                       className="pt-3 text-light text-center"
                       style={{ textAlign: "justify" }}
                     >
+                      <div className="countdown-timer text-center mb-3">
+  <h2 style={{
+    fontSize: "2rem",
+    color: "#FFD700",
+    textShadow: "0 0 15px #FFD700",
+    animation: "pulse 1.5s infinite"
+  }}>
+    🚀 Launching At 5:00 PM — Time Left: {timeLeft}
+  </h2>
+</div>
                       <h1 style={{fontSize: "3.5rem"}}>The World’s Most Powerful Community System</h1>
                       Empowering Communities, One Contribution at a Time! A
                       decentralized, trust-driven platform where members
