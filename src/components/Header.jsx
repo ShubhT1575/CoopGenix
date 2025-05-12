@@ -188,16 +188,16 @@ function Header() {
             ) : (
               <></>
             )}
-            {/* <div className="nav-menu">
+            <div className="nav-menu">
               <NavLink
-                to="#"
+                to="/LeaderBoard"
                 className={({ isActive }) =>
                   isActive ? "nav-link active" : "nav-link"
                 }
               >
-                List
+                Unity LeaderBoard
               </NavLink>
-            </div> */}
+            </div>
             {/* <div className="nav-menu"></div> */}
           </div>
 

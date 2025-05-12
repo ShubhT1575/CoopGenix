@@ -18,7 +18,7 @@ function CoreHead() {
           </ol>
         </nav> */}
         <h1 className="page-title fw-medium fs-18 mb-0 text-light">
-        Charity Call
+        {/* Charity Call */}
         </h1>
       </div>
     </div>

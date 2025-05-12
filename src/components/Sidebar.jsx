@@ -139,7 +139,7 @@ function Sidebar() {
                 <GiReceiveMoney className="side-menu__icon sidebar-item" />
                 <span className="side-menu__label sidebar-item">Walking Rewards</span>
               </Link>
-            </li>
+            </li>*/}
             <li className="slide has-sub">
               <Link
                 to="/CommunityRewards"
@@ -149,7 +149,7 @@ function Sidebar() {
                 <RiGlobalFill className="side-menu__icon sidebar-item" />
                 <span className="side-menu__label sidebar-item">Community Rewards</span>
               </Link>
-            </li> */}
+            </li> 
             {/* <li className="slide has-sub">
               <Link
                 to="/AutoGlobal"

@@ -12,15 +12,15 @@ const REPORT_OPTIONS = [
   "Unity Bonus",
   "Promise Reward",
   "Package Report",
-  // "Unity Leaderboard",
+  "Unity Leaderboard",
 ];
 
-function CoreBody() {
+function LeaderBody() {
   const { wallet } = useSelector((state) => state.coreCrowd);
   const { walletAddress } = wallet;
   const address = walletAddress;
 
-  const [reportType, setReportType] = useState("Direct Referral");
+  const [reportType, setReportType] = useState("Unity Leaderboard");
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -223,7 +223,7 @@ function CoreBody() {
     <div className="row">
       <div className="col-xl-12">
         <div className="card custom-card overflow-hidden crm-card glow-box">
-          <div className="card-header justify-content-between">
+          {/* <div className="card-header justify-content-between">
             <div className="card-title">Rewards Data</div>
             <select
               className="form-select w-auto"
@@ -234,7 +234,7 @@ function CoreBody() {
                 <option key={option} value={option}>{option}</option>
               ))}
             </select>
-          </div>
+          </div> */}
 
           <div className="card-body active-tab">
             <div className="table-responsive">
@@ -287,4 +287,4 @@ function CoreBody() {
   );
 }
 
-export default CoreBody;
+export default LeaderBody;

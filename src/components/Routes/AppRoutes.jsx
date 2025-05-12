@@ -18,6 +18,7 @@ import ProfileMain from "../Profile/ProfileMain";
 // import SupportMain from "../Support/SupportMain";
 import MatrixMain from "../Matrix/MatrixMain";
 import CoreMain from "../Staking Rewards/CoreMain";
+import LeaderMain from "../Staking Rewards/LeaderMain";
 import GlobalMain from "../Community Rewards/GlobalMain";
 import FortuneMain from "../Walking Rewards/FortuneMain";
 import SignIn from "../SignIn";
@@ -88,6 +89,7 @@ const AppRoutes = () => {
           <Route path="/StakingReward" element={<CoreMain />} />
           <Route path="/CommunityRewards" element={<GlobalMain />} />
           <Route path="/WalkingRewards" element={<FortuneMain />} />
+          <Route path="/LeaderBoard" element={<LeaderMain />} />
           {/* <Route path="/Ranking" element={<RankingMain />} /> */}
           {/* <Route path="/Profile" element={<ProfileMain />} /> */}
           {/* <Route path="/Support" element={<Support />} /> */}

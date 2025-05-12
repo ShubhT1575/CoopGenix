@@ -343,7 +343,7 @@ tr {
 }
 
 .table > :not(caption) > * > * {
-  color: white;
+  color: rgb(20, 3, 3);
 }
 #signup-package::placeholder {
   color: white;
