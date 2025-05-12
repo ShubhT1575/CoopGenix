@@ -222,7 +222,12 @@ function LeaderBody() {
   return (
     <div className="row">
       <div className="col-xl-12">
-        <div className="card custom-card overflow-hidden crm-card glow-box">
+        <div className="card custom-card overflow-hidden crm-card glow-box" style={{
+      background: "linear-gradient(135deg, rgb(123, 47, 247), rgb(241, 7, 163))",
+      minHeight: "100vh",
+      padding: "20px",
+      color: "#fff",
+    }}>
           {/* <div className="card-header justify-content-between">
             <div className="card-title">Rewards Data</div>
             <select
