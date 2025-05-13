@@ -119,7 +119,7 @@
   /* box-shadow: var(--glow-effect); */
 }
 .width-box {
-  width: 200px !important;
+  width: 160px !important;
 }
 @media (min-width: 990px){
     .ham{

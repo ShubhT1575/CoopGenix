@@ -127,7 +127,7 @@ function Sidebar() {
                 onClick={closeSidebar}
               >
                 <GiProfit className="side-menu__icon sidebar-item" />
-                <span className="side-menu__label sidebar-item">Staking Rewards</span>
+                <span className="side-menu__label sidebar-item">csStaking Rewards</span>
               </Link>
             </li>
             <li className="slide has-sub">

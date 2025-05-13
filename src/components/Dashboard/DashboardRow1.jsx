@@ -554,18 +554,14 @@ function DashboardRow1() {
             </div>
           </div>
         </div>
-        {/* <div className="col-sm-6 col-lg-6">
-         
-        </div> */}
 
-        {/* // row for four box */}
+        {/* new section */}
         <div className="col-sm-12 col-lg-12">
-        <div>
-            <div className="card custom-card school-card glow-box " style={{overflow: "hidden", paddingRight:"25px"}}>
-              <div className="card-body col-12 d-flex" style={{overflow: "auto"}}>
-                {/* Box 1: User ID */}
-                <div className="col-12 col-sm-6 col-lg-3 mx-1">
-                  <div className="card custom-card school-card glow-box ">
+          <div>
+            <div className="card custom-card school-card glow-box">
+              <div className="card-body d-flex gap-2 justify-content-evenly flex-wrap">
+                <div className="">
+                  <div className="card custom-card school-card glow-box width-box">
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Self Team Bonus</span>
@@ -574,15 +570,15 @@ function DashboardRow1() {
                         </h6>
                       </div>
                       <div>
-                        <span className="text-primary1"></span>
+                        <span className="text-primary1">
+                          {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
+                        </span>
                       </div>
                     </div>
                   </div>
                 </div>
-
-                {/* Box 2: Sponsor ID */}
-                <div className="col-12 col-sm-6 col-lg-3  mx-1">
-                  <div className="card custom-card school-card glow-box">
+                <div>
+                  <div className="card custom-card school-card glow-box width-box">
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Weekly Fund</span>
@@ -591,43 +587,138 @@ function DashboardRow1() {
                         </h6>
                       </div>
                       <div>
-                        <span className="text-primary1"></span>
+                        <span className="text-primary1">
+                          {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
+                        </span>
                       </div>
                     </div>
                   </div>
                 </div>
-
-                {/* Box 3: ID Date */}
-                <div className="col-12 col-sm-6 col-lg-3  mx-1">
-                  <div className="card custom-card school-card glow-box">
+                <div>
+                  <div className="card custom-card school-card glow-box width-box">
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Unity Income</span>
                         <h6 className="mb-0 fw-semibold">
-                        {Number(dashboard?.userDetails?.unity_income || 0).toFixed(2)}
+                          {Number(dashboard?.userDetails?.unity_income || 0).toFixed(2)}
                         </h6>
                       </div>
                       <div>
-                        <span className="text-primary1"></span>
+                        <span className="text-primary1">
+                          {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
+                        </span>
                       </div>
                     </div>
                   </div>
                 </div>
-
-                {/* Box 4: Total Earnings */}
-                <div className="col-12 col-sm-6 col-lg-3 mx-1">
-                  <div className="card custom-card school-card glow-box ">
+                <div>
+                  <div className="card custom-card school-card glow-box width-box">
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Direct Count</span>
                         <h6 className="mb-0 fw-semibold">
-                          0
                           {dashboard?.week_directs || "0"}
                         </h6>
                       </div>
                       <div>
-                        <span className="text-primary1"></span>
+                        <span className="text-primary1">
+                          {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
+                        </span>
                       </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div className="card custom-card school-card glow-box width-box">
+                    <div className="card-body d-flex gap-2 justify-content-between">
+                      <div>
+                        <span className="d-block mb-1">Direct Referral</span>
+                        <h6 className="mb-0 fw-semibold">
+                          {dashboard?.userDetails?.directCount || "0"}
+                        </h6>
+                      </div>
+                      <div>
+                        <span className="text-primary1">
+                          {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div className="card custom-card school-card glow-box width-box">
+                    <div className="card-body d-flex gap-2 justify-content-between">
+                      <div>
+                        <span className="d-block mb-1">Referral Reward</span>
+                        <h6 className="mb-0 fw-semibold"> 
+                          {dashboard?.sponsor_income || "0"}
+                        </h6>
+                      </div>
+                      <div>
+                        <span className="text-primary1">
+                          {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div className="card custom-card school-card glow-box width-box">
+                    <div className="card-body d-flex gap-2 justify-content-between">
+                      <div>
+                        <span className="d-block mb-1">Reward Goal</span>
+                        <h6 className="mb-0 fw-semibold">
+                          {dashboard?.reward_goal > 0
+                          ? Number(dashboard.reward_goal).toFixed(2)
+                          : "0"}
+                        </h6>
+                      </div>
+                      <div>
+                        <span className="text-primary1">
+                          {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
+                        </span>
+                        {/* <span
+                          className="text-info badge bg-success-transparent"
+                          style={{
+                            cursor: "pointer",
+                            position: "absolute",
+                            bottom: "15px",
+                            right: "15px",
+                          }}
+                          // onClick={getDailyReward}
+                        >
+                          Claim
+                        </span> */}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div className="card custom-card school-card glow-box width-box">
+                    <div className="card-body d-flex gap-2 justify-content-between">
+                      <div>
+                        <span className="d-block mb-1">Direct Volume</span>
+                        <h6 className="mb-0 fw-semibold">
+                          {dashboard?.direct_volume || "0"}
+                          </h6>
+                      </div>
+                      {/* <div>
+                        <span className="text-primary1">
+                          <img src={sponsor} alt="" style={{ width: "40px" }} /> 
+                        </span>
+                        <span
+                          className="text-info badge bg-success-transparent"
+                          style={{
+                            cursor: "pointer",
+                            position: "absolute",
+                            bottom: "15px",
+                            right: "8px",
+                          }}
+                          onClick={() => setShowWithdrawModal(true)}
+                        >
+                          Withdraw
+                        </span>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -635,134 +726,20 @@ function DashboardRow1() {
             </div>
           </div>
         </div>
+        {/* new section */}
 
-        {/* // row for four box */}
+        {/* <div className="col-sm-6 col-lg-6">
+         
+        </div> */}
 
-        <div className="col-sm-12 col-md-6 col-lg-6 ">
+       
+
+        <div className="col-sm-12 col-md-6 col-lg-6">
           <div
             className="row col-md-12 col-lg-12 left-row-cards"
             style={{ paddingRight: "0px", marginLeft: "0", marginRight: "0" }}
           >
-            <div className="col-sm-6 col-lg-6">
-              <div>
-                <div className="card custom-card school-card glow-box">
-                  <div className="card-body d-flex gap-2 justify-content-between">
-                    <div>
-                      <span className="d-block mb-1">Direct Referral</span>
-                      <h6 className="mb-0 fw-semibold">
-                        {dashboard?.userDetails?.directCount || "0"}
-                      </h6>
-                    </div>
-                    <div>
-                      <span className="text-primary1">
-                        {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div className="col-sm-6 col-lg-6">
-              <div>
-                <div className="card custom-card school-card glow-box">
-                  <div className="card-body d-flex gap-2 justify-content-between">
-                    <div>
-                      <span className="d-block mb-1">Referral Reward</span>
-                      <h6 className="mb-0 fw-semibold">
-                        {dashboard?.sponsor_income || "0"}
-                      </h6>
-                    </div>
-                    <div>
-                      <span className="text-primary1">
-                        {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-lg-6">
-              <div>
-                <div className="card custom-card school-card glow-box">
-                  <div className="card-body d-flex gap-2 justify-content-between">
-                    <div>
-                      <span className="d-block mb-1">Reward Goal</span>
-                      <h6 className="mb-0 fw-semibold">
-                        {dashboard?.reward_goal > 0
-                          ? Number(dashboard.reward_goal).toFixed(2)
-                          : "0"}
-                      </h6>
-                    </div>
-                    <div>
-                      <span className="text-primary1">
-                        {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-lg-6">
-              <div>
-                <div className="card custom-card school-card glow-box">
-                  <div className="card-body d-flex gap-2 justify-content-between">
-                    <div>
-                      <span className="d-block mb-1">Direct Volume</span>
-                      <h6 className="mb-0 fw-semibold">
-                        {" "}
-                        {dashboard?.direct_volume || "0"}
-                      </h6>
-                    </div>
-                    <div>
-                      <span className="text-primary1">
-                        {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* <div className="col-sm-6 col-lg-6">
-              <div>
-                <div className="card custom-card school-card glow-box">
-                  <div className="card-body d-flex gap-2 justify-content-between">
-                    <div>
-                      <span className="d-block mb-1">Unity Reward</span>
-                      <h6 className="mb-0 fw-semibold"> 0</h6>
-                    </div>
-                    <div>
-                      <span className="text-primary1">
-                        <img src={sponsor} alt="" style={{ width: "40px" }} />
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> */}
-
-            {/* <div className="col-sm-6 col-lg-6">
-              <div>
-                <div className="card custom-card school-card glow-box">
-                  <div className="card-body d-flex gap-2 justify-content-between">
-                    <div>
-                      <span className="d-block mb-1">Self Team Bonus</span>
-                      <h6 className="mb-0 fw-semibold">
-                        {dashboard?.self_team_income || "0"}
-                      </h6>
-                    </div>
-                    <div>
-                      <span className="text-primary1">
-                        <img src={sponsor} alt="" style={{ width: "40px" }} />
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> */}
           </div>
 
           <div
@@ -851,9 +828,6 @@ function DashboardRow1() {
                             )}
                             <div className="block-box">
                               {[...Array(8)].map((_, i) => {
-                                // Mapping 8 small boxes to combinations of poolId and place
-                                // First 2 boxes: poolId 1 place 1 & 2
-                                // Next 2: poolId 2 place 1 & 2 and so on...
                                 const poolId = Math.floor(i / 2) + 1; // 1 to 4
                                 const place = (i % 2) + 1; // 1 or 2
                                 const isPurple = shouldBePurple(

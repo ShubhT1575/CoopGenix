@@ -20694,6 +20694,9 @@ span.flatpickr-weekday {
   #chart-quarter {
     transform: translate(-50%);
   }
+  .width-box {
+    width: 160px !important;
+}
 }
 .echart-charts {
   height: 20rem;
