@@ -36,13 +36,15 @@ function CoreBody() {
         params: {
           address: address,
           page: currentPage,
-          type: reportType, // send type in request
+          type: reportType,
         },
       });
       if (response?.data?.status === 200) {
-        setData(response?.data?.data);
+        setData(response?.data?.data || []);
+        setTotalPages(response?.data?.totalPages || 1); // <--- Fix here
       } else {
         setData([]);
+        setTotalPages(1);
       }
     } catch (error) {
       console.error("Error fetching data:", error.message);
@@ -61,15 +63,13 @@ function CoreBody() {
     setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
   };
 
-  // Header + Row mappings for dynamic rendering
   const getTableHeaders = () => {
     switch (reportType) {
       case "Promise Reward":
-        return ["S.No", "Amount","Timestamp", "Hash"];
+        return ["S.No", "Amount", "Timestamp", "Hash"];
       case "Package Report":
         return ["S.No", "Package Amount", "Timestamp", "Hash"];
       case "Global Upline":
-        return ["S.No", "Amount", "Level", "Timestamp", "Hash"];
       case "Global Downline":
         return ["S.No", "Amount", "Level", "Timestamp", "Hash"];
       case "Self Team Bonus":
@@ -79,7 +79,7 @@ function CoreBody() {
       case "Unity Leaderboard":
         return ["Rank", "User ID", "Current Unit", "Expected Reward"];
       case "Block Reward":
-        return ["S.No", "From", "Package", "Level","Amount", "Timestamp", "Hash"];
+        return ["S.No", "From", "Package", "Level", "Amount", "Timestamp", "Hash"];
       default:
         return ["S.No", "From", "Level", "Amount", "Timestamp", "Hash"];
     }
@@ -94,11 +94,7 @@ function CoreBody() {
               <td>{index + 1}</td>
               <td>${(item?.amount / 1e18).toFixed(4)}</td>
               <td>{new Date(item?.createdAt).toLocaleString()}</td>
-              <td>
-                <a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noopener noreferrer">
-                  {item?.txHash}
-                </a>
-              </td>
+              <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
             </tr>
           );
         case "Package Report":
@@ -107,94 +103,42 @@ function CoreBody() {
               <td>{index + 1}</td>
               <td>${(item?.usdAmt / 1e18).toFixed(2)}</td>
               <td>{new Date(item?.createdAt).toLocaleString()}</td>
-              <td>
-                <a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noopener noreferrer">
-                  {item?.txHash}
-                </a>
-              </td>
+              <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
             </tr>
           );
-          case "Global Upline":
-            return (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>${(item?.amount / 1e18).toFixed(2)}</td>
-                <td>{item?.level}</td>
-                <td>{new Date(item?.createdAt).toLocaleString()}</td>
-                <td>
-                  <a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noopener noreferrer">
-                    {item?.txHash}
-                  </a>
-                </td>
-              </tr>
-            );
-            case "Global Downline":
-            return (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>${(item?.amount / 1e18).toFixed(2)}</td>
-                <td>{item?.level}</td>
-                <td>{new Date(item?.createdAt).toLocaleString()}</td>
-                <td>
-                  <a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noopener noreferrer">
-                    {item?.txHash}
-                  </a>
-                </td>
-              </tr>
-            );
-            case "Self Team Bonus":
-            return (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{item?.sender}</td>
-                <td>{item?.level}</td>
-                <td>${(item?.amount / 1e18).toFixed(2)}</td>
-                <td>{new Date(item?.createdAt).toLocaleString()}</td>
-                <td>
-                  <a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noopener noreferrer">
-                    {item?.txHash}
-                  </a>
-                </td>
-              </tr>
-            );
-            case "Direct Referral":
-            return (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{item?.sender}</td>
-                <td>{item?.level}</td>
-                <td>${(item?.amount / 1e18).toFixed(2)}</td>
-                <td>{new Date(item?.timestamp*1000).toLocaleString()}</td>
-                <td>
-                  <a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noopener noreferrer">
-                    {item?.txHash}
-                  </a>
-                </td>
-              </tr>
-            );
-            case "Block Reward":
-              return (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{item?.sender}</td>
-                  <td>{item?.packageId}</td>
-                  <td>{item?.poolId}</td>
-                  <td>${(item?.amount / 1e18).toFixed(2)}</td>
-                  <td>{new Date(item?.createdAt).toLocaleString()}</td>
-                  <td>
-                    <a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noopener noreferrer">
-                      {item?.txHash}
-                    </a>
-                  </td>
-                </tr>
-              );
-        case "Unity Leaderboard":
+        case "Global Upline":
+        case "Global Downline":
           return (
             <tr key={index}>
               <td>{index + 1}</td>
-              <td>{item?.userId}</td>
-              <td>{item?.currentUnit}</td>
-              <td>{item?.expectedReward}</td>
+              <td>${(item?.amount / 1e18).toFixed(2)}</td>
+              <td>{item?.level}</td>
+              <td>{new Date(item?.createdAt).toLocaleString()}</td>
+              <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
+            </tr>
+          );
+        case "Self Team Bonus":
+        case "Direct Referral":
+          return (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{item?.sender}</td>
+              <td>{item?.level}</td>
+              <td>${(item?.amount / 1e18).toFixed(2)}</td>
+              <td>{new Date((item?.timestamp || item?.createdAt) * 1000).toLocaleString()}</td>
+              <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
+            </tr>
+          );
+        case "Block Reward":
+          return (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{item?.sender}</td>
+              <td>{item?.packageId}</td>
+              <td>{item?.poolId}</td>
+              <td>${(item?.amount / 1e18).toFixed(2)}</td>
+              <td>{new Date(item?.createdAt).toLocaleString()}</td>
+              <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
             </tr>
           );
         default:
@@ -202,14 +146,8 @@ function CoreBody() {
             <tr key={item._id}>
               <td>{index + 1}</td>
               <td>{item?.userDetails?.referralId}</td>
-              <td>
-                {item.user?.slice(0, 6)}...{item.user?.slice(-6)}
-              </td>
-              <td>
-                <a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noopener noreferrer">
-                  {item.txHash}
-                </a>
-              </td>
+              <td>{item.user?.slice(0, 6)}...{item.user?.slice(-6)}</td>
+              <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item.txHash}</a></td>
               <td>${item?.amount}</td>
               <td>{new Date(item?.timestamp).toLocaleString()}</td>
               <td><span className="badge bg-success-transparent">success</span></td>
@@ -225,11 +163,7 @@ function CoreBody() {
         <div className="card custom-card overflow-hidden crm-card glow-box">
           <div className="card-header justify-content-between">
             <div className="card-title">Rewards Data</div>
-            <select
-              className="form-select w-auto"
-              value={reportType}
-              onChange={handleReportChange}
-            >
+            <select className="form-select w-auto" value={reportType} onChange={handleReportChange}>
               {REPORT_OPTIONS.map((option) => (
                 <option key={option} value={option}>{option}</option>
               ))}
@@ -240,11 +174,7 @@ function CoreBody() {
             <div className="table-responsive">
               <table className="table table-bordered text-nowrap mb-0">
                 <thead>
-                  <tr>
-                    {getTableHeaders().map((header, idx) => (
-                      <th key={idx}>{header}</th>
-                    ))}
-                  </tr>
+                  <tr>{getTableHeaders().map((header, idx) => <th key={idx}>{header}</th>)}</tr>
                 </thead>
                 <tbody>
                   {data?.length > 0 ? renderTableRows() : (
@@ -261,24 +191,10 @@ function CoreBody() {
             <div className="d-flex align-items-center justify-content-between">
               <div>Showing {data?.length || 0} Rewards</div>
               <div>
-                <button
-                  className="btn btn-primary me-2"
-                  disabled={currentPage === 1}
-                  onClick={handlePreviousPage}
-                >
-                  Prev
-                </button>
-                <button
-                  className="btn btn-success"
-                  disabled={currentPage === totalPages}
-                  onClick={handleNextPage}
-                >
-                  Next
-                </button>
+                <button className="btn btn-primary me-2" disabled={currentPage === 1} onClick={handlePreviousPage}>Prev</button>
+                <button className="btn btn-success" disabled={currentPage === totalPages} onClick={handleNextPage}>Next</button>
               </div>
-              <div>
-                <span>Page {currentPage} of {totalPages}</span>
-              </div>
+              <div>Page {currentPage} of {totalPages}</div>
             </div>
           </div>
         </div>
