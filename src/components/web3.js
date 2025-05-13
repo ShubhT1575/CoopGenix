@@ -42,7 +42,7 @@ export const JoinPlan = async (amt,ref) => {
   const result = await writeContract(config, {
     abi: ContractABI,
     address: ContractAddress,
-    functionName: "joinPlan",
+    functionName: "communitySignup",
     args: [ref],
     value: amt
     //value: 0
@@ -148,7 +148,7 @@ export const updatepoolexpiry = async (addresses, packageIds) => {
     result = await writeContract(config, {
       abi: ContractABI,
       address: ContractAddress,
-      functionName: "multiUpgradePool",
+      functionName: "charityCall",
       args: [addresses,packageIds],
     });
     return result;
