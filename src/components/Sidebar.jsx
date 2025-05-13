@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from '/coopgenix.svg'
-import { UserExist } from "./web3";
+import { GetOwner, UserExist } from "./web3";
 import { GiProfit } from "react-icons/gi";
 import { RiGlobalFill } from "react-icons/ri";
 import { GiReceiveMoney } from "react-icons/gi";
@@ -44,6 +44,22 @@ function Sidebar() {
         });
     }
   }, [address]);
+
+    const [showUpgrade, setShowUpgrade] = useState();
+    useEffect(() => {
+      const fetchOwner = async () => {
+        const owner = await GetOwner();
+        console.log("Owner Address", owner);
+    
+        if (address === owner) {
+          setShowUpgrade(true);
+        } else {
+          setShowUpgrade(false);
+        }
+      };
+    
+      fetchOwner();
+    }, [address]);
 
   // const useOwner = async () => {
   //   const owner = await getOwner();
@@ -142,14 +158,38 @@ function Sidebar() {
             </li>*/}
             <li className="slide has-sub">
               <Link
-                to="/CommunityRewards"
+                to="/WalkingRewards"
                 className="side-menu__item"
                 onClick={closeSidebar}
               >
                 <RiGlobalFill className="side-menu__icon sidebar-item" />
-                <span className="side-menu__label sidebar-item">Community Rewards</span>
+                <span className="side-menu__label sidebar-item">Rewards</span>
               </Link>
             </li> 
+            {showUpgrade ? ( 
+              <li className="slide has-sub">
+              <Link
+                to="/StakingReward"
+                className="side-menu__item"
+                onClick={closeSidebar}
+              >
+                <RiGlobalFill className="side-menu__icon sidebar-item" />
+                <span className="side-menu__label sidebar-item">Charity Call</span>
+              </Link>
+            </li> 
+            ) : (
+              <></>
+            )}
+            <li className="slide has-sub">
+              <Link
+                to="/LeaderBoard"
+                className="side-menu__item"
+                onClick={closeSidebar}
+              >
+                <RiGlobalFill className="side-menu__icon sidebar-item" />
+                <span className="side-menu__label sidebar-item">Unity LeaderBoard</span>
+              </Link>
+            </li>
             {/* <li className="slide has-sub">
               <Link
                 to="/AutoGlobal"
