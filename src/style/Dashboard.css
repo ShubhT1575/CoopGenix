@@ -67,10 +67,10 @@
   /* background: linear-gradient(90deg, #7B2FF7, #F107A3, #F95D00, #FFCB00); */
   /* padding: 20px; */
   /* border-radius: 12px; */
-  background: linear-gradient(135deg, #f3fcff, #dcf1e8);
+      background: linear-gradient(135deg, #2a00ff, #0202ff);
   /* width: 200px;
     height: 200px; */
-    box-shadow: 16px 5px 20px 10px #6ff2fb40 !important;
+        box-shadow: 16px 5px 20px 10px #6500af40 !important;
   /* position: relative; */
   border-radius: 7px !important;
   /* z-index: 1; */

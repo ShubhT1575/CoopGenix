@@ -12,6 +12,7 @@ const REPORT_OPTIONS = [
   "Unity Bonus",
   "Promise Reward",
   "Package Report",
+  "Withdraw Report"
   // "Unity Leaderboard",
 ];
 
@@ -80,6 +81,8 @@ function CoreBody() {
         return ["Rank", "User ID", "Current Unit", "Expected Reward"];
       case "Block Reward":
         return ["S.No", "From", "Package", "Level", "Amount", "Timestamp", "Hash"];
+      case "Withdraw Report":
+        return ["S.No", "Amount","UsdtAmt", "PolAmt", "Timestamp"];
       default:
         return ["S.No", "From", "Level", "Amount", "Timestamp", "Hash"];
     }
@@ -141,6 +144,17 @@ function CoreBody() {
               <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
             </tr>
           );
+         case "Withdraw Report":
+          return (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>${(item?.amount / 1e18).toFixed(2)}</td>
+              <td>${(item?.netUsdAmt / 1e18).toFixed(2)}</td>
+              <td>${(item?.netPolAmt / 1e18).toFixed(2)}</td>
+              <td>{new Date(item?.createdAt).toLocaleString()}</td>
+              {/* <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td> */}
+            </tr>
+          ); 
         default:
           return (
             <tr key={item._id}>

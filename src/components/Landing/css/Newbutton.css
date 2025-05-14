@@ -220,9 +220,11 @@
 body {
   margin: 0;
   padding: 0;
+  color: black;
   font-family: 'Arial', sans-serif;
   transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
 }
+
 
 /* Light Theme (Vibrant Yellow) */
 body.light-theme {

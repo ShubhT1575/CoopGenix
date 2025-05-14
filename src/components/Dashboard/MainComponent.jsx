@@ -49,7 +49,7 @@ function MainComponent() {
       style={{ background: "black" , margin: "0"}}
     >
       <div
-        className="container-fluid"
+        className="container-fluid marginTop"
         style={{ marginTop: "68px", paddingTop: "10px" }}
       >
         {/* <div style={{ marginTop: "68px", paddingTop: "10px"}} className="dash-head-div">

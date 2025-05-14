@@ -583,7 +583,7 @@ function DashboardRow1() {
                       <div>
                         <span className="d-block mb-1">Weekly Fund</span>
                         <h6 className="mb-0 fw-semibold">
-                          {dashboard?.weeklyfund || "0"}
+                          {Number(dashboard?.weeklyfund).toFixed(2) || "0"}
                         </h6>
                       </div>
                       <div>
@@ -812,10 +812,10 @@ function DashboardRow1() {
                   console.log(blockRecords, "blockRecordsxxxx");
                   return (
                     <div
-                      className="col-sm-12 col-md-12 col-lg-4"
+                      className=""
                       key={block.id}
                     >
-                      <div className="card custom-card crm-card">
+                      <div className="card custom-card crm-card minwidth">
                         <div className="card-body">
                           <div className="reward-box glow-box">
                             <h5>Block {block.id}</h5>
@@ -842,7 +842,7 @@ function DashboardRow1() {
                                     key={i}
                                     style={{
                                       backgroundColor: isPurple
-                                        ? "purple"
+                                        ? "#1b045a"
                                         : undefined,
                                       color: isPurple ? "#fff" : undefined,
                                     }}

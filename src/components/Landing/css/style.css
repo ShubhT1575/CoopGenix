@@ -168,7 +168,7 @@ h4,
 h5,
 h6 {
   font-family: var(--tg-heading-font-family);
-  color: var(--tg-heading-font-color);
+  color: rgb(255, 251, 251);
   margin-top: 0px;
   margin-bottom: 0.7rem;
   font-style: normal;

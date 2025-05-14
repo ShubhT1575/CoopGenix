@@ -102,6 +102,7 @@ function ConnectWallet() {
                         ? ` (${account.displayBalance})`
                         : ""}
                     </button>
+                        {/* <img src="/coopgenix symbol.svg" alt="" width={25}/> */}
                   </div>
                 );
               })()}

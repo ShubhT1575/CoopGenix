@@ -3,7 +3,7 @@ import React from "react";
 function CoreHead() {
   return (
     <div
-      className="d-flex align-items-center justify-content-between page-header-breadcrumb flex-wrap gap-2 page-head-breadcrumb"
+      className="d-flex align-items-center justify-content-between page-header-breadcrumb flex-wrap gap-2 page-head-breadcrumb marginTop"
       style={{ marginTop: "68px", paddingTop: "10px" }}
     >
       <div>

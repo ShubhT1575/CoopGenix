@@ -36,7 +36,7 @@ const CountdownTimer = ({ endTime }) => {
     alignItems: "center", // Centers the timer vertically
     gap: "8px", // Adjust gap between time units
     padding: "6px 10px",
-    background: "linear-gradient(135deg, #a4508b, #5f0a87)", // Purple gradient
+    background: "linear-gradient(135deg,rgb(39, 5, 112),rgb(20, 3, 76))", // Purple gradient
     borderRadius: "8px",
     width: "fit-content", // Adjusts to content size
     whiteSpace: "nowrap",

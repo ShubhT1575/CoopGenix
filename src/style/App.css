@@ -10150,9 +10150,9 @@ fieldset:disabled .btn-light.btn {
 .card.custom-card .card-header .card-title {
   position: relative;
   margin-block-end: 0;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #080512 !important;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #ffffff !important;
 }
 .card.custom-card .card-header .card-title .subtitle {
   margin-block-end: 0;
@@ -10165,8 +10165,22 @@ fieldset:disabled .btn-light.btn {
   font-size: 0.8125rem;
 }
 .card.custom-card .card-body {
+   padding: 1rem;
+  
   padding: 1rem;
-  color: #080512;
+  color: #ffffff;
+  background: linear-gradient(135deg, #2a00ff, #0d0b4f);
+  /* box-shadow: 16px 5px 20px 10px #6500ff40 !important; */
+  border-radius: 7px !important;
+}
+.minwidth{
+min-width: 320px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .marginTop {
+    margin-top: 15px !important;
+  }
 }
 .card.custom-card .card-link {
   font-size: 0.75rem;
@@ -14832,7 +14846,7 @@ caption {
 }
 .table thead tr th {
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 .table.table-sm > :not(caption) > * > * {
   padding: 0.3rem;
@@ -31250,7 +31264,7 @@ ul.files-main-nav li div.filemanager-upgrade-storage img {
   color: var(--custom-white) !important;
 }
 .text-fixed-white {
-  color: #080512 !important;
+  color: #ffffff !important;
 }
 .text-fixed-black {
   color: #000 !important;
