@@ -2,7 +2,7 @@ import React from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import "../style/SignUp.css";
 
-function ConnectWallet() {
+function ConnectWalletheader() {
   return (
     <div className="d-grid">
       <ConnectButton.Custom>
@@ -92,7 +92,7 @@ function ConnectWallet() {
                       {chain.name}
                     </button>
 
-                    <button
+                    {/* <button
                       onClick={openAccountModal}
                       type="button"
                       className="btn btn-primary1-gradient btn-wave"
@@ -101,8 +101,13 @@ function ConnectWallet() {
                       {account.displayBalance
                         ? ` (${account.displayBalance})`
                         : ""}
-                    </button>
-                        {/* <img src="/coopgenix symbol.svg" alt="" width={25}/> */}
+                    </button> */}
+                        <img
+  src="/coopgenix symbol.svg"
+  alt=""
+  width={40}
+ style={{ float: "left", marginRight: "238px" }}
+/>
                   </div>
                 );
               })()}
@@ -114,4 +119,4 @@ function ConnectWallet() {
   );
 }
 
-export default ConnectWallet;
+export default ConnectWalletheader;

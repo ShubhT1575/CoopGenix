@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ConnectWallet from "./ConnectWallet";
+import ConnectWallet from "./connectwalletheader";
 import { useAccount, useChainId } from "wagmi";
 import Logo from "/coopgenix.svg";
 import { useDispatch, useSelector } from "react-redux";
