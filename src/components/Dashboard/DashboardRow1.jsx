@@ -449,7 +449,7 @@ function DashboardRow1() {
                         <span className="d-block mb-1">Total Earnings</span>
                         <h6 className="mb-0 fw-semibold">
                           {" "}
-                          {dashboard?.totalincome.toFixed(3) || "0"}
+                          $ {dashboard?.totalincome.toFixed(3) || "0"}
                         </h6>
                       </div>
                       <div>
@@ -467,7 +467,7 @@ function DashboardRow1() {
                         <span className="d-block mb-1">Earning Goal</span>
                         <h6 className="mb-0 fw-semibold">
                           {" "}
-                          {dashboard?.earning_goal || "0"}
+                          $ {dashboard?.earning_goal || "0"}
                         </h6>
                       </div>
                       <div>
@@ -483,7 +483,7 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Promise Reward</span>
-                        <h6 className="mb-0 fw-semibold"> {promise || "0"}</h6>
+                        <h6 className="mb-0 fw-semibold"> $ {promise || "0"}</h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -500,7 +500,7 @@ function DashboardRow1() {
                         <span className="d-block mb-1">Today Earning</span>
                         <h6 className="mb-0 fw-semibold">
                           {" "}
-                          {dashboard?.todayBonus || "0"}
+                          $ {dashboard?.todayBonus || "0"}
                         </h6>
                       </div>
                       <div>
@@ -528,7 +528,7 @@ function DashboardRow1() {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Reward Wallet</span>
-                        <h6 className="mb-0 fw-semibold">{udata || "0"}</h6>
+                        <h6 className="mb-0 fw-semibold">$ {Number(udata).toFixed(2) || "0"}</h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -566,7 +566,7 @@ function DashboardRow1() {
                       <div>
                         <span className="d-block mb-1">Self Team Bonus</span>
                         <h6 className="mb-0 fw-semibold">
-                          {dashboard?.self_team_income || "0"}
+                          $ {dashboard?.self_team_income || "0"}
                         </h6>
                       </div>
                       <div>
@@ -583,7 +583,7 @@ function DashboardRow1() {
                       <div>
                         <span className="d-block mb-1">Weekly Fund</span>
                         <h6 className="mb-0 fw-semibold">
-                          {Number(dashboard?.weeklyfund).toFixed(2) || "0"}
+                          $ {Number(dashboard?.weeklyfund).toFixed(2) || "0"}
                         </h6>
                       </div>
                       <div>
@@ -600,7 +600,7 @@ function DashboardRow1() {
                       <div>
                         <span className="d-block mb-1">Unity Income</span>
                         <h6 className="mb-0 fw-semibold">
-                          {Number(dashboard?.userDetails?.unity_income || 0).toFixed(2)}
+                          $ {Number(dashboard?.userDetails?.unity_income || 0).toFixed(2)}
                         </h6>
                       </div>
                       <div>
@@ -634,7 +634,7 @@ function DashboardRow1() {
                       <div>
                         <span className="d-block mb-1">Direct Referral</span>
                         <h6 className="mb-0 fw-semibold">
-                          {dashboard?.userDetails?.directCount || "0"}
+                          $ {dashboard?.userDetails?.directCount || "0"}
                         </h6>
                       </div>
                       <div>
@@ -651,7 +651,7 @@ function DashboardRow1() {
                       <div>
                         <span className="d-block mb-1">Referral Reward</span>
                         <h6 className="mb-0 fw-semibold"> 
-                          {dashboard?.sponsor_income || "0"}
+                          $ {Number(dashboard?.sponsor_income).toFixed(2) || "0"}
                         </h6>
                       </div>
                       <div>
@@ -668,7 +668,7 @@ function DashboardRow1() {
                       <div>
                         <span className="d-block mb-1">Reward Goal</span>
                         <h6 className="mb-0 fw-semibold">
-                          {dashboard?.reward_goal > 0
+                          $ {dashboard?.reward_goal > 0
                           ? Number(dashboard.reward_goal).toFixed(2)
                           : "0"}
                         </h6>
@@ -699,7 +699,7 @@ function DashboardRow1() {
                       <div>
                         <span className="d-block mb-1">Direct Volume</span>
                         <h6 className="mb-0 fw-semibold">
-                          {dashboard?.direct_volume || "0"}
+                          $ {dashboard?.direct_volume || "0"}
                           </h6>
                       </div>
                       {/* <div>

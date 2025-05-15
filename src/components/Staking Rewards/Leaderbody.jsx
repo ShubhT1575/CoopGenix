@@ -70,10 +70,10 @@ function LeaderBody() {
         case "Unity Leaderboard":
           return (
             <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{item?.userId}</td>
-              <td>{item?.currentUnit}</td>
-              <td>{item?.expectedReward}</td>
+              <td className="text-white">{index + 1}</td>
+              <td className="text-white">{item?._id}</td>
+              <td className="text-white">{item?.directCount}</td>
+              <td className="text-white">{item?.expectedshare}</td>
             </tr>
           );
         default:
@@ -123,20 +123,27 @@ function LeaderBody() {
           <div className="card-body active-tab">
             <div className="table-responsive">
               <table className="table table-bordered text-nowrap mb-0">
-                <thead>
+               <thead className="text-white">
+                <tr>
+                  {getTableHeaders().map((header, idx) => (
+                    <th key={idx} className="text-white">{header}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {data?.length > 0 ? (
+                  renderTableRows()
+                ) : (
                   <tr>
-                    {getTableHeaders().map((header, idx) => (
-                      <th key={idx}>{header}</th>
-                    ))}
+                    <td
+                      colSpan={getTableHeaders().length}
+                      className="text-white"
+                    >
+                      No Data Found.
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {data?.length > 0 ? renderTableRows() : (
-                    <tr>
-                      <td colSpan={getTableHeaders().length} className="text-center">No Data Found.</td>
-                    </tr>
-                  )}
-                </tbody>
+                )}
+              </tbody>
               </table>
             </div>
           </div>

@@ -93,78 +93,78 @@ function CoreBody() {
       switch (reportType) {
         case "Promise Reward":
           return (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>${(item?.amount / 1e18).toFixed(4)}</td>
-              <td>{new Date(item?.createdAt).toLocaleString()}</td>
-              <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
+            <tr style={{ color: "white" }} key={index}>
+              <td style={{ color: "white" }}>{index + 1}</td>
+              <td style={{ color: "white" }}>${(item?.amount / 1e18).toFixed(4)}</td>
+              <td style={{ color: "white" }}>{new Date(item?.createdAt).toLocaleString()}</td>
+              <td style={{ color: "white" }}><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
             </tr>
           );
         case "Package Report":
           return (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>${(item?.usdAmt / 1e18).toFixed(2)}</td>
-              <td>{new Date(item?.createdAt).toLocaleString()}</td>
-              <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
+            <tr style={{ color: "white" }} key={index}>
+              <td style={{ color: "white" }}>{index + 1}</td>
+              <td style={{ color: "white" }}>${(item?.usdAmt / 1e18).toFixed(2)}</td>
+              <td style={{ color: "white" }}>{new Date(item?.createdAt).toLocaleString()}</td>
+              <td style={{ color: "white" }}><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
             </tr>
           );
         case "Global Upline":
         case "Global Downline":
           return (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>${(item?.amount / 1e18).toFixed(2)}</td>
-              <td>{item?.level}</td>
-              <td>{new Date(item?.createdAt).toLocaleString()}</td>
-              <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
+            <tr style={{ color: "white" }} key={index}>
+              <td style={{ color: "white" }}>{index + 1}</td>
+              <td style={{ color: "white" }}>${(item?.amount / 1e18).toFixed(2)}</td>
+              <td style={{ color: "white" }}>{item?.level}</td>
+              <td style={{ color: "white" }}>{new Date(item?.createdAt).toLocaleString()}</td>
+              <td style={{ color: "white" }}><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
             </tr>
           );
         case "Self Team Bonus":
         case "Direct Referral":
           return (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{item?.sender}</td>
-              <td>{item?.level}</td>
-              <td>${(item?.amount / 1e18).toFixed(2)}</td>
-              <td>{new Date((item?.timestamp || item?.createdAt) * 1000).toLocaleString()}</td>
-              <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
+            <tr style={{ color: "white" }} key={index}>
+              <td style={{ color: "white" }}>{index + 1}</td>
+              <td style={{ color: "white" }}>{item?.sender}</td>
+              <td style={{ color: "white" }}>{item?.level}</td>
+              <td style={{ color: "white" }}>${(item?.amount / 1e18).toFixed(2)}</td>
+              <td style={{ color: "white" }}>{new Date((item?.timestamp || item?.createdAt) * 1000).toLocaleString()}</td>
+              <td style={{ color: "white" }}><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
             </tr>
           );
         case "Block Reward":
           return (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{item?.sender}</td>
-              <td>{item?.packageId}</td>
-              <td>{item?.poolId}</td>
-              <td>${(item?.amount / 1e18).toFixed(2)}</td>
-              <td>{new Date(item?.createdAt).toLocaleString()}</td>
-              <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
+            <tr style={{ color: "white" }} key={index}>
+              <td style={{ color: "white" }}>{index + 1}</td>
+              <td style={{ color: "white" }}>{item?.sender}</td>
+              <td style={{ color: "white" }}>{item?.packageId}</td>
+              <td style={{ color: "white" }}>{item?.poolId}</td>
+              <td style={{ color: "white" }}>${(item?.amount / 1e18).toFixed(2)}</td>
+              <td style={{ color: "white" }}>{new Date(item?.createdAt).toLocaleString()}</td>
+              <td style={{ color: "white" }}><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
             </tr>
           );
          case "Withdraw Report":
           return (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>${(item?.amount / 1e18).toFixed(2)}</td>
-              <td>${(item?.netUsdAmt / 1e18).toFixed(2)}</td>
-              <td>${(item?.netPolAmt / 1e18).toFixed(2)}</td>
-              <td>{new Date(item?.createdAt).toLocaleString()}</td>
-              {/* <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td> */}
+            <tr style={{ color: "white" }} key={index}>
+              <td style={{ color: "white" }}>{index + 1}</td>
+              <td style={{ color: "white" }}>${(item?.amount / 1e18).toFixed(2)}</td>
+              <td style={{ color: "white" }}>${(item?.netUsdAmt / 1e18).toFixed(2)}</td>
+              <td style={{ color: "white" }}>${(item?.netPolAmt / 1e18).toFixed(2)}</td>
+              <td style={{ color: "white" }}>{new Date(item?.createdAt).toLocaleString()}</td>
+              {/* <td style={{ color: "white" }}><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td> */}
             </tr>
           ); 
         default:
           return (
-            <tr key={item._id}>
-              <td>{index + 1}</td>
-              <td>{item?.userDetails?.referralId}</td>
-              <td>{item.user?.slice(0, 6)}...{item.user?.slice(-6)}</td>
-              <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item.txHash}</a></td>
-              <td>${item?.amount}</td>
-              <td>{new Date(item?.timestamp).toLocaleString()}</td>
-              <td><span className="badge bg-success-transparent">success</span></td>
+            <tr style={{ color: "white" }} key={item._id}>
+              <td style={{ color: "white" }}>{index + 1}</td>
+              <td style={{ color: "white" }}>{item?.userDetails?.referralId}</td>
+              <td style={{ color: "white" }}>{item.user?.slice(0, 6)}...{item.user?.slice(-6)}</td>
+              <td style={{ color: "white" }}><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item.txHash}</a></td>
+              <td style={{ color: "white" }}>${item?.amount}</td>
+              <td style={{ color: "white" }}>{new Date(item?.timestamp).toLocaleString()}</td>
+              <td style={{ color: "white" }}><span className="badge bg-success-transparent">success</span></td>
             </tr>
           );
       }
@@ -187,7 +187,7 @@ function CoreBody() {
           <div className="card-body active-tab">
             <div className="table-responsive">
               <table className="table table-bordered text-nowrap mb-0">
-                <thead>
+                <thead className="text-white">
                   <tr>{getTableHeaders().map((header, idx) => <th key={idx}>{header}</th>)}</tr>
                 </thead>
                 <tbody>
