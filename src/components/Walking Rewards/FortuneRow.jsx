@@ -125,7 +125,7 @@ function CoreBody() {
           return (
             <tr style={{ color: "white" }} key={index}>
               <td style={{ color: "white" }}>{index + 1}</td>
-              <td style={{ color: "white" }}>{item?.sender}</td>
+              <td style={{ color: "white" }}>{item?.userId}</td>
               <td style={{ color: "white" }}>{item?.level}</td>
               <td style={{ color: "white" }}>${(item?.amount / 1e18).toFixed(2)}</td>
               <td style={{ color: "white" }}>{new Date((item?.timestamp || item?.createdAt) * 1000).toLocaleString()}</td>
