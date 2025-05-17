@@ -158,6 +158,29 @@ function DashboardRow1() {
     }
   };
 
+const withdrawIncomeUnity = async () => {
+  if (!address) return toast.error("Please connect wallet");
+
+  try {
+    setIsLoading(true);
+   
+    // API call to save withdrawal record
+    const response = await axios.get(apiUrl + "/withdrawWeekly", {
+        params: {
+          walletAddress: address,
+        },
+      });
+
+      console.log("response ",response)
+
+  } catch (error) {
+    console.error(error.message);
+    toast.error("An error occurred during withdrawal.");
+  } finally {
+    setIsLoading(false);
+  }
+};
+
   const getBlockData = async (packageId) => {
     try {
       const response = await axios.get(apiUrl + "/uwn", {
@@ -606,6 +629,18 @@ function DashboardRow1() {
                       <div>
                         <span className="text-primary1">
                           {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
+                        </span>
+                        <span
+                          className="text-info badge bg-success-transparent"
+                          style={{
+                            cursor: "pointer",
+                            position: "absolute",
+                            bottom: "15px",
+                            right: "8px",
+                          }}
+                          onClick={() => withdrawIncomeUnity()}
+                        >
+                          Withdraw
                         </span>
                       </div>
                     </div>
