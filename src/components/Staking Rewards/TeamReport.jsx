@@ -3,30 +3,21 @@ import axios from "axios";
 import { apiUrl } from "../Config";
 import { useSelector } from "react-redux";
 
-const REPORT_OPTIONS = [
-  "Unity Leaderboard",
-];
 
 function TeamBody() {
   const { wallet } = useSelector((state) => state.coreCrowd);
   const { walletAddress } = wallet;
   const address = walletAddress;
 
-  const [reportType, setReportType] = useState("Unity Leaderboard");
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const handleReportChange = (e) => {
-    setReportType(e.target.value);
-    setCurrentPage(1);
-  };
-
   const getCoreIncome = async () => {
     try {
-      const response = await axios.get(apiUrl + "/getAllreport", {
+      const response = await axios.get(apiUrl + "/teamreport", {
         params: {
-          address: address,
+          address: address,  
           page: currentPage,
           type: reportType, // send type in request
         },
