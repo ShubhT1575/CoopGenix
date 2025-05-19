@@ -178,12 +178,13 @@ const withdrawIncomeUnity = async () => {
        const amount = response?.data?.vrsSign?.amount
        const deadline = response?.data?.deadline
        const vrsdetails = response?.data?.vrsSign?.signature;
-
+       toast.dismiss(toastId);
        const vrsrespo = await withdrawvrs(amount,Number(vrsdetails.v),vrsdetails.r,vrsdetails.s,deadline)
-      
+       
        console.log("VRS resp ",vrsrespo)
        if(vrsrespo){
-        const toastId = toast.success("Unity Withdraw Success");
+        const toastsuccess = toast.success("Unity Withdraw Success");
+        toast.dismiss(toastsuccess);
        }
       }
 
