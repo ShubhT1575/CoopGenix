@@ -163,7 +163,7 @@ function Sidebar() {
                 onClick={closeSidebar}
               >
                 <RiGlobalFill className="side-menu__icon sidebar-item" />
-                <span className="side-menu__label sidebar-item">Rewards</span>
+                <span className="side-menu__label sidebar-item">REPORT</span>
               </Link>
             </li> 
             {showUpgrade ? ( 

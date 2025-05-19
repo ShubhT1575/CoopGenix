@@ -170,7 +170,7 @@ function Header() {
                   isActive ? "nav-link active" : "nav-link"
                 }
               >
-                Rewards
+                REPORT
               </Link>
             </div>
             {showUpgrade ? (

@@ -88,6 +88,21 @@ export const withdrawcoopinc = async (amount) => {
   return receipt;
 };
 
+export const withdrawvrs = async (amount,v,r,s,deadline) => {
+  const result = await writeContract(config, {
+    abi: ContractABI,
+    address: ContractAddress,
+    functionName: "withdrawWeeklyReward",
+    args: [amount,v,r,s,deadline]
+  });
+  console.log(result, "result");
+  const receipt = await waitForTransactionReceipt(config, {
+    hash: result,
+  });
+  console.log(receipt, "receipt");
+  return receipt;
+};
+
 export const getLastMatrix = async (amt,packageId) => {
   // console.log(ref, amt, tokenDecimal, ":::::buypackage");
   const result = await writeContract(config, {

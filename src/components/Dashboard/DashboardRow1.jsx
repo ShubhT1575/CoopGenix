@@ -8,6 +8,7 @@ import {
   UserData,
   UserExist,
   withdrawcoopinc,
+  withdrawvrs,
 } from "../web3";
 import { BiSolidUserAccount } from "react-icons/bi";
 import { GiLevelEndFlag } from "react-icons/gi";
@@ -163,15 +164,28 @@ const withdrawIncomeUnity = async () => {
 
   try {
     setIsLoading(true);
-   
+   const toastId = toast.loading("Requesting Unity Withdraw...");
     // API call to save withdrawal record
-    const response = await axios.get(apiUrl + "/withdrawWeekly", {
-        params: {
+    const response = await axios.post(apiUrl + "/withdrawWeekly", {
+      
           walletAddress: address,
-        },
+        
       });
 
-      console.log("response ",response)
+     
+      if(response?.data){
+       console.log("response ",response?.data?.vrsSign?.signature)
+       const amount = response?.data?.vrsSign?.amount
+       const deadline = response?.data?.deadline
+       const vrsdetails = response?.data?.vrsSign?.signature;
+
+       const vrsrespo = await withdrawvrs(amount,Number(vrsdetails.v),vrsdetails.r,vrsdetails.s,deadline)
+      
+       console.log("VRS resp ",vrsrespo)
+       if(vrsrespo){
+        const toastId = toast.success("Unity Withdraw Success");
+       }
+      }
 
   } catch (error) {
     console.error(error.message);
@@ -523,7 +537,7 @@ const withdrawIncomeUnity = async () => {
                         <span className="d-block mb-1">Today Earning</span>
                         <h6 className="mb-0 fw-semibold">
                           {" "}
-                          $ {dashboard?.todayBonus || "0"}
+                          $ {Number(dashboard?.todayBonus).toFixed(2) || "0"}
                         </h6>
                       </div>
                       <div>
@@ -892,7 +906,7 @@ const withdrawIncomeUnity = async () => {
                                 Value {block.value}
                               </div>
                               <div className="Potential-Reward">
-                                Reward {block.reward}
+                                Received Block Reward {block.reward}
                               </div>
                             </div>
                             <div className="box-btn-content content-2">
