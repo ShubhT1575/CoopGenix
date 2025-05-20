@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { apiUrl } from "../Config";
 import { useSelector } from "react-redux";
+import { useAccount } from "wagmi";
 
 const REPORT_OPTIONS = [
   "Global Upline",
@@ -19,7 +20,8 @@ const REPORT_OPTIONS = [
 function CoreBody() {
   const { wallet } = useSelector((state) => state.coreCrowd);
   const { walletAddress } = wallet;
-  const address = walletAddress;
+  // const address = walletAddress;
+  const { address } = useAccount();
 
   const [reportType, setReportType] = useState("Direct Referral");
   const [data, setData] = useState([]);
