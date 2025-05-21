@@ -111,7 +111,7 @@ function LeaderBody() {
               <td className="text-white">{item?._id}</td>
               <td className="text-white">{item?.directCount}</td>
               <td className="text-white">
-                {convertUSDToPOL(item?.expectedshare) + " POL"}
+                {convertUSDToPOL(item?.expectedshare)}
               </td>
             </tr>
           );
@@ -204,10 +204,30 @@ function LeaderBody() {
     }
   };
 
-  function convertUSDToPOL(usdAmount, ratePerPOL = 0.2325) {
-    // Example: 1 POL = $0.5
-    const polAmount = usdAmount / ratePerPOL;
-    return polAmount;
+  const [POLPrice, setPOLPrice] = useState(0);
+
+
+async function getPOLPriceInUSD() {
+  try {
+    const response = await axios.get(
+      "https://api.coingecko.com/api/v3/simple/price?ids=pooltogether&vs_currencies=usd"
+    );
+    const price = response.data.pooltogether.usd;
+    setPOLPrice(price);
+  } catch (error) {
+    console.error("Error fetching POL price:", error.message);
+    setPOLPrice(0); // Set to 0 or handle error as needed
+  }
+}
+
+  function convertUSDToPOL(usdAmount) {
+    if (!POLPrice || typeof POLPrice !== "number" || POLPrice <= 0) {
+      console.warn("Invalid POL price:", POLPrice);
+      return "$ " + usdAmount; // or null, or throw an error based on your needs
+    }
+  
+    const polAmount = usdAmount / POLPrice;
+    return polAmount + " POL";
   }
 
   const findUserData = async (userId) => {
@@ -218,6 +238,10 @@ function LeaderBody() {
     }
     return null; // not found
   };
+
+  useEffect(()=>{
+    getPOLPriceInUSD();
+  },[])
   
 
   useEffect(() => {
@@ -263,7 +287,7 @@ function LeaderBody() {
                         className="mb-0 fw-semibold"
                         style={{ fontSize: "14px" }}
                       >
-                        {convertUSDToPOL(unityFund) + " POL"}
+                        {convertUSDToPOL(unityFund)}
                       </p>
                     </div>
                     <div>
