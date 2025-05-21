@@ -327,7 +327,7 @@ function LeaderBody() {
                     <div className="card custom-card overflow-hidden crm-card glow-box">
                       <div className="card-body d-flex gap-2 justify-content-between">
                         <div>
-                          <span className="d-block ">Position {userInfo?.index + 1}</span>
+                          <span className="d-block ">Position {userInfo?.index + 1 || "0"}</span>
                         </div>
                         <div>
                           <span className="text-primary1">
@@ -341,7 +341,7 @@ function LeaderBody() {
                     <div className="card custom-card overflow-hidden crm-card glow-box">
                       <div className="card-body d-flex gap-2 justify-content-between">
                         <div>
-                          <span className="d-block">Unit {userInfo?.directCount}</span>
+                          <span className="d-block">Unit {userInfo?.directCount || "0"}</span>
                         </div>
                         <div>
                           <span className="text-primary1">
