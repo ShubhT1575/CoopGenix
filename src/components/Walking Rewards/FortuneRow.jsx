@@ -13,23 +13,28 @@ const REPORT_OPTIONS = [
   "Unity Bonus",
   "Promise Reward",
   "Package Report",
-  "Withdraw Report"
-  // "Unity Leaderboard",
+  "Withdraw Report",
+  "Level Report", // ✅ Added new report
 ];
 
 function CoreBody() {
   const { wallet } = useSelector((state) => state.coreCrowd);
   const { walletAddress } = wallet;
-  // const address = walletAddress;
   const { address } = useAccount();
 
   const [reportType, setReportType] = useState("Direct Referral");
+  const [level, setLevel] = useState(1); // ✅ New state for level dropdown
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
   const handleReportChange = (e) => {
     setReportType(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handleLevelChange = (e) => {
+    setLevel(Number(e.target.value));
     setCurrentPage(1);
   };
 
@@ -40,11 +45,12 @@ function CoreBody() {
           address: address,
           page: currentPage,
           type: reportType,
+          ...(reportType === "Level Report" && { level }), // ✅ Pass level if Level Report
         },
       });
       if (response?.data?.status === 200) {
         setData(response?.data?.data || []);
-        setTotalPages(response?.data?.totalPages || 1); // <--- Fix here
+        setTotalPages(response?.data?.totalPages || 1);
       } else {
         setData([]);
         setTotalPages(1);
@@ -56,7 +62,7 @@ function CoreBody() {
 
   useEffect(() => {
     if (address) getCoreIncome();
-  }, [address, currentPage, reportType]);
+  }, [address, currentPage, reportType, level]); // ✅ Added `level` dependency
 
   const handleNextPage = () => {
     setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev));
@@ -85,6 +91,8 @@ function CoreBody() {
         return ["S.No", "From", "Package", "Level", "Amount", "Timestamp", "Hash"];
       case "Withdraw Report":
         return ["S.No", "Amount","UsdtAmt", "PolAmt", "Timestamp"];
+      case "Level Report":
+        return ["S.No", "User ID", "Level", "Amount", "Timestamp", "Hash"]; // ✅ Sample header
       default:
         return ["S.No", "From", "Level", "Amount", "Timestamp", "Hash"];
     }
@@ -96,77 +104,77 @@ function CoreBody() {
         case "Promise Reward":
           return (
             <tr style={{ color: "white" }} key={index}>
-              <td style={{ color: "white" }}>{index + 1}</td>
-              <td style={{ color: "white" }}>${(item?.amount / 1e18).toFixed(4)}</td>
-              <td style={{ color: "white" }}>{new Date(item?.createdAt).toLocaleString()}</td>
-              <td style={{ color: "white" }}><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
+              <td>{index + 1}</td>
+              <td>${(item?.amount / 1e18).toFixed(4)}</td>
+              <td>{new Date(item?.createdAt).toLocaleString()}</td>
+              <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
             </tr>
           );
         case "Package Report":
           return (
             <tr style={{ color: "white" }} key={index}>
-              <td style={{ color: "white" }}>{index + 1}</td>
-              <td style={{ color: "white" }}>${(item?.usdAmt / 1e18).toFixed(2)}</td>
-              <td style={{ color: "white" }}>{new Date(item?.createdAt).toLocaleString()}</td>
-              <td style={{ color: "white" }}><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
+              <td>{index + 1}</td>
+              <td>${(item?.usdAmt / 1e18).toFixed(2)}</td>
+              <td>{new Date(item?.createdAt).toLocaleString()}</td>
+              <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
             </tr>
           );
         case "Global Upline":
         case "Global Downline":
           return (
             <tr style={{ color: "white" }} key={index}>
-              <td style={{ color: "white" }}>{index + 1}</td>
-              <td style={{ color: "white" }}>${(item?.amount / 1e18).toFixed(2)}</td>
-              <td style={{ color: "white" }}>{item?.level}</td>
-              <td style={{ color: "white" }}>{new Date(item?.createdAt).toLocaleString()}</td>
-              <td style={{ color: "white" }}><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
+              <td>{index + 1}</td>
+              <td>${(item?.amount / 1e18).toFixed(2)}</td>
+              <td>{item?.level}</td>
+              <td>{new Date(item?.createdAt).toLocaleString()}</td>
+              <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
             </tr>
           );
         case "Self Team Bonus":
         case "Direct Referral":
+        case "Level Report":
           return (
             <tr style={{ color: "white" }} key={index}>
-              <td style={{ color: "white" }}>{index + 1}</td>
-              <td style={{ color: "white" }}>{item?.userId}</td>
-              <td style={{ color: "white" }}>{item?.level}</td>
-              <td style={{ color: "white" }}>${(item?.amount / 1e18).toFixed(2)}</td>
-              <td style={{ color: "white" }}>{new Date((item?.timestamp || item?.createdAt) * 1000).toLocaleString()}</td>
-              <td style={{ color: "white" }}><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
+              <td>{index + 1}</td>
+              <td>{item?.userId}</td>
+              <td>{item?.level}</td>
+              <td>${(item?.amount / 1e18).toFixed(2)}</td>
+              <td>{new Date((item?.timestamp || item?.createdAt) * 1000).toLocaleString()}</td>
+              <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
             </tr>
           );
         case "Block Reward":
           return (
             <tr style={{ color: "white" }} key={index}>
-              <td style={{ color: "white" }}>{index + 1}</td>
-              <td style={{ color: "white" }}>{item?.sender}</td>
-              <td style={{ color: "white" }}>{item?.packageId}</td>
-              <td style={{ color: "white" }}>{item?.poolId}</td>
-              <td style={{ color: "white" }}>${(item?.amount / 1e18).toFixed(2)}</td>
-              <td style={{ color: "white" }}>{new Date(item?.createdAt).toLocaleString()}</td>
-              <td style={{ color: "white" }}><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
+              <td>{index + 1}</td>
+              <td>{item?.sender}</td>
+              <td>{item?.packageId}</td>
+              <td>{item?.poolId}</td>
+              <td>${(item?.amount / 1e18).toFixed(2)}</td>
+              <td>{new Date(item?.createdAt).toLocaleString()}</td>
+              <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td>
             </tr>
           );
-         case "Withdraw Report":
+        case "Withdraw Report":
           return (
             <tr style={{ color: "white" }} key={index}>
-              <td style={{ color: "white" }}>{index + 1}</td>
-              <td style={{ color: "white" }}>${(item?.amount / 1e18).toFixed(2)}</td>
-              <td style={{ color: "white" }}>${(item?.netUsdAmt / 1e18).toFixed(2)}</td>
-              <td style={{ color: "white" }}>${(item?.netPolAmt / 1e18).toFixed(2)}</td>
-              <td style={{ color: "white" }}>{new Date(item?.createdAt).toLocaleString()}</td>
-              {/* <td style={{ color: "white" }}><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item?.txHash}</a></td> */}
+              <td>{index + 1}</td>
+              <td>${(item?.amount / 1e18).toFixed(2)}</td>
+              <td>${(item?.netUsdAmt / 1e18).toFixed(2)}</td>
+              <td>${(item?.netPolAmt / 1e18).toFixed(2)}</td>
+              <td>{new Date(item?.createdAt).toLocaleString()}</td>
             </tr>
-          ); 
+          );
         default:
           return (
             <tr style={{ color: "white" }} key={item._id}>
-              <td style={{ color: "white" }}>{index + 1}</td>
-              <td style={{ color: "white" }}>{item?.userDetails?.referralId}</td>
-              <td style={{ color: "white" }}>{item.user?.slice(0, 6)}...{item.user?.slice(-6)}</td>
-              <td style={{ color: "white" }}><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item.txHash}</a></td>
-              <td style={{ color: "white" }}>${item?.amount}</td>
-              <td style={{ color: "white" }}>{new Date(item?.timestamp).toLocaleString()}</td>
-              <td style={{ color: "white" }}><span className="badge bg-success-transparent">success</span></td>
+              <td>{index + 1}</td>
+              <td>{item?.userDetails?.referralId}</td>
+              <td>{item.user?.slice(0, 6)}...{item.user?.slice(-6)}</td>
+              <td><a href={`https://polygonscan.com/tx/${item.txHash}`} target="_blank" rel="noreferrer">{item.txHash}</a></td>
+              <td>${item?.amount}</td>
+              <td>{new Date(item?.timestamp).toLocaleString()}</td>
+              <td><span className="badge bg-success-transparent">success</span></td>
             </tr>
           );
       }
@@ -179,11 +187,21 @@ function CoreBody() {
         <div className="card custom-card overflow-hidden crm-card glow-box">
           <div className="card-header justify-content-between">
             <div className="card-title">Rewards Data</div>
-            <select className="form-select w-auto" value={reportType} onChange={handleReportChange}>
-              {REPORT_OPTIONS.map((option) => (
-                <option key={option} value={option}>{option}</option>
-              ))}
-            </select>
+            <div className="d-flex gap-2 align-items-center">
+              <select className="form-select w-auto" value={reportType} onChange={handleReportChange}>
+                {REPORT_OPTIONS.map((option) => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+              </select>
+
+              {reportType === "Level Report" && (
+                <select className="form-select w-auto" value={level} onChange={handleLevelChange}>
+                  {Array.from({ length: 15 }, (_, i) => i + 1).map((lvl) => (
+                    <option key={lvl} value={lvl}>Level {lvl}</option>
+                  ))}
+                </select>
+              )}
+            </div>
           </div>
 
           <div className="card-body active-tab">

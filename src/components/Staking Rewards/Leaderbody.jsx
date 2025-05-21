@@ -14,40 +14,40 @@ function LeaderBody() {
   // const address = walletAddress;
   const { address } = useAccount();
 
+  const [userInfo, setUserInfo] = useState();
+
   const [reportType, setReportType] = useState("Unity Leaderboard");
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState("");
-  const [unityFund,setUnityFund] = useState(0);
-    const [dashboard, setDashboard] = useState();
-    const [udata, setUdata] = useState(0);
+  const [unityFund, setUnityFund] = useState(0);
+  const [dashboard, setDashboard] = useState();
+  const [udata, setUdata] = useState(0);
 
+  async function fetchData(address) {
+    try {
+      const response = await axios.get(apiUrl + "/user-info", {
+        params: {
+          userId: address,
+        },
+      });
 
-      async function fetchData(address) {
-        try {
-          const response = await axios.get(apiUrl + "/user-info", {
-            params: {
-              userId: address,
-            },
-          });
-    
-          if (response?.status === 200) {
-            setDashboard(response?.data);
-            dispatch(setUserDetails(response?.data));
-            let datauu = response?.data?.global_upline_downline;
-            console.log(
-              response?.data?.global_upline_downline,
-              ":::::api data grlobal downline"
-            );
-            setGlobalupdownline(datauu);
-          }
-        } catch (error) {
-          console.log(error);
-        }
+      if (response?.status === 200) {
+        setDashboard(response?.data);
+        dispatch(setUserDetails(response?.data));
+        let datauu = response?.data?.global_upline_downline;
+        console.log(
+          response?.data?.global_upline_downline,
+          ":::::api data grlobal downline"
+        );
+        setGlobalupdownline(datauu);
       }
-  
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleReportChange = (e) => {
     setReportType(e.target.value);
@@ -110,7 +110,9 @@ function LeaderBody() {
               <td className="text-white">{index + 1}</td>
               <td className="text-white">{item?._id}</td>
               <td className="text-white">{item?.directCount}</td>
-              <td className="text-white">{convertUSDToPOL(item?.expectedshare)+" POL"}</td>
+              <td className="text-white">
+                {convertUSDToPOL(item?.expectedshare) + " POL"}
+              </td>
             </tr>
           );
         default:
@@ -143,38 +145,48 @@ function LeaderBody() {
 
   const withdrawIncomeUnity = async () => {
     if (!address) return toast.error("Please connect wallet");
-  
+
     try {
-      setIsLoading(true);
-     const toastId = toast.loading("Requesting Unity Withdraw...");
+      // setIsLoading(true);
+      const toastId = toast.loading("Requesting Unity Withdraw...");
       // API call to save withdrawal record
       const response = await axios.post(apiUrl + "/withdrawWeekly", {
-        
-            walletAddress: address,
-          
-        });
-  
-       
-        if(response?.data){
-         console.log("response ",response?.data?.vrsSign?.signature)
-         const amount = response?.data?.vrsSign?.amount
-         const deadline = response?.data?.deadline
-         const vrsdetails = response?.data?.vrsSign?.signature;
-         toast.dismiss(toastId);
-         const vrsrespo = await withdrawvrs(amount,Number(vrsdetails.v),vrsdetails.r,vrsdetails.s,deadline)
-         
-         console.log("VRS resp ",vrsrespo)
-         if(vrsrespo){
+        walletAddress: address,
+      });
+
+      if (
+        response?.data?.message === "Insufficient Unity Balance minimum is $1"
+      ) {
+        toast.error("Insufficient Unity Balance minimum is $1");
+        toast.dismiss(toastId);
+        return;
+      }
+
+      if (response?.data) {
+        console.log("response ", response?.data?.vrsSign?.signature);
+        const amount = response?.data?.vrsSign?.amount;
+        const deadline = response?.data?.deadline;
+        const vrsdetails = response?.data?.vrsSign?.signature;
+        toast.dismiss(toastId);
+        const vrsrespo = await withdrawvrs(
+          amount,
+          Number(vrsdetails.v),
+          vrsdetails.r,
+          vrsdetails.s,
+          deadline
+        );
+
+        console.log("VRS resp ", vrsrespo);
+        if (vrsrespo) {
           const toastsuccess = toast.success("Unity Withdraw Success");
           toast.dismiss(toastsuccess);
-         }
         }
-  
+      }
     } catch (error) {
       console.error(error.message);
       toast.error("An error occurred during withdrawal.");
     } finally {
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   };
 
@@ -198,11 +210,33 @@ function LeaderBody() {
     return polAmount;
   }
 
-    useEffect(() => {
-      if (address)
-        fetchData(address);
+  const findUserData = async (userId) => {
+    const index = data.findIndex((item) => item._id === userId);
+    if (index !== -1) {
+      const foundUser = { ...data[index], index }; // add index to the object
+      return foundUser;
+    }
+    return null; // not found
+  };
+  
+
+  useEffect(() => {
+    if (address) {
+      fetchData(address);
       getUserData(address);
-    }, [address]);
+    }
+  
+    const userId = dashboard?.userDetails?.userId;
+    if (userId) {
+      findUserData("9403053623").then((foundUser) => {
+        if (foundUser) {
+          setUserInfo(foundUser);
+        }
+      });
+    }
+  }, [address, dashboard?.userDetails?.userId]);
+
+  console.log(userInfo, "userInfo");
 
   return (
     <div>
@@ -225,7 +259,12 @@ function LeaderBody() {
                     <div>
                       <span className="d-block mb-1">Unity Bonus Fund</span>
                       <h6 className="mb-0 fw-semibold">$ {unityFund}</h6>
-                      <p className="mb-0 fw-semibold" style={{fontSize: "14px"}}>{convertUSDToPOL(unityFund)+ " POL"}</p>
+                      <p
+                        className="mb-0 fw-semibold"
+                        style={{ fontSize: "14px" }}
+                      >
+                        {convertUSDToPOL(unityFund) + " POL"}
+                      </p>
                     </div>
                     <div>
                       <span className="text-primary1">
@@ -235,13 +274,15 @@ function LeaderBody() {
                   </div>
                 </div>
               </div>
-              <div className="col-12 col-xl-6" style={{alignSelf: "center"}}>
+              <div className="col-12 col-xl-6" style={{ alignSelf: "center" }}>
                 <div className="row">
                   <div className="col-6 col-xl-3">
                     <div className="card custom-card overflow-hidden crm-card glow-box">
                       <div className="card-body d-flex gap-2 justify-content-between">
                         <div>
-                          <span className="d-block">Reward</span>
+                          <span className="d-block">
+                            Reward
+                          </span>
                         </div>
                         <div>
                           <span className="text-primary1">
@@ -255,7 +296,12 @@ function LeaderBody() {
                     <div className="card custom-card overflow-hidden crm-card glow-box">
                       <div className="card-body d-flex gap-2 justify-content-between">
                         <div>
-                          <span className="d-block">$ {Number(dashboard?.userDetails?.unity_income || 0).toFixed(2)}</span>
+                          <span className="d-block">
+                            ${" "}
+                            {Number(
+                              dashboard?.userDetails?.unity_income || 0
+                            ).toFixed(2)}
+                          </span>
                         </div>
                         <div>
                           <span className="text-primary1">
@@ -281,7 +327,7 @@ function LeaderBody() {
                     <div className="card custom-card overflow-hidden crm-card glow-box">
                       <div className="card-body d-flex gap-2 justify-content-between">
                         <div>
-                          <span className="d-block ">Position 1st</span>
+                          <span className="d-block ">Position {userInfo?.index + 1}</span>
                         </div>
                         <div>
                           <span className="text-primary1">
@@ -295,7 +341,7 @@ function LeaderBody() {
                     <div className="card custom-card overflow-hidden crm-card glow-box">
                       <div className="card-body d-flex gap-2 justify-content-between">
                         <div>
-                          <span className="d-block">Unit</span>
+                          <span className="d-block">Unit {userInfo?.directCount}</span>
                         </div>
                         <div>
                           <span className="text-primary1">
@@ -312,7 +358,7 @@ function LeaderBody() {
         </div>
       </div>
       <div className="row">
-        <div className="col-xl-12" >
+        <div className="col-xl-12">
           <div
             className="card custom-card overflow-hidden crm-card glow-box"
             style={{
