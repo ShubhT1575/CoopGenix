@@ -228,7 +228,7 @@ function LeaderBody() {
   
     const userId = dashboard?.userDetails?.userId;
     if (userId) {
-      findUserData("9403053623").then((foundUser) => {
+      findUserData(userId).then((foundUser) => {
         if (foundUser) {
           setUserInfo(foundUser);
         }
