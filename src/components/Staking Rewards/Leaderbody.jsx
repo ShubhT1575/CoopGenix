@@ -204,7 +204,7 @@ function LeaderBody() {
     }
   };
 
-  function convertUSDToPOL(usdAmount, ratePerPOL = 0.5) {
+  function convertUSDToPOL(usdAmount, ratePerPOL = 0.2325) {
     // Example: 1 POL = $0.5
     const polAmount = usdAmount / ratePerPOL;
     return polAmount;
