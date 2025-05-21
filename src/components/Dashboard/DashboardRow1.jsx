@@ -159,42 +159,44 @@ function DashboardRow1() {
     }
   };
 
-const withdrawIncomeUnity = async () => {
-  if (!address) return toast.error("Please connect wallet");
+  const withdrawIncomeUnity = async () => {
+    if (!address) return toast.error("Please connect wallet");
 
-  try {
-    setIsLoading(true);
-   const toastId = toast.loading("Requesting Unity Withdraw...");
-    // API call to save withdrawal record
-    const response = await axios.post(apiUrl + "/withdrawWeekly", {
-      
-          walletAddress: address,
-        
+    try {
+      setIsLoading(true);
+      const toastId = toast.loading("Requesting Unity Withdraw...");
+      // API call to save withdrawal record
+      const response = await axios.post(apiUrl + "/withdrawWeekly", {
+        walletAddress: address,
       });
 
-     
-      if(response?.data){
-       console.log("response ",response?.data?.vrsSign?.signature)
-       const amount = response?.data?.vrsSign?.amount
-       const deadline = response?.data?.deadline
-       const vrsdetails = response?.data?.vrsSign?.signature;
-       toast.dismiss(toastId);
-       const vrsrespo = await withdrawvrs(amount,Number(vrsdetails.v),vrsdetails.r,vrsdetails.s,deadline)
-       
-       console.log("VRS resp ",vrsrespo)
-       if(vrsrespo){
-        const toastsuccess = toast.success("Unity Withdraw Success");
-        toast.dismiss(toastsuccess);
-       }
-      }
+      if (response?.data) {
+        console.log("response ", response?.data?.vrsSign?.signature);
+        const amount = response?.data?.vrsSign?.amount;
+        const deadline = response?.data?.deadline;
+        const vrsdetails = response?.data?.vrsSign?.signature;
+        toast.dismiss(toastId);
+        const vrsrespo = await withdrawvrs(
+          amount,
+          Number(vrsdetails.v),
+          vrsdetails.r,
+          vrsdetails.s,
+          deadline
+        );
 
-  } catch (error) {
-    console.error(error.message);
-    toast.error("An error occurred during withdrawal.");
-  } finally {
-    setIsLoading(false);
-  }
-};
+        console.log("VRS resp ", vrsrespo);
+        if (vrsrespo) {
+          const toastsuccess = toast.success("Unity Withdraw Success");
+          toast.dismiss(toastsuccess);
+        }
+      }
+    } catch (error) {
+      console.error(error.message);
+      toast.error("An error occurred during withdrawal.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const getBlockData = async (packageId) => {
     try {
@@ -521,7 +523,10 @@ const withdrawIncomeUnity = async () => {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Promise Reward</span>
-                        <h6 className="mb-0 fw-semibold"> $ {promise || "0"}</h6>
+                        <h6 className="mb-0 fw-semibold">
+                          {" "}
+                          $ {promise || "0"}
+                        </h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -566,7 +571,9 @@ const withdrawIncomeUnity = async () => {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Reward Wallet</span>
-                        <h6 className="mb-0 fw-semibold">$ {Number(udata).toFixed(2) || "0"}</h6>
+                        <h6 className="mb-0 fw-semibold">
+                          $ {Number(udata).toFixed(2) || "0"}
+                        </h6>
                       </div>
                       <div>
                         <span className="text-primary1">
@@ -636,26 +643,23 @@ const withdrawIncomeUnity = async () => {
                   <div className="card custom-card school-card glow-box width-box">
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
-                        <span className="d-block mb-1">Unity Income</span>
+                        <span
+                          className="d-block mb-1"
+                          style={{ whiteSpace: "nowrap" }}
+                        >
+                          Total Team Volume
+                        </span>
+
                         <h6 className="mb-0 fw-semibold">
-                          $ {Number(dashboard?.userDetails?.unity_income || 0).toFixed(2)}
+                          {"0"}
+                          {/* {Number(
+                            dashboard?.userDetails?.unity_income || 0
+                          ).toFixed(2)} */}
                         </h6>
                       </div>
                       <div>
                         <span className="text-primary1">
                           {/* <img src={sponsor} alt="" style={{ width: "40px" }} /> */}
-                        </span>
-                        <span
-                          className="text-info badge bg-success-transparent"
-                          style={{
-                            cursor: "pointer",
-                            position: "absolute",
-                            bottom: "15px",
-                            right: "8px",
-                          }}
-                          onClick={() => withdrawIncomeUnity()}
-                        >
-                          Withdraw
                         </span>
                       </div>
                     </div>
@@ -665,7 +669,7 @@ const withdrawIncomeUnity = async () => {
                   <div className="card custom-card school-card glow-box width-box">
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
-                        <span className="d-block mb-1">Direct Count</span>
+                        <span className="d-block mb-1">Total Team Count</span>
                         <h6 className="mb-0 fw-semibold">
                           {dashboard?.week_directs || "0"}
                         </h6>
@@ -700,8 +704,9 @@ const withdrawIncomeUnity = async () => {
                     <div className="card-body d-flex gap-2 justify-content-between">
                       <div>
                         <span className="d-block mb-1">Referral Reward</span>
-                        <h6 className="mb-0 fw-semibold"> 
-                          $ {Number(dashboard?.sponsor_income).toFixed(2) || "0"}
+                        <h6 className="mb-0 fw-semibold">
+                          ${" "}
+                          {Number(dashboard?.sponsor_income).toFixed(2) || "0"}
                         </h6>
                       </div>
                       <div>
@@ -718,9 +723,10 @@ const withdrawIncomeUnity = async () => {
                       <div>
                         <span className="d-block mb-1">Reward Goal</span>
                         <h6 className="mb-0 fw-semibold">
-                          $ {dashboard?.reward_goal > 0
-                          ? Number(dashboard.reward_goal).toFixed(2)
-                          : "0"}
+                          ${" "}
+                          {dashboard?.reward_goal > 0
+                            ? Number(dashboard.reward_goal).toFixed(2)
+                            : "0"}
                         </h6>
                       </div>
                       <div>
@@ -750,7 +756,7 @@ const withdrawIncomeUnity = async () => {
                         <span className="d-block mb-1">Direct Volume</span>
                         <h6 className="mb-0 fw-semibold">
                           $ {dashboard?.direct_volume || "0"}
-                          </h6>
+                        </h6>
                       </div>
                       {/* <div>
                         <span className="text-primary1">
@@ -782,15 +788,11 @@ const withdrawIncomeUnity = async () => {
          
         </div> */}
 
-       
-
         <div className="col-sm-12 col-md-6 col-lg-6">
           <div
             className="row col-md-12 col-lg-12 left-row-cards"
             style={{ paddingRight: "0px", marginLeft: "0", marginRight: "0" }}
-          >
-
-          </div>
+          ></div>
 
           <div
             className="card custom-card crm-card glow-box"
@@ -861,10 +863,7 @@ const withdrawIncomeUnity = async () => {
                   console.log(timeData, block.id, "timeData");
                   console.log(blockRecords, "blockRecordsxxxx");
                   return (
-                    <div
-                      className=""
-                      key={block.id}
-                    >
+                    <div className="" key={block.id}>
                       <div className="card custom-card crm-card minwidth">
                         <div className="card-body">
                           <div className="reward-box glow-box">

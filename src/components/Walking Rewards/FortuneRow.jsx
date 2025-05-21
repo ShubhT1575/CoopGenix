@@ -196,7 +196,7 @@ function CoreBody() {
 
               {reportType === "Level Report" && (
                 <select className="form-select w-auto" value={level} onChange={handleLevelChange}>
-                  {Array.from({ length: 15 }, (_, i) => i + 1).map((lvl) => (
+                  {Array.from({ length: 10 }, (_, i) => i + 1).map((lvl) => ( 
                     <option key={lvl} value={lvl}>Level {lvl}</option>
                   ))}
                 </select>
