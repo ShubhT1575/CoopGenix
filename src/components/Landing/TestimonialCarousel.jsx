@@ -29,7 +29,7 @@ const TestimonialCarousel = () => {
   };
 
   return (
-    <div className="testimonial-carousel relative w-full max-w-lg mx-auto">
+    <div className="testimonial-carousel relative w-full max-w-lg mx-auto" >
       <button
         className="carousel-btn prev-btn absolute left-0 top-1/2 transform -translate-y-1/2 px-4 py-2 bg-gray-800 text-white rounded-full"
         onClick={prevSlide}
@@ -37,7 +37,7 @@ const TestimonialCarousel = () => {
         ‹
       </button>
 
-      <div className="testimonial-container glow-box-blue border-curve relative w-full overflow-hidden">
+      <div className="testimonial-container glow-box-blue border-curve relative w-full overflow-hidden" style={{background: "linear-gradient(135deg,#2a00ff,#0d0b4f)"}}>
         {testimonials.map((testimonial, index) => (
           <div
             key={index}
@@ -45,7 +45,7 @@ const TestimonialCarousel = () => {
               index === currentIndex ? "active" : ""
             }`}
           >
-            <p className="testimonial-text text-center">{testimonial.text}</p>
+            <p className="testimonial-text text-center text-white">{testimonial.text}</p>
             <h3 className="testimonial-user text-center">{testimonial.user}</h3>
           </div>
         ))}

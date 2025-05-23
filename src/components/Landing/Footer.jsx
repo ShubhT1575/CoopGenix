@@ -4,7 +4,7 @@ import "./css/Newbutton.css";
 
 const Footer = () => {
   return (
-    <footer className="footer-main bg-img" id="contact">
+    <footer className="footer-main bg-img" id="contact" style={{background: "#0d0b4f"}}>
       <div className="footer-container">
         <div className="footer-column about-column">
           <div className="logo-section">
@@ -63,7 +63,7 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        <p>© 2025 CoopGenix All Rights Reserved.</p>
+        <p className="text-white">© 2025 CoopGenix All Rights Reserved.</p>
         <div className="footer-links">
           <a href="/terms">Terms & Conditions</a>
           <a href="/privacy">Privacy Policy</a>

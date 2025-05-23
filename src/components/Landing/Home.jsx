@@ -25,7 +25,6 @@ import Footer from "./Footer";
 // import economy from "/Home Logo/Asset 1.png"
 
 export default function Home() {
-
   const [timeLeft, setTimeLeft] = useState("");
 
   useEffect(() => {
@@ -41,9 +40,16 @@ export default function Home() {
         setTimeLeft("🎉 Launching Now!");
         clearInterval(timer);
       } else {
-        const hours = String(Math.floor((difference / (1000 * 60 * 60)) % 24)).padStart(2, '0');
-        const minutes = String(Math.floor((difference / (1000 * 60)) % 60)).padStart(2, '0');
-        const seconds = String(Math.floor((difference / 1000) % 60)).padStart(2, '0');
+        const hours = String(
+          Math.floor((difference / (1000 * 60 * 60)) % 24)
+        ).padStart(2, "0");
+        const minutes = String(
+          Math.floor((difference / (1000 * 60)) % 60)
+        ).padStart(2, "0");
+        const seconds = String(Math.floor((difference / 1000) % 60)).padStart(
+          2,
+          "0"
+        );
 
         setTimeLeft(`${hours}:${minutes}:${seconds}`);
       }
@@ -57,7 +63,7 @@ export default function Home() {
       <Header />
       {/* Hero Section */}
       <div
-        className="hero-wrapper hero-1 hero-bg bg-img"
+        className="hero-wrapper hero-1 bg-img"
         style={{ height: "100%" }}
       >
         <div className="bg-1 bg-img"></div>
@@ -72,7 +78,7 @@ export default function Home() {
           <div className="hero-style1">
             <div className="row flex-row-reverse">
               <div className="col-lg-12">
-                <h1 className="hero-title text-center animated-text">
+                <h1 className="hero-title text-center animated-text" >  
                   <span className="word">C</span>
                   <span className="word">O</span>
                   <span className="word">O</span>
@@ -90,16 +96,20 @@ export default function Home() {
                       style={{ textAlign: "justify" }}
                     >
                       <div className="countdown-timer text-center mb-3">
-  <h2 style={{
-    fontSize: "2rem",
-    color: "#FFD700",
-    textShadow: "0 0 15px #FFD700",
-    animation: "pulse 1.5s infinite"
-  }}>
-    {/* 🚀 Launching Tommorow 5:00 PM — Time Left: {timeLeft} */}
-  </h2>
-</div>
-                      <h1 style={{fontSize: "3.5rem"}}>The World’s Most Powerful Community System</h1>
+                        <h2
+                          style={{
+                            fontSize: "2rem",
+                            color: "#FFD700",
+                            textShadow: "0 0 15px #FFD700",
+                            animation: "pulse 1.5s infinite",
+                          }}
+                        >
+                          {/* 🚀 Launching Tommorow 5:00 PM — Time Left: {timeLeft} */}
+                        </h2>
+                      </div>
+                      <h1 style={{ fontSize: "3.5rem" }}>
+                        The World’s Most Powerful Community System
+                      </h1>
                       Empowering Communities, One Contribution at a Time! A
                       decentralized, trust-driven platform where members
                       contribute, support, and grow together—ensuring financial
@@ -135,31 +145,41 @@ export default function Home() {
       <div className="about-us hero-1 bg-img" id="">
         <div className="about-container">
           <div className="about-content">
-            <h2>Key Principles</h2>
-            <p>
-            The World's First Community-Driven System
-            </p>
+            <h2 style={{color: "#00FFFF"}}>Key Principles</h2>
+            <p className="text-white">The World's First Community-Driven System</p>
           </div>
           <div className="about-principles">
             <div className="principle glow-box">
-              <span className="emoji"><i class="fa-solid fa-dna"></i></span>
+              <span className="emoji text-white">
+                <i class="fa-solid fa-dna"></i>
+              </span>
               <h3>Beyond Earnings – A Financial Revolution</h3>
-              <p>
-              Coopgenix isn’t just about rewards; it’s about breaking financial barriers and empowering individuals with a self-sustaining, debt-free model.
+              <p className="text-white">
+                Coopgenix isn’t just about rewards; it’s about breaking
+                financial barriers and empowering individuals with a
+                self-sustaining, debt-free model.
               </p>
             </div>
             <div className="principle glow-box">
-              <span className="emoji"><i className="fa-solid fa-arrow-up-right-dots"></i></span>
+              <span className="emoji text-white">
+                <i className="fa-solid fa-arrow-up-right-dots"></i>
+              </span>
               <h3>Earn, Multiply & Reinvest Seamlessly</h3>
-              <p>
-              Our smart contract ensures continuous financial growth by auto-reinvesting a portion of rewards, creating unstoppable earning cycles.
+              <p className="text-white">
+                Our smart contract ensures continuous financial growth by
+                auto-reinvesting a portion of rewards, creating unstoppable
+                earning cycles.
               </p>
             </div>
             <div className="principle glow-box">
-              <span className="emoji"><i class="fa-brands fa-superpowers"></i></span>
+              <span className="emoji text-white">
+                <i class="fa-brands fa-superpowers"></i>
+              </span>
               <h3>The Power of Unified Prosperity</h3>
-              <p>
-              Unlike traditional financial systems, Coopgenix transforms contribution fees into community-driven wealth, ensuring everyone prospers together.
+              <p className="text-white">
+                Unlike traditional financial systems, Coopgenix transforms
+                contribution fees into community-driven wealth, ensuring
+                everyone prospers together.
               </p>
             </div>
           </div>
@@ -167,82 +187,103 @@ export default function Home() {
       </div>
 
       {/* Why Choose Us Section */}
-      <div className="why-choose-us hero-1 bg-img" id="why-us" style={{paddingTop: "160px",paddingBottom: "150px"}}>
-        <h2 className="section-title text-light">Why Choose Us?</h2>
+      <div
+        className="why-choose-us hero-1 bg-img"
+        id="why-us"
+        style={{ paddingTop: "160px", paddingBottom: "150px" }}
+      >
+        <h2 className="section-title"  style={{color: "#00FFFF"}}>Why Choose Us?</h2>
 
         <div className="value-propositions">
-          <div className="value-box glow-box-blue border-curve">
+          <div className="value-box glow-box-blue border-curve" >
             {/* <span className="icon">💡</span> */}
             <img className="img-img" src={blockchain1} alt="" />
             <h3>Decentralized & Transparent</h3>
-            <p>No banks, no hidden fees.</p>
+            <p className="text-white">No banks, no hidden fees.</p>
           </div>
 
           <div className="value-box glow-box-blue border-curve">
             {/* <span className="icon">💡</span> */}
             <img className="img-img" src={security} alt="" />
             <h3>Secure & Trustworthy</h3>
-            <p>100% smart contract-driven transactions.</p>
+            <p className="text-white">100% smart contract-driven transactions.</p>
           </div>
 
           <div className="value-box glow-box-blue border-curve">
             {/* <span className="icon">💡</span> */}
             <img className="img-img" src={creator} alt="" />
             <h3>Instant & Global Access</h3>
-            <p>Raise funds from anywhere, anytime.</p>
+            <p className="text-white">Raise funds from anywhere, anytime.</p>
           </div>
 
           <div className="value-box glow-box-blue border-curve" id="about">
             {/* <span className="icon">💡</span> */}
             <img className="img-img" src={crowdfunding} alt="" />
             <h3>Community-Driven</h3>
-            <p>Support real causes with direct impact.</p>
+            <p className="text-white">Support real causes with direct impact.</p>
           </div>
         </div>
 
         {/* Comparison Table */}
-        <div className="comparison-table" >
-          <h3 className="text-light">
-          Coopgenix - The Smartest Way to Grow Together
+        <div className="comparison-table">
+          <h3 className="text-"  style={{color: "#00FFFF"}}>
+            Coopgenix - The Smartest Way to Grow Together
           </h3>
           <div className="video-container">
-  <iframe 
-    src="https://www.youtube.com/embed/iht2aiIXsZQ?autoplay=1&mute=1" 
-    frameBorder="0" 
-    allow="autoplay; encrypted-media" 
-    allowFullScreen>
-  </iframe>
-</div>
+            <iframe
+              src="https://www.youtube.com/embed/iht2aiIXsZQ?autoplay=1&mute=1"
+              frameBorder="0"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+            ></iframe>
+          </div>
         </div>
       </div>
 
       {/* Fundraising Categories Section */}
-      <div className="fundraising-categories hero-1 bg-img" id="categories" style={{paddingTop: "100px" , paddingBottom: "100px"}}>
-        <h2 className="section-title text-light">Start For Your Purpose</h2>
+      <div
+        className="fundraising-categories hero-1 bg-img"
+        id="categories"
+        style={{ paddingTop: "100px", paddingBottom: "100px" }}
+      >
+        <h2 className="section-title text-"  style={{color: "#00FFFF"}}>Start For Your Purpose</h2>
 
         <div className="categories-container">
           <div className="category-box glow-box">
-            <span className="icon"><i className="fa-solid fa-truck-medical" style={{fontSize: "35px"}}></i></span>
+            <span className="icon text-white">
+              <i
+                className="fa-solid fa-truck-medical"
+                style={{ fontSize: "35px" }}
+              ></i>
+            </span>
             <h3>Medical Emergencies</h3>
           </div>
 
           <div className="category-box glow-box">
-            <span className="icon"><i className="fa-solid fa-graduation-cap"></i></span>
+            <span className="icon text-white">
+              <i className="fa-solid fa-graduation-cap"></i>
+            </span>
             <h3>Education & Scholarships</h3>
           </div>
 
           <div className="category-box glow-box">
-            <span className="icon"><i className="fa-solid fa-lightbulb"></i></span>
+            <span className="icon text-white">
+              <i className="fa-solid fa-lightbulb"></i>
+            </span>
             <h3>Startups & Business Ideas</h3>
           </div>
 
           <div className="category-box glow-box">
-            <span className="icon"><i className="fa-solid fa-building-ngo"></i></span>
+            <span className="icon text-white">
+              <i className="fa-solid fa-building-ngo"></i>
+            </span>
             <h3>Non-Profits & Charity</h3>
           </div>
 
           <div className="category-box glow-box">
-            <span className="icon"><i className="fa-solid fa-people-group"></i></span>
+            <span className="icon text-white">
+              <i className="fa-solid fa-people-group"></i>
+            </span>
             <h3>Community Projects</h3>
           </div>
         </div>
@@ -250,7 +291,7 @@ export default function Home() {
 
       {/* Success Stories Section */}
       <div className="testimonials hero-1 bg-img" id="success-stories">
-        <h2 className="section-title text-light">
+        <h2 className="section-title text-"  style={{color: "#00FFFF"}}>
           Success Stories & Testimonials
         </h2>
 
@@ -289,83 +330,114 @@ export default function Home() {
       </div>
 
       {/* Security Section */}
-      <div className="security hero-1 bg-img" id="security"  style={{paddingTop: "100px" , paddingBottom: "100px"}}>
-        <h2 className="section-title text-light">
+      <div
+        className="security hero-1 bg-img"
+        id="security"
+        style={{ paddingTop: "100px", paddingBottom: "100px" }}
+      >
+        <h2 className="section-title text-"  style={{color: "#00FFFF"}}>
           {/* <img className="img-img" src={security} alt="" /> */}
           Security & Transparency
         </h2>
-        <p className="section-description">
+        <p className="section-description text-white">
           We ensure that every transaction is secure, transparent, and
           tamper-proof with the power of blockchain technology.
         </p>
 
         <div className="security-container">
           <div className="security-box glow-box">
-            <div className="icon"><i className="fa-solid fa-lock"></i></div>
-            <h3>Ultimate Security & Unmatched Transparency</h3>
-            <p>
-            Immutable Blockchain Security – Transactions are cryptographically secured and permanently recorded, ensuring a tamper-proof and fraud-resistant ecosystem.
+            <div className="icon  text-white">
+              <i className="fa-solid fa-lock"></i>
+            </div>
+            <h3 className="text-white">Ultimate Security & Unmatched Transparency</h3>
+            <p className="text-white">
+              Immutable Blockchain Security – Transactions are cryptographically
+              secured and permanently recorded, ensuring a tamper-proof and
+              fraud-resistant ecosystem.
             </p>
           </div>
 
           <div className="security-box glow-box">
-            <div className="icon"><i className="fa-solid fa-file-contract"></i></div>
-            <h3>Real-Time Financial Visibility</h3>
-            <p>
-            Every contribution and reward is instantly verifiable, fostering absolute trust and financial clarity within the community.
+            <div className="icon text-white">
+              <i className="fa-solid fa-file-contract"></i>
+            </div>
+            <h3 className="text-white">Real-Time Financial Visibility</h3>
+            <p className="text-white">
+              Every contribution and reward is instantly verifiable, fostering
+              absolute trust and financial clarity within the community.
             </p>
           </div>
 
           <div className="security-box glow-box">
-            <div className="icon"><i className="fa-solid fa-wallet"></i></div>
-            <h3>Trustless & Autonomous System</h3>
-            <p>
-            Powered by smart contracts, eliminating intermediaries, ensuring fair distribution, and guaranteeing full transparency at all times. 
+            <div className="icon text-white">
+              <i className="fa-solid fa-wallet"></i>
+            </div>
+            <h3 className="text-white">Trustless & Autonomous System</h3>
+            <p className="text-white">
+              Powered by smart contracts, eliminating intermediaries, ensuring
+              fair distribution, and guaranteeing full transparency at all
+              times.
             </p>
           </div>
         </div>
       </div>
 
       {/* Community Impact Section */}
-      <div className="community-impact hero-1 bg-img" id="community"  style={{paddingTop: "100px" , paddingBottom: "100px"}}>
-        <h2 className="section-title text-light">
+      <div
+        className="community-impact hero-1 bg-img"
+        id="community"
+        style={{ paddingTop: "100px", paddingBottom: "100px" }}
+      >
+        <h2 className="section-title text"  style={{color: "#00FFFF"}}>
           {/* <img className="img-img" src={crowdfunding} alt="" /> */}
           Community & Social Impact
         </h2>
-        <p className="section-description">
+        <p className="section-description text-white">
           Be part of a movement that changes lives. Support causes, contribute,
           or help spread the word.
         </p>
 
         <div className="impact-container">
           <div className="impact-box glow-box-blue border-curve">
-            <div className="icon"><i className="fa-solid fa-handshake"></i></div>
-            <h3>Join Our Mission</h3>
-            <p>
+            <div className="icon text-white">
+              <i className="fa-solid fa-handshake"></i>
+            </div>
+            <h3 className="text-white">Join Our Mission</h3>
+            <p className="text-white">
               Help people raise funds for meaningful causes and be a part of
               real change.
             </p>
           </div>
 
           <div className="impact-box  glow-box-blue border-curve">
-            <div className="icon"><i className="fa-solid fa-circle-dollar-to-slot"></i></div>
-            <h3>Empowering Financial Freedom</h3>
-            <p>
-            Breaking barriers to wealth by providing a transparent, opportunity-driven system that uplifts lives and secures futures.
+            <div className="icon text-white">
+              <i className="fa-solid fa-circle-dollar-to-slot"></i>
+            </div>
+            <h3 className="text-white">Empowering Financial Freedom</h3>
+            <p className="text-white">
+              Breaking barriers to wealth by providing a transparent,
+              opportunity-driven system that uplifts lives and secures futures.
             </p>
           </div>
 
           <div className="impact-box glow-box-blue border-curve">
-            <div className="icon"><i class="fa-solid fa-hand-fist"></i></div>
-            <h3>Stronger Together</h3>
-            <p>
-            A thriving ecosystem where collective growth fuels individual success, fostering trust, unity, and long-term financial stability.
+            <div className="icon text-white">
+              <i class="fa-solid fa-hand-fist"></i>
+            </div>
+            <h3 className="text-white">Stronger Together</h3>
+            <p className="text-white">
+              A thriving ecosystem where collective growth fuels individual
+              success, fostering trust, unity, and long-term financial
+              stability.
             </p>
           </div>
         </div>
 
         <div className="cta-container">
-          <Link to="https://telegram.me/coopgenixcommunity" className="cta-button">
+          <Link
+            to="https://telegram.me/coopgenixcommunity"
+            className="cta-button text-white"
+          >
             Join the Community
           </Link>
         </div>
@@ -374,17 +446,16 @@ export default function Home() {
       {/* CTA Section */}
       <div className="full-width hero-1 bg-img">
         <div className="cta-section">
-          <h2 className="cta-title text-light">
+          <h2 className="cta-title text-"  style={{color: "#00FFFF"}}>
             {/* <img className="img-img" src={deal} alt="" />  */}
-            Ready to Make a
-            Difference?
+            Ready to Make a Difference?
           </h2>
-          <p className="cta-description">
-          Take the First Step to Make a Difference Today
+          <p className="cta-description text-white">
+            Take the First Step to Make a Difference Today
           </p>
 
           <div className="cta-buttons">
-            <Link to="/create-campaign" className="cta-btn primary">
+            <Link to="/create-campaign" className="cta-btn primary text-white">
               Join CoopGenix
             </Link>
             {/* <Link to="/campaigns" className="cta-btn secondary">Explore Campaigns</Link> */}
@@ -393,25 +464,28 @@ export default function Home() {
       </div>
 
       {/* Fundraising Stats */}
-      <div className="full-width hero-1 bg-img" id="liveFund" >
-        <div className="fundraising-stats hero-1 bg-img"  style={{paddingTop: "100px" , paddingBottom: "100px"}}>
-          <h2 className="stats-title text-light">
-              {/* <img className="img-img" src={loan} alt="" />  */}
+      <div className="full-width hero-1 bg-img" id="liveFund">
+        <div
+          className="fundraising-stats hero-1 bg-img"
+          style={{ paddingTop: "100px", paddingBottom: "100px" }}
+        >
+          <h2 className="stats-title text-ligt"  style={{color: "#00FFFF"}}>
+            {/* <img className="img-img" src={loan} alt="" />  */}
             Live Stats
           </h2>
 
           <div className="stats-counters">
             <div className="counter-box">
-              <h3 className="counter" id="totalRaised">
+              <h3 className="counter text-white" id="totalRaised">
                 $ 0
               </h3>
-              <p>Total Reward</p>
+              <p className=" text-white">Total Reward</p>
             </div>
             <div className="counter-box">
-              <h3 className="counter" id="activeCampaigns">
+              <h3 className="counter text-white" id="activeCampaigns">
                 0
               </h3>
-              <p>Total Community</p>
+              <p className=" text-white">Total Community</p>
             </div>
           </div>
 
@@ -423,44 +497,50 @@ export default function Home() {
         </div> */}
           {/* Latest FundRaiser */}
           <div className="featured-fundraisers">
-            <h3 className="text-light">
+            <h3 className="text-"  style={{color: "#00FFFF"}}>
               {/* <img className="img-img" src={economy} alt="" /> */}
               Top Gainer
             </h3>
-            <div className="fundraiser-list"> 
+            <div className="fundraiser-list">
               <div className="fundraiser-box  glow-box">
-              <div className="icon"><i class="fa-solid fa-user-shield"></i></div>
-                <h4>#22345</h4>
-                <p>Raised: ₹1,20,000 / Goal: ₹2,00,000</p>
+                <div className="icon text-white">
+                  <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <h4 className="text-white">#22345</h4>
+                <p className="text-white">Raised: ₹1,20,000 / Goal: ₹2,00,000</p>
                 <div className="progress-bar">
                   <div style={{ width: "60%" }}></div>
                 </div>
-                <Link to="/campaign/1" className="cta-btn">
+                <Link to="/campaign/1" className="cta-btn text-white">
                   Join Now
                 </Link>
               </div>
 
               <div className="fundraiser-box  glow-box">
-              <div className="icon"><i class="fa-solid fa-user-shield"></i></div>
-                <h4>#22365</h4>
-                <p>Raised: ₹80,000 / Goal: ₹1,50,000</p>
+                <div className="icon text-white">
+                  <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <h4 className="text-white">#22365</h4>
+                <p className="text-white">Raised: ₹80,000 / Goal: ₹1,50,000</p>
                 <div className="progress-bar">
                   <div style={{ width: "53%" }}></div>
                 </div>
-                <Link to="/campaign/2" className="cta-btn">
-                Join Now
+                <Link to="/campaign/2" className="cta-btn text-white">
+                  Join Now
                 </Link>
               </div>
 
               <div className="fundraiser-box  glow-box">
-              <div className="icon"><i class="fa-solid fa-user-shield"></i></div>
-                <h4>#27645</h4>
-                <p>Raised: ₹50,000 / Goal: ₹1,00,000</p>
+                <div className="icon text-white">
+                  <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <h4 className="text-white">#27645</h4>
+                <p className="text-white">Raised: ₹50,000 / Goal: ₹1,00,000</p>
                 <div className="progress-bar">
                   <div style={{ width: "50%" }}></div>
                 </div>
-                <Link to="/campaign/3" className="cta-btn">
-                Join Now
+                <Link to="/campaign/3" className="cta-btn text-white">
+                  Join Now
                 </Link>
               </div>
             </div>
@@ -470,12 +550,15 @@ export default function Home() {
 
       {/* FAQ Section */}
       <div className="full-width hero-1 bg-img" id="faq">
-        <div className="faq-section hero-1 bg-img"  style={{paddingTop: "100px" , paddingBottom: "100px"}}>
-          <h2 className="text-light">Frequently Asked Questions</h2>
+        <div
+          className="faq-section hero-1 bg-img"
+          style={{ paddingTop: "100px", paddingBottom: "100px" }}
+        >
+          <h2 className="text-"  style={{color: "#00FFFF"}}>Frequently Asked Questions</h2>
 
           <div className="faq-wrapper">
             <div className="faq-category">
-              <h3>General Questions</h3>
+              <h3 className="text-white">General Questions</h3>
               <div className="faq-container" id="generalQuestionsAccordion">
                 <div className="faq-box">
                   <div
@@ -484,7 +567,9 @@ export default function Home() {
                     data-bs-toggle="collapse"
                     data-bs-target="#howItWorks"
                   >
-                    <h3 style={{textAlign: "left"}}>How does CoopGenix work?</h3>
+                    <h3 style={{ textAlign: "left", color: "white" }}>
+                      How does CoopGenix work?
+                    </h3>
                     <span className="faq-toggle ms-auto">+</span>
                   </div>
                   <p
@@ -506,7 +591,9 @@ export default function Home() {
                     data-bs-toggle="collapse"
                     data-bs-target="#hiddenFees"
                   >
-                    <h3 style={{textAlign: "left"}}>Are there any hidden fees?</h3>
+                    <h3 style={{ textAlign: "left", color: "white"  }}>
+                      Are there any hidden fees?
+                    </h3>
                     <span className="faq-toggle ms-auto">+</span>
                   </div>
                   <p
@@ -526,7 +613,9 @@ export default function Home() {
                     data-bs-toggle="collapse"
                     data-bs-target="#startFundraiser"
                   >
-                    <h3 style={{textAlign: "left"}}>Can anyone start a fundraiser?</h3>
+                    <h3 style={{ textAlign: "left", color: "white"  }}>
+                      Can anyone start a fundraiser?
+                    </h3>
                     <span className="faq-toggle ms-auto">+</span>
                   </div>
                   <p
@@ -542,16 +631,18 @@ export default function Home() {
             </div>
 
             <div className="faq-category">
-              <h3>Security & Withdrawals</h3>
+              <h3 className="text-white">Security & Withdrawals</h3>
               <div className="faq-container" id="securityAccordion">
                 <div className="faq-box">
-                <div
+                  <div
                     className="faq-question accordion-button collapsed"
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#donationSecure"
                   >
-                    <h3 style={{textAlign: "left"}}>Is my donation secure?</h3>
+                    <h3 style={{ textAlign: "left", color: "white"  }}>
+                      Is my donation secure?
+                    </h3>
                     <span className="faq-toggle ms-auto">+</span>
                   </div>
                   <p
@@ -565,13 +656,15 @@ export default function Home() {
                 </div>
 
                 <div className="faq-box">
-                <div
+                  <div
                     className="faq-question accordion-button collapsed"
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#withdrawFunds"
                   >
-                    <h3 style={{textAlign: "left"}}>How do I withdraw funds?</h3>
+                    <h3 style={{ textAlign: "left", color: "white"  }}>
+                      How do I withdraw funds?
+                    </h3>
                     <span className="faq-toggle ms-auto">+</span>
                   </div>
                   <p
@@ -586,13 +679,15 @@ export default function Home() {
                 </div>
 
                 <div className="faq-box">
-                <div
+                  <div
                     className="faq-question accordion-button collapsed"
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#trackContributions"
                   >
-                    <h3 style={{textAlign: "left"}}>Can I track my contributions?</h3>
+                    <h3 style={{ textAlign: "left", color: "white"  }}>
+                      Can I track my contributions?
+                    </h3>
                     <span className="faq-toggle ms-auto">+</span>
                   </div>
                   <p
@@ -613,27 +708,54 @@ export default function Home() {
 
       {/* Get Involved Section */}
       <div className="get-involved hero-1 bg-img" id="getInvolved">
-        <h2>Get Involved & Make an Impact</h2>
+        <h2 style={{color: "#00FFFF"}}>Get Involved & Make an Impact</h2>
         <div className="involved-boxes">
           <div className="involved-box  glow-box">
-            <h3><i className="fa-solid fa-handshake-simple" style={{marginRight: "10px"}}></i>Join the Movement</h3>
-            <p>Be part of a thriving community dedicated to financial empowerment and positive change worldwide.</p>
-            <Link to="/" className="cta">
+            <h3>
+              <i
+                className="fa-solid fa-handshake-simple"
+                style={{ marginRight: "10px" }}
+              ></i>
+              Join the Movement
+            </h3>
+            <p className="text-white">
+              Be part of a thriving community dedicated to financial empowerment
+              and positive change worldwide.
+            </p>
+            <Link to="/" className="cta text-white">
               Join Now
             </Link>
           </div>
           <div className="involved-box glow-box">
-            <h3><i className="fa-solid fa-building-columns"  style={{marginRight: "10px"}}></i>Contribute & Earn</h3>
-            <p>Support the network while benefiting from structured rewards that promote long-term financial growth and stability.</p>
-            <Link to="/" className="cta">
-            Join Now
+            <h3>
+              <i
+                className="fa-solid fa-building-columns"
+                style={{ marginRight: "10px" }}
+              ></i>
+              Contribute & Earn
+            </h3>
+            <p className="text-white" >
+              Support the network while benefiting from structured rewards that
+              promote long-term financial growth and stability.
+            </p>
+            <Link to="/" className="cta text-white">
+              Join Now
             </Link>
           </div>
           <div className="involved-box glow-box">
-            <h3><i className="fa-solid fa-sack-dollar" style={{marginRight: "10px"}}></i>Empower Others</h3>
-            <p>Share opportunities, educate, and uplift communities by fostering a sustainable, transparent, and rewarding ecosystem.</p>
-            <Link to="/" className="cta">
-            Join Now
+            <h3>
+              <i
+                className="fa-solid fa-sack-dollar"
+                style={{ marginRight: "10px" }}
+              ></i>
+              Empower Others
+            </h3>
+            <p className="text-white">
+              Share opportunities, educate, and uplift communities by fostering
+              a sustainable, transparent, and rewarding ecosystem.
+            </p>
+            <Link to="/" className="cta text-white">
+              Join Now
             </Link>
           </div>
         </div>
@@ -641,22 +763,47 @@ export default function Home() {
 
       {/* Why You Can Trust Us */}
       <div className="get-involved hero-1 bg-img">
-        <h2>Coopgenix -  A Revolution in Community Rewards</h2>
+        <h2 style={{color: "#00FFFF"}}>Coopgenix - A Revolution in Community Rewards</h2>
         <div className="involved-boxes">
           <div className="involved-box  glow-box-blue border-curve">
-            <h3><i className="fa-solid fa-shield-halved" style={{marginRight: "10px"}}></i>Decentralized & Transparent</h3>
-            <p>Built on blockchain, ensuring fair, automated, and trustless reward distribution for every member</p>
+            <h3>
+              <i
+                className="fa-solid fa-shield-halved"
+                style={{ marginRight: "10px" }}
+              ></i>
+              Decentralized & Transparent
+            </h3>
+            <p className="text-white">
+              Built on blockchain, ensuring fair, automated, and trustless
+              reward distribution for every member
+            </p>
             {/* <Link to="/volunteer" className="cta">Join Now</Link> */}
           </div>
           <div className="involved-box  glow-box-blue border-curve">
-            <h3><i className="fa-solid fa-cubes"  style={{marginRight: "10px"}}></i>12 Packages Opportunity</h3>
-            <p>Unlock endless opportunities with our 12-tier packages—begin your journey today for only $5</p>
+            <h3>
+              <i
+                className="fa-solid fa-cubes"
+                style={{ marginRight: "10px" }}
+              ></i>
+              12 Packages Opportunity
+            </h3>
+            <p className="text-white">
+              Unlock endless opportunities with our 12-tier packages—begin your
+              journey today for only $5
+            </p>
             {/* <Link to="/partnership" className="cta">Partner Up</Link> */}
           </div>
           <div className="involved-box  glow-box-blue border-curve">
-            <h3><i className="fa-solid fa-chart-diagram" style={{marginRight: "10px"}}></i>4 Algorithmic Rewards</h3>
-            <p>
-            Earn Rewards From: Block 499%, Global $948,726, Referral 57%, Promise 200%—maximize your potential earnings!
+            <h3>
+              <i
+                className="fa-solid fa-chart-diagram"
+                style={{ marginRight: "10px" }}
+              ></i>
+              4 Algorithmic Rewards
+            </h3>
+            <p className="text-white">
+              Earn Rewards From: Block 499%, Global $948,726, Referral 57%,
+              Promise 200%—maximize your potential earnings!
             </p>
             {/* <Link to="/create-campaign" className="cta">Start Fundraising</Link> */}
           </div>
@@ -664,7 +811,7 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <Footer/>
+      <Footer />
       {/* <footer className="footer hero-1 bg-img ">
         <div className="footer-container">
           <div className="footer-column">

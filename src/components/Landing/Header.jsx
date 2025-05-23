@@ -109,27 +109,27 @@ export default function Header() {
                           </a>
                         </li> */}
                         <li>
-                          <a href="#about" className="section-link">
+                          <a href="#about" className="section-link text-white">
                           About Coopgenix
 
                           </a>
                         </li>
                         <li className="">
-                          <a href="#community">Social Impact
+                          <a href="#community" className="text-white">Social Impact
                           </a>
 
                         </li>
                         <li>
-                          <a href="#liveFund">Live States</a>
+                          <a href="#liveFund" className="text-white">Live States</a>
                         </li>
                         {/* <li>
                           <a href="#getInvolved">Get Involved</a>
                         </li> */}
                         <li>
-                          <a href="#faq">FAQ</a>
+                          <a href="#faq" className="text-white">FAQ</a>
                         </li>
                         <li>
-                          <a href="#" onClick={showLoading}>Contact Us</a>
+                          <a href="#" onClick={showLoading} className="text-white">Contact Us</a>
                         </li>
                       </ul>
                     </div>

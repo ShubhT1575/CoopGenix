@@ -1,12 +1,12 @@
 /* From Uiverse.io by Peary74 */ 
 .buttons {
-    background: linear-gradient(30deg, #000 35%, #d32bf5 73%);
+    background: transparent;
     position: relative;
     padding: 17px 45px;
     font-size: 20px;
     font-weight: 500;
-    color: white;
-    border: 3px solid #d32bf5;
+    color: #00FFFF;
+    border: 3px solid #ffffff;
     border-radius: 8px;
     transition: all .3s ease-in-out;
   }
@@ -184,7 +184,7 @@
   }
   
   .boxx:hover:after {
-    border-color: #d32bf5;
+    border-color: #ffffff;
     height: 100%;
     transform: translateX(0);
     transition: .3s transform linear, .3s height linear .5s;
@@ -425,7 +425,7 @@ body.dark-theme {
 
 /* Principle Box */
 .principle {
-  background: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg,#2a00ff,#0d0b4f) !important;
   padding: 20px;
   border-radius: 10px;
   margin: 20px auto;
@@ -642,7 +642,7 @@ td {
   flex: 1;
   max-width: 220px;
   padding: 20px;
-  background: rgba(0, 0, 0, 0.6); /* Transparent Background */
+  background: linear-gradient(135deg,#2a00ff,#0d0b4f);/* Transparent Background */
   border-radius: 12px;
   text-align: center;
   color: var(--text-color);
@@ -847,7 +847,7 @@ td {
   flex: 1;
   min-width: 280px;
   max-width: 350px;
-  background: rgba(0, 0, 0, 0.6);
+  background: linear-gradient(135deg,#2a00ff,#0d0b4f);
   border: 2px solid var(--primary-glow);
   border-radius: 12px;
   box-shadow: 0 0 15px var(--primary-glow);
@@ -924,7 +924,7 @@ td {
   flex: 1;
   min-width: 280px;
   max-width: 350px;
-  background: rgba(0, 0, 0, 0.6);
+  background: linear-gradient(135deg,#2a00ff,#0d0b4f);
   border: 2px solid var(--primary-glow);
   border-radius: 12px;
   box-shadow: 0 0 15px var(--primary-glow);
@@ -1599,7 +1599,7 @@ td {
 }
 
 .involved-box {
-  background: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg,#2a00ff,#0d0b4f);
   padding: 20px;
   border-radius: 10px;
   text-align: center;
