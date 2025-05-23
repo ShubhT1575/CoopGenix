@@ -262,13 +262,27 @@ function CoreBody() {
     <div className="row">
       <div className="col-xl-12">
         <div className="card custom-card overflow-hidden crm-card glow-box">
-          <div className="card-header justify-content-between">
+          <div className="card-header justify-content-between pst">
             <div className="card-title">Rewards Data</div>
-            <div className="d-flex gap-2 align-items-center">
+            <div
+              className="d-flex gap-2 align-items-center"
+              style={{
+                zIndex: 99,
+                position: "relative", // ensure stacking context
+                backgroundColor: "#fff", // avoid transparency issues
+              }}
+            >
               <select
-                className="form-select w-auto"
+                className="form-select"
                 value={reportType}
                 onChange={handleReportChange}
+                style={{
+                  position: "relative",
+                  zIndex: 1000,
+                  pointerEvents: "auto",
+                  backgroundColor: "#fff",
+                  maxWidth: "100%",
+                }}
               >
                 {REPORT_OPTIONS.map((option) => (
                   <option key={option} value={option}>
@@ -282,6 +296,13 @@ function CoreBody() {
                   className="form-select w-auto"
                   value={level}
                   onChange={handleLevelChange}
+                  style={{
+                    position: "relative",
+                    zIndex: 1000,
+                    pointerEvents: "auto",
+                    backgroundColor: "#fff",
+                    maxWidth: "100%",
+                  }}
                 >
                   {Array.from({ length: 10 }, (_, i) => i + 1).map((lvl) => (
                     <option key={lvl} value={lvl}>
