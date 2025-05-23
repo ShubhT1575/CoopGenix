@@ -3,6 +3,7 @@ import axios from "axios";
 import { apiUrl } from "../Config";
 import { useSelector } from "react-redux";
 import { useAccount } from "wagmi";
+import Select from "react-select";
 
 const REPORT_OPTIONS = [
   "Global Upline",
@@ -258,6 +259,62 @@ function CoreBody() {
     });
   };
 
+
+
+  const reportOptions = REPORT_OPTIONS.map((opt) => ({
+    value: opt,
+    label: opt,
+  }));
+  
+  const levelOptions = Array.from({ length: 10 }, (_, i) => ({
+    value: i + 1,
+    label: `Level ${i + 1}`,
+  }));
+  
+  const customStyles = {
+    control: (base) => ({
+      ...base,
+      minWidth: "150px",
+      maxWidth: "200px",
+      border: "2px solid #ccc",
+      borderRadius: "4px",
+      zIndex: 1000,
+      backgroundColor: "#1e1e1e", // dark background
+      color: "#ffffff",
+    }),
+    menu: (base) => ({
+      ...base,
+      zIndex: 2000,
+      backgroundColor: "#1e1e1e", // dark menu
+    }),
+    option: (base, state) => ({
+      ...base,
+      backgroundColor: state.isFocused ? "#333" : "#1e1e1e",
+      color: "#fff",
+    }),
+    singleValue: (base) => ({
+      ...base,
+      color: "#fff",
+    }),
+    input: (base) => ({
+      ...base,
+      color: "#fff",
+    }),
+  };
+  
+  const customTheme = (theme) => ({
+    ...theme,
+    colors: {
+      ...theme.colors,
+      neutral0: "#1e1e1e",  // background
+      neutral80: "#ffffff", // text
+      primary25: "#333333", // hover
+      primary: "#cccccc",   // border/focus
+    },
+  });
+
+
+
   return (
     <div className="row">
       <div className="col-xl-12">
@@ -265,53 +322,50 @@ function CoreBody() {
           <div className="card-header justify-content-between pst">
             <div className="card-title">Rewards Data</div>
             <div
-              className="d-flex gap-2 align-items-center"
-              style={{
-                zIndex: 99,
-                position: "relative", // ensure stacking context
-                backgroundColor: "#fff", // avoid transparency issues
-              }}
-            >
-              <select
-                className="form-select"
-                value={reportType}
-                onChange={handleReportChange}
-                style={{
-                  position: "relative",
-                  zIndex: 1000,
-                  pointerEvents: "auto",
-                  backgroundColor: "#fff",
-                  maxWidth: "100%",
-                }}
-              >
-                {REPORT_OPTIONS.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
+      className="d-flex gap-2 align-items-center flex-wrap"
+      style={{
+        zIndex: 9999,
+        position: "relative",
+        backgroundColor: "transparent",
+        overflow: "visible",
+        padding: "8px 0",
+      }}
+    >
+      <Select
+        options={reportOptions}
+        value={reportOptions.find((opt) => opt.value === reportType)}
+        onChange={(selected) =>
+          handleReportChange({ target: { value: selected.value } })
+        }
+        styles={customStyles}
+        theme={customTheme}
+        isSearchable={false}
+      />
 
-              {reportType === "Level Report" && (
-                <select
-                  className="form-select w-auto"
-                  value={level}
-                  onChange={handleLevelChange}
-                  style={{
-                    position: "relative",
-                    zIndex: 1000,
-                    pointerEvents: "auto",
-                    backgroundColor: "#fff",
-                    maxWidth: "100%",
-                  }}
-                >
-                  {Array.from({ length: 10 }, (_, i) => i + 1).map((lvl) => (
-                    <option key={lvl} value={lvl}>
-                      Level {lvl}
-                    </option>
-                  ))}
-                </select>
-              )}
-            </div>
+      {reportType === "Level Report" && (
+        <Select
+          options={levelOptions}
+          value={levelOptions.find((opt) => opt.value === level)}
+          onChange={(selected) =>
+            handleLevelChange({ target: { value: selected.value } })
+          }
+          styles={{
+            ...customStyles,
+            control: (base) => ({
+              ...base,
+              minWidth: "120px",
+              maxWidth: "160px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              zIndex: 1000,
+              backgroundColor: "#1e1e1e",
+            }),
+          }}
+          theme={customTheme}
+          isSearchable={false}
+        />
+      )}
+    </div>
           </div>
 
           <div className="card-body active-tab">
