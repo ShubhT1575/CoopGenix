@@ -271,7 +271,7 @@ function Sidebar() {
             )} */}
           </ul>
           <Link
-            to="/signup"
+            to="/SignIn"
             className=" position-absolute"
             style={{ bottom: "20px", left: "30%" }}
           >
