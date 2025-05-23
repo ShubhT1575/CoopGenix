@@ -118,7 +118,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="hero-button mt-5">
-                  <Link to={"#"}>
+                  <Link to={"/SignUp"}>
                     <button className="buttons">
                       <span className="boxx">Join Now</span>
                     </button>
@@ -126,7 +126,7 @@ export default function Home() {
                   <div className="">
                     <ul className="list-wrap">
                       <li>
-                        <Link to={"#"}>
+                        <Link to={"/SignIn"}>
                           <button className="buttons">
                             <span className="boxx">Login</span>
                           </button>
@@ -563,6 +563,7 @@ export default function Home() {
                 <div className="faq-box">
                   <div
                     className="faq-question accordion-button collapsed"
+                    style={{background: "transparent"}}
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#howItWorks"
@@ -573,7 +574,7 @@ export default function Home() {
                     <span className="faq-toggle ms-auto">+</span>
                   </div>
                   <p
-                    className="faq-answer accordion-collapse collapse"
+                    className="faq-answer accordion-collapse collapse  text-white"
                     id="howItWorks"
                     data-bs-parent="#generalQuestionsAccordion"
                   >
@@ -587,6 +588,7 @@ export default function Home() {
                 <div className="faq-box">
                   <div
                     className="faq-question accordion-button collapsed"
+                    style={{background: "transparent"}}
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#hiddenFees"
@@ -597,7 +599,7 @@ export default function Home() {
                     <span className="faq-toggle ms-auto">+</span>
                   </div>
                   <p
-                    className="faq-answer accordion-collapse collapse"
+                    className="faq-answer accordion-collapse collapse text-white"
                     id="hiddenFees"
                     data-bs-parent="#generalQuestionsAccordion"
                   >
@@ -609,6 +611,7 @@ export default function Home() {
                 <div className="faq-box">
                   <div
                     className="faq-question accordion-button collapsed"
+                    style={{background: "transparent"}}
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#startFundraiser"
@@ -619,7 +622,7 @@ export default function Home() {
                     <span className="faq-toggle ms-auto">+</span>
                   </div>
                   <p
-                    className="faq-answer accordion-collapse collapse"
+                    className="faq-answer accordion-collapse collapse text-white"
                     id="startFundraiser"
                     data-bs-parent="#generalQuestionsAccordion"
                   >
@@ -636,6 +639,7 @@ export default function Home() {
                 <div className="faq-box">
                   <div
                     className="faq-question accordion-button collapsed"
+                    style={{background: "transparent"}}
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#donationSecure"
@@ -646,7 +650,7 @@ export default function Home() {
                     <span className="faq-toggle ms-auto">+</span>
                   </div>
                   <p
-                    className="faq-answer accordion-collapse collapse"
+                    className="faq-answer accordion-collapse collapse text-white"
                     id="donationSecure"
                     data-bs-parent="#securityAccordion"
                   >
@@ -658,6 +662,7 @@ export default function Home() {
                 <div className="faq-box">
                   <div
                     className="faq-question accordion-button collapsed"
+                    style={{background: "transparent"}}
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#withdrawFunds"
@@ -668,7 +673,7 @@ export default function Home() {
                     <span className="faq-toggle ms-auto">+</span>
                   </div>
                   <p
-                    className="faq-answer accordion-collapse collapse"
+                    className="faq-answer accordion-collapse collapse text-white"
                     id="withdrawFunds"
                     data-bs-parent="#securityAccordion"
                   >
@@ -681,6 +686,7 @@ export default function Home() {
                 <div className="faq-box">
                   <div
                     className="faq-question accordion-button collapsed"
+                    style={{background: "transparent"}}
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#trackContributions"
@@ -691,7 +697,7 @@ export default function Home() {
                     <span className="faq-toggle ms-auto">+</span>
                   </div>
                   <p
-                    className="faq-answer accordion-collapse collapse"
+                    className="faq-answer accordion-collapse collapse text-white"
                     id="trackContributions"
                     data-bs-parent="#securityAccordion"
                   >
