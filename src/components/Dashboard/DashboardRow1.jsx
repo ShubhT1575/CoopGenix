@@ -651,10 +651,10 @@ function DashboardRow1() {
                         </span>
 
                         <h6 className="mb-0 fw-semibold">
-                          {"0"}
-                          {/* {Number(
-                            dashboard?.userDetails?.unity_income || 0
-                          ).toFixed(2)} */}
+                         
+                          $ {Number(
+                            dashboard?.totalVolume || 0
+                          ).toFixed(2)}
                         </h6>
                       </div>
                       <div>
@@ -671,7 +671,9 @@ function DashboardRow1() {
                       <div>
                         <span className="d-block mb-1">Total Team Count</span>
                         <h6 className="mb-0 fw-semibold">
-                          {dashboard?.week_directs || "0"}
+                          {
+                            dashboard?.totalTeam || 0
+                          }
                         </h6>
                       </div>
                       <div>
