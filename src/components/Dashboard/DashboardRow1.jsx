@@ -319,7 +319,11 @@ function DashboardRow1() {
             color: "red",
             visibility: "",
           }}
-        ><span className="" style={{fontWeight: "700", color: "#ff818d"}}>Waiting For 2 Directs</span></button>
+        >
+          <span className="" style={{ fontWeight: "700", color: "#ff818d" }}>
+            Waiting For 2 Directs
+          </span>
+        </button>
       );
     }
     // return null;
@@ -864,7 +868,7 @@ function DashboardRow1() {
                     <div className="" key={block.id}>
                       <div className="card custom-card crm-card minwidth">
                         <div className="card-body">
-                        <div className="recycle-img">0</div>
+                          <div className="recycle-img">0</div>
                           <div className="reward-box glow-box">
                             <h5>Block {block.id}</h5>
                             {timeData >= 0 ? (
@@ -883,7 +887,11 @@ function DashboardRow1() {
                                   poolId,
                                   place
                                 );
-                                const record = blockRecords?.find(item => item.poolId === poolId && item.place === place);
+                                const record = blockRecords?.find(
+                                  (item) =>
+                                    item.poolId === poolId &&
+                                    item.place === place
+                                );
 
                                 return (
                                   <div
@@ -897,16 +905,23 @@ function DashboardRow1() {
                                       position: "relative",
                                     }}
                                   >
-                                   L{poolId}
-        {record && (
-          <div className="box-tooltip">
-            <div className="tooltip-header">User Details</div>
-            <div className="tooltip-userid">{record.userId}</div>
-            <div className="tooltip-date">
-              Joined: {new Date(record.timestamp * 1000).toLocaleDateString()}
-            </div>
-          </div>
-        )}
+                                    L{poolId}
+                                    {record && (
+                                      <div className="box-tooltip">
+                                        <div className="tooltip-header">
+                                          User Details
+                                        </div>
+                                        <div className="tooltip-userid">
+                                          {record.userId}
+                                        </div>
+                                        <div className="tooltip-date">
+                                          Joined:{" "}
+                                          {new Date(
+                                            record.timestamp * 1000
+                                          ).toLocaleDateString()}
+                                        </div>
+                                      </div>
+                                    )}
                                   </div>
                                 );
                               })}
