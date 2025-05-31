@@ -312,15 +312,15 @@ function DashboardRow1() {
       return (
         <button
           type="button"
-          className="btn text-light"
+          className="btn text-light blink-warning"
           style={{
-            background: "transparent",
-            border: "2px solid #ff818d",
+            background: "red",
+            border: "2px solid white",
             color: "red",
             visibility: "",
           }}
         >
-          <span className="" style={{ fontWeight: "700", color: "#ff818d" }}>
+          <span className="" style={{ fontWeight: "700", color: "white" }}>
             Waiting For 2 Directs
           </span>
         </button>

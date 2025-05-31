@@ -236,8 +236,8 @@ function CoreBody() {
               <tr style={{ color: "white" }} key={index}>
                 <td>$ {item?.weeklyfund}</td>
                 <td>{item?.directs}</td>
-                <td>$ {item?.amount.toFixed(3)}</td>
-                <td>$ {item?.shareratio.toFixed(3)}</td>
+                <td>$ {item?.amount}</td>
+                <td>$ {item?.shareratio}</td>
                 {/* <td>${(item?.netPolAmt / 1e18).toFixed(2)}</td> */}
                 <td>{new Date(item?.createdAt).toLocaleString()}</td>
               </tr>
