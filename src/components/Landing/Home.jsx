@@ -22,6 +22,9 @@ import loan from "../../assets/img/loan.png";
 import deal from "../../assets/img/deal (1).png";
 import TestimonialCarousel from "./TestimonialCarousel";
 import Footer from "./Footer";
+import axios from "axios";
+import { apiUrl } from "../Config";
+import { use } from "react";
 // import economy from "/Home Logo/Asset 1.png"
 
 export default function Home() {
@@ -57,6 +60,24 @@ export default function Home() {
 
     return () => clearInterval(timer);
   }, []);
+
+  const [data,setData] = useState();
+
+  const getLandingData = async ()=>{
+    try {
+      const response = await axios.get(apiUrl + "/user-info?userId=0x1b0E46531f89804DEa605323B83F79E2b91E51D4");
+      if (response?.status === 200) {
+        setData(response?.data);
+      }
+    } catch (error) {
+      console.error("Error fetching landing data:", error);
+    }
+  }
+
+  useEffect(()=>{
+    getLandingData();
+  },[])
+  
 
   return (
     <>
@@ -229,14 +250,81 @@ export default function Home() {
           <h3 className="text-"  style={{color: "#00FFFF"}}>
             Coopgenix - The Smartest Way to Grow Together
           </h3>
-          <div className="video-container">
-            <iframe
-              src="https://www.youtube.com/embed/iht2aiIXsZQ?autoplay=1&mute=1"
-              frameBorder="0"
-              allow="autoplay; encrypted-media"
-              allowFullScreen
-            ></iframe>
-          </div>
+          <div className="video-" style={{
+  position: "relative",
+  width: "80%",
+  maxWidth: "800px",
+  margin: "40px auto",
+  padding: "20px",
+  background: "#111",
+  borderRadius: "10px",
+  boxShadow: "0 0 0 10px #333, 0 0 0 15px #555, 0 30px 50px rgba(0,0,0,0.5)",
+  border: "15px solid #222",
+  borderTop: "40px solid #222",
+  borderBottom: "40px solid #222",
+  transform: "perspective(500px) rotateX(5deg)",
+  '&:before': {
+    content: '""',
+    position: "absolute",
+    top: "-25px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    width: "60px",
+    height: "10px",
+    background: "#444",
+    borderRadius: "5px"
+  },
+  '&:after': {
+    content: '"TELEVISION"',
+    position: "absolute",
+    bottom: "-30px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    color: "#888",
+    fontSize: "12px",
+    letterSpacing: "2px",
+    textTransform: "uppercase"
+  }
+}}>
+  <div style={{
+    position: "relative",
+    paddingBottom: "56.25%", /* 16:9 aspect ratio */
+    height: 0,
+    overflow: "hidden"
+  }}>
+    <iframe
+      src="https://www.youtube.com/embed/iht2aiIXsZQ?autoplay=1&mute=1"
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        border: "3px solid rgba(255,255,255,0.2)",
+        boxShadow: "inset 0 0 20px rgba(0,0,0,0.5), 0 0 30px rgba(0,255,255,0.2)"
+      }}
+      frameBorder="0"
+      allow="autoplay; encrypted-media"
+      allowFullScreen
+    ></iframe>
+  </div>
+  <div style={{
+    position: "absolute",
+    top: "10px",
+    right: "10px",
+    display: "flex",
+    gap: "5px"
+  }}>
+    {[1, 2, 3].map((_, i) => (
+      <div key={i} style={{
+        width: "8px",
+        height: "8px",
+        borderRadius: "50%",
+        background: ["#ff5f56", "#ffbd2e", "#27c93f"][i]
+      }}></div>
+    ))}
+  </div>
+</div>
         </div>
       </div>
 
@@ -477,13 +565,13 @@ export default function Home() {
           <div className="stats-counters">
             <div className="counter-box">
               <h3 className="counter text-white" id="totalRaised">
-                $ 0
+                $ {data?.totalVolume.toFixed() || 0}
               </h3>
               <p className=" text-white">Total Reward</p>
             </div>
             <div className="counter-box">
               <h3 className="counter text-white" id="activeCampaigns">
-                0
+                {data?.totalTeam || 0}
               </h3>
               <p className=" text-white">Total Community</p>
             </div>
@@ -511,7 +599,7 @@ export default function Home() {
                 <div className="progress-bar">
                   <div style={{ width: "60%" }}></div>
                 </div>
-                <Link to="/campaign/1" className="cta-btn text-white">
+                <Link to="/SignUp" className="cta-btn text-white">
                   Join Now
                 </Link>
               </div>
@@ -525,7 +613,7 @@ export default function Home() {
                 <div className="progress-bar">
                   <div style={{ width: "53%" }}></div>
                 </div>
-                <Link to="/campaign/2" className="cta-btn text-white">
+                <Link to="/SignUp" className="cta-btn text-white">
                   Join Now
                 </Link>
               </div>
@@ -539,7 +627,7 @@ export default function Home() {
                 <div className="progress-bar">
                   <div style={{ width: "50%" }}></div>
                 </div>
-                <Link to="/campaign/3" className="cta-btn text-white">
+                <Link to="/SignUp" className="cta-btn text-white">
                   Join Now
                 </Link>
               </div>

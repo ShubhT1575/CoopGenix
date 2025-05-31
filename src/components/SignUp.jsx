@@ -41,8 +41,6 @@ function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
   const [refFromUrl, setRefFromUrl] = useState(false);
   const [showDiv, setShowDiv] = useState(false);
-  // const [isCheckedYes, setIsCheckedYes] = useState(false);
-  // const [isCheckedNo, setIsCheckedNo] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
@@ -54,52 +52,12 @@ function SignUp() {
     }
   }, [window.location.search]);
 
-  // const handleYesChange = (event) => {
-  //   const checked = event.target.checked;
-  //   setIsCheckedYes(checked);
-  //   if (checked) {
-  //     setIsCheckedNo(false);
-  //     setShowDiv(true);
-  //   }
-  // };
-
-  // const handleNoChange = (event) => {
-  //   const checked = event.target.checked;
-  //   setIsCheckedNo(checked);
-  //   if (checked) {
-  //     setIsCheckedYes(false);
-  //     setShowDiv(false);
-  //   }
-  // };
-
   const handleCheckboxChange = (event) => {
     setIsChecked(event.target.checked);
   };
 
-  // const handleButtonClick = (value) => {
-  //   setPackageValue(value);
-  // };
-
-  // function getButtonClass(value) {
-  //   switch (value) {
-  //     case "10":
-  //       return "primary3-light";
-  //     case "50":
-  //       return "secondary-light";
-  //     case "100":
-  //       return "warning-light";
-  //     case "200":
-  //       return "orange-light";
-  //     case "500":
-  //       return "primary2-light";
-  //     default:
-  //       return "default";
-  //   }
-  // }
-
   const appToken = async (amt, TokenAddress, tokenDecimals) => {
     try {
-      // console.log(amt, TokenAddress, tokenDecimals, "??????????????????");
       const res = tokenApprove(amt, TokenAddress, tokenDecimals);
       await toast.promise(res, {
         loading: "Wait for Approvel.........",
@@ -122,23 +80,10 @@ function SignUp() {
         setIsLoading(false);
         return toast.error("Please connect wallet");
       }
-      // if (!isCheckedYes && !isCheckedNo) {
-      //   setIsLoading(false);
-      //   return toast.error("Please select checkbox !");
-      // }
-      // if(!refAddress){
-      //   setIsLoading(false);
-      //   return toast.error("Sponsor Id Required");
-      // }
       if (!packageValue) {
         setIsLoading(false);
         return toast.error("Enter Package Value");
       }
-      // if (amt >= 60) {
-      //   setIsLoading(false);
-      //   toast.error("Please Enter an Register Amount Greater Than 60");
-      //   return;
-      // }
 
       const isUserExist = await UserExist(address);
       if (isUserExist) {
@@ -147,20 +92,8 @@ function SignUp() {
         return;
       }
       
-      // let getRefAddress;
-      // if (refAddress) {
-        //   getRefAddress = await getAddressbyRefrralId(refAddress);
-        //   if (getRefAddress?.data?.status != 200) {
-          //     setIsLoading(false);
-          //     toast.error(getRefAddress?.data?.message);
-          //     return;
-          //   }
-          // }
-          
-          const ownerAddress = await GetOwner();
-          console.log(ownerAddress,"sssss")
-
-     
+      const ownerAddress = await GetOwner();
+      console.log(ownerAddress,"sssss")
 
       const response = await getAddressbyRefrralId(refAddress);
       console.log(response,"response")
@@ -185,62 +118,15 @@ function SignUp() {
     }
 
     let realAmt = 5*1e18;
-    // if(amt === 1){
-    //   realAmt = 5*1e18;
-    // }
-    // if(amt === 2){
-    //   realAmt = 25*1e18
-    // }
     console.log(realAmt,"realAmt")
 
     const bal = await getTotalPol(realAmt)
 
     let increasedAmt = bal + (bal * BigInt(2)) / BigInt(100);
-
-    // console.log(increasedAmt,"incc")
     
-    // console.log("xxx")
-
-      
-      // const Tokaddress = await getUSDT();
-      // const Taddress = Tokaddress.address;
-      // console.log(Taddress, "::::123");
-      // const tokenDecimals = Tokaddress.decimals;
-      
-      // console.log(Taddress, Tokaddress, "::::123");
-
-      // const balance = await getBalance(config, {
-      //   address: address,
-      //   token: Taddress,
-      // });
-
-      // const walletBalance = parseFloat(bal.formatted);
-
-      // if (walletBalance < amt) {
-      //   console.log(walletBalance, amt);
-      //   setIsLoading(false);
-      //   toast.error("Insufficient Balance");
-      //   return;
-      // }
-
-      // if (!isChecked) {
-      //   setIsLoading(false);
-      //   return toast.error(
-      //     "You must accept the Terms and Conditions to Register."
-      //   );
-      // }
-      // console.log("a a");
-
-      // const allowance = await checkAllowance(address, Taddress);
-      // console.log("a a4");
-      let appRes;
-
-      // if (amt > allowance / Number("1e" + tokenDecimals)) {
-      //   appRes = await appToken(amt, Taddress, tokenDecimals);
-      // } else {
-      // }
-      appRes = true;
-      if (appRes) {
+    let appRes;
+    appRes = true;
+    if (appRes) {
         const buy = JoinPlan(increasedAmt,refAddressSet);
         await toast.promise(buy, {
           loading: "Buying...",
@@ -260,8 +146,6 @@ function SignUp() {
       setIsLoading(false);
     }
   };
-
-
 
   useEffect(() => {
     if (address) {
@@ -287,11 +171,33 @@ function SignUp() {
     <>
       <div className="full-width">
         <div className="hero-sign">
-          {/* <!-- Sign In Section --> */}
+          {/* Back Button */}
+          <button 
+            onClick={() => navigate("/")}
+            style={{
+              position: 'absolute',
+              top: '20px',
+              left: '20px',
+              padding: '8px 16px',
+              background: '#000000',
+              border: '1px solid',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '5px'
+            }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg>
+            Back
+          </button>
+          
+          {/* Sign In Section */}
           <div className="auth-section">
             <a href="/">
               <img src={Logo} style={{ height: "50px" }} alt="Logo" />
-              {/* <h2>CoopGenix</h2> */}
             </a>
             <h2 className="h2">Sign Up</h2>
             <p className="welcome-msg text-light">
@@ -318,7 +224,6 @@ function SignUp() {
               type="text"
               placeholder="Package Value"
             />
-            {/* <input className="input-signin" type="password" placeholder="Password"/> */}
             {isConnected ? (
               <button
                 className="button-signin"
@@ -357,8 +262,6 @@ function SignUp() {
                   </div>
                 </p>
               </div>
-              {/* <button className="button-signin" onclick="connectMetaMask()"><i className="fab fa-ethereum"></i> MetaMask</button>
-            <button className="button-signin" onclick="connectWalletConnect()"><i className="fas fa-link"></i> WalletConnect</button> */}
             </div>
           </div>
         </div>

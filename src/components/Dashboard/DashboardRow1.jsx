@@ -26,6 +26,7 @@ import { apiUrl } from "../Config";
 import { setUserDetails } from "../../Redux/Dashdata";
 import toast from "react-hot-toast";
 import CountdownTimer from "../CountdownTimer";
+import { color } from "d3";
 
 function DashboardRow1() {
   const { tokenData } = useSelector((state) => state.coreCrowd);
@@ -313,30 +314,30 @@ function DashboardRow1() {
           type="button"
           className="btn text-light"
           style={{
-            background: `radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
-              radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
-              linear-gradient(135deg, #0d0d2b, #1b1b3a)`,
-            visibility: "hidden",
+            background: "transparent",
+            border: "2px solid #ff818d",
+            color: "red",
+            visibility: "",
           }}
-        ></button>
+        ><span className="" style={{fontWeight: "700", color: "#ff818d"}}>Waiting For 2 Directs</span></button>
       );
     }
     // return null;
   };
 
   const blocks = [
-    { id: 1, value: "$5", reward: "12.8" },
-    { id: 2, value: "$15", reward: "38.4" },
-    { id: 3, value: "$45", reward: "115" },
-    { id: 4, value: "$135", reward: "345" },
-    { id: 5, value: "$405", reward: "1036" },
-    { id: 6, value: "$1215", reward: "3110" },
-    { id: 7, value: "$3645", reward: "9331" },
-    { id: 8, value: "$10935", reward: "27993" },
-    { id: 9, value: "$32805", reward: "83980" },
-    { id: 10, value: "$98415", reward: "251942" },
-    { id: 11, value: "$265245", reward: "755827" },
-    { id: 12, value: "$885735", reward: "2267481" },
+    { id: 1, value: "5", reward: "12.8" },
+    { id: 2, value: "15", reward: "38.4" },
+    { id: 3, value: "45", reward: "115" },
+    { id: 4, value: "135", reward: "345" },
+    { id: 5, value: "405", reward: "1036" },
+    { id: 6, value: "1215", reward: "3110" },
+    { id: 7, value: "3645", reward: "9331" },
+    { id: 8, value: "10935", reward: "27993" },
+    { id: 9, value: "32805", reward: "83980" },
+    { id: 10, value: "98415", reward: "251942" },
+    { id: 11, value: "265245", reward: "755827" },
+    { id: 12, value: "885735", reward: "2267481" },
   ];
 
   const tableData = [
@@ -507,7 +508,7 @@ function DashboardRow1() {
                         <span className="d-block mb-1">Earning Goal</span>
                         <h6 className="mb-0 fw-semibold">
                           {" "}
-                          $ {dashboard?.earning_goal || "0"}
+                          $ {dashboard?.earning_goal.toFixed(3) || "0"}
                         </h6>
                       </div>
                       <div>
@@ -651,10 +652,7 @@ function DashboardRow1() {
                         </span>
 
                         <h6 className="mb-0 fw-semibold">
-                         
-                          $ {Number(
-                            dashboard?.totalVolume || 0
-                          ).toFixed(2)}
+                          $ {Number(dashboard?.totalVolume || 0).toFixed(2)}
                         </h6>
                       </div>
                       <div>
@@ -671,9 +669,7 @@ function DashboardRow1() {
                       <div>
                         <span className="d-block mb-1">Total Team Count</span>
                         <h6 className="mb-0 fw-semibold">
-                          {
-                            dashboard?.totalTeam || 0
-                          }
+                          {dashboard?.totalTeam || 0}
                         </h6>
                       </div>
                       <div>
@@ -868,6 +864,7 @@ function DashboardRow1() {
                     <div className="" key={block.id}>
                       <div className="card custom-card crm-card minwidth">
                         <div className="card-body">
+                        <div className="recycle-img">0</div>
                           <div className="reward-box glow-box">
                             <h5>Block {block.id}</h5>
                             {timeData >= 0 ? (
@@ -886,6 +883,7 @@ function DashboardRow1() {
                                   poolId,
                                   place
                                 );
+                                const record = blockRecords?.find(item => item.poolId === poolId && item.place === place);
 
                                 return (
                                   <div
@@ -896,19 +894,29 @@ function DashboardRow1() {
                                         ? "#1b045a"
                                         : undefined,
                                       color: isPurple ? "#fff" : undefined,
+                                      position: "relative",
                                     }}
                                   >
-                                    {i + 1}
+                                   L{poolId}
+        {record && (
+          <div className="box-tooltip">
+            <div className="tooltip-header">User Details</div>
+            <div className="tooltip-userid">{record.userId}</div>
+            <div className="tooltip-date">
+              Joined: {new Date(record.timestamp * 1000).toLocaleDateString()}
+            </div>
+          </div>
+        )}
                                   </div>
                                 );
                               })}
                             </div>
                             <div className="box-btn-content">
                               <div className="package-package">
-                                Value {block.value}
+                                Value: ${block.value}
                               </div>
                               <div className="Potential-Reward">
-                                Received Block Reward {block.reward}
+                                Reward: ${block?.value * 5}
                               </div>
                             </div>
                             <div className="box-btn-content content-2">

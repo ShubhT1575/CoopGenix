@@ -85,7 +85,7 @@ function CoreBody() {
       case "Self Team Bonus":
         return ["S.No", "From", "Level", "Amount", "Timestamp", "Hash"];
       case "Unity Bonus":
-        return ["Amount", "Unit", "Reward", "Share"];
+        return ["Amount", "Unit", "Reward","Share", "TimeStamp"];
       case "Unity Leaderboard":
         return ["Rank", "User ID", "Current Unit", "Expected Reward"];
       case "Block Reward":
@@ -101,7 +101,7 @@ function CoreBody() {
       case "Withdraw Report":
         return ["S.No", "Amount", "UsdtAmt", "PolAmt", "Timestamp"];
       case "Level Report":
-        return ["S.No", "User ID", "Level", "Direct Team", "Timestamp"]; // ✅ Sample header
+        return ["S.No", "User ID", "Direct Team", "Timestamp"]; // ✅ Sample header
       default:
         return ["S.No", "From", "Level", "Amount", "Timestamp", "Hash"];
     }
@@ -192,7 +192,7 @@ function CoreBody() {
             <tr style={{ color: "white" }} key={index}>
               <td>{index + 1}</td>
               <td>{item?.userId}</td>
-              <td>{item?.level}</td>
+              {/* <td>{item?.level}</td> */}
               <td>{item?.directteam}</td>
               <td>
                 {item?.time ? new Date(item.time).toLocaleString() : "N/A"}
@@ -231,6 +231,17 @@ function CoreBody() {
               <td>{new Date(item?.createdAt).toLocaleString()}</td>
             </tr>
           );
+          case "Unity Bonus":
+            return (
+              <tr style={{ color: "white" }} key={index}>
+                <td>$ {item?.weeklyfund}</td>
+                <td>{item?.directs}</td>
+                <td>$ {item?.amount.toFixed(3)}</td>
+                <td>$ {item?.shareratio.toFixed(3)}</td>
+                {/* <td>${(item?.netPolAmt / 1e18).toFixed(2)}</td> */}
+                <td>{new Date(item?.createdAt).toLocaleString()}</td>
+              </tr>
+            );
         default:
           return (
             <tr style={{ color: "white" }} key={item._id}>

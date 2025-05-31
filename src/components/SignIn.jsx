@@ -65,6 +65,27 @@ function SignIn() {
     <>
       <div className="full-width">
         <div className="hero-sign">
+        <button 
+            onClick={() => navigate("/")}
+            style={{
+              position: 'absolute',
+              top: '20px',
+              left: '20px',
+              padding: '8px 16px',
+              background: '#000000',
+              border: '1px solid',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '5px'
+            }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg>
+            Back
+          </button>
           {/* <!-- Sign In Section --> */}
           <div className="auth-section">
             <a href="/">

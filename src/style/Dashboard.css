@@ -150,3 +150,76 @@
   color: white;
   text-shadow: 10px 10px 20px rgba(138, 43, 226, 0.6) !important;
 }
+
+.recycle-img{
+  position: absolute;
+  top: 18px;
+  right: 17px;
+  background-image: url("/Asset 2.png");
+  background-position: center;
+  background-size: cover;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Tooltip Content Styles */
+.box-tooltip {
+  z-index: 100;
+  position: absolute;
+  top: calc(100% + 10px); /* <-- moved from bottom to top */
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  min-width: 120px;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.box-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: 100%; /* <-- arrow goes above the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent rgba(0, 0, 0, 0.9) transparent;
+}
+
+.tooltip-header {
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: #7b2ff7;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tooltip-userid {
+  font-weight: 600;
+  margin-bottom: 4px;
+  word-break: break-all;
+  color: #fff;
+}
+
+.tooltip-date {
+  font-size: 11px;
+  opacity: 0.8;
+  color: #ddd;
+}
+
+.small-box:hover .box-tooltip {
+  opacity: 1 !important;
+  transform: translateX(-50%) translateY(5px); /* optional hover movement */
+}

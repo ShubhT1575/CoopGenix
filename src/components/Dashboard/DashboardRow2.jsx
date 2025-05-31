@@ -1198,16 +1198,24 @@ function DashboardRow2() {
                 </span>
               ) : isConnected ? (
                 <button
-                  style={{
-                    background: "transparent",
-                    border: "none",
-                  }}
-                  className="btn btn-secondary-gradient w-100 text-light stakebtn"
-                  onClick={handleButtonClick}
-                  disabled={accessAddress}
-                >
-                  Copy Link
-                </button>
+                style={{
+                  backgroundColor: "aqua",          // Aqua color background
+                  color: "#000",                     // White text
+                  border: "none",                    // No border
+                  borderRadius: "6px",              // Rounded corners
+                  padding: "10px 16px",             // Some padding
+                  fontWeight: "600",                // Bold text
+                  boxShadow: "0 2px 5px rgba(0,0,0,0.15)", // Optional shadow
+                  cursor: accessAddress ? "not-allowed" : "pointer", // Cursor style
+                  opacity: accessAddress ? 0.6 : 1,  // Fade if disabled
+                }}
+                className="w-100"
+                onClick={handleButtonClick}
+                disabled={accessAddress}
+              >
+                Copy Link
+              </button>
+              
               ) : (
                 <ConnectWallet className="address-connected-btn" />
               )}
