@@ -12,6 +12,7 @@ import { getUser } from "../API/Api";
 // import { getUSDT } from "./web3";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { GetOwner, UserExist } from "./web3";
+import DirectPopup from "./DirectPopup";
 
 function Header() {
   const dispatch = useDispatch();
@@ -107,17 +108,29 @@ function Header() {
     const fetchOwner = async () => {
       const owner = await GetOwner();
       console.log("Owner Address", owner);
-  
+
       if (address === owner) {
         setShowUpgrade(true);
       } else {
         setShowUpgrade(false);
       }
     };
-  
+
     fetchOwner();
   }, [address]);
-  
+
+  const [showPopup, setShowPopup] = useState(false);
+
+useEffect(() => {
+  const lastShown = localStorage.getItem("popupLastShown");
+  const now = new Date().getTime();
+
+  if (!lastShown || now - parseInt(lastShown) > 24 * 60 * 60 * 1000) {
+    setShowPopup(true);
+    localStorage.setItem("popupLastShown", now.toString());
+  }
+}, []);
+
 
   return (
     <header
@@ -300,6 +313,8 @@ function Header() {
           </div>
         </ul>
       </div>
+      {showPopup && <DirectPopup onClose={() => setShowPopup(false)} />}
+
     </header>
   );
 }

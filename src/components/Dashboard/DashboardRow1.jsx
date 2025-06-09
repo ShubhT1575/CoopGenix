@@ -310,20 +310,17 @@ function DashboardRow1() {
       );
     } else {
       return (
+        // <></>
         <button
           type="button"
-          className="btn text-light blink-warning"
+          className="btn text-light"
           style={{
-            background: "red",
-            border: "2px solid white",
-            color: "red",
-            visibility: "",
+            background: `radial-gradient(circle at 30% 30%, rgba(0, 191, 255, 0.8), rgba(0, 0, 0, 0) 50%), 
+              radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.8), rgba(0, 0, 0, 0) 50%),
+              linear-gradient(135deg, #0d0d2b, #1b1b3a)`,
+            visibility: "hidden",
           }}
-        >
-          <span className="" style={{ fontWeight: "700", color: "white" }}>
-            Waiting For 2 Directs
-          </span>
-        </button>
+        ></button>
       );
     }
     // return null;
