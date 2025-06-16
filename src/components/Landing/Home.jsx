@@ -62,6 +62,7 @@ export default function Home() {
   }, []);
 
   const [data,setData] = useState();
+  const [gainer,setGainer] = useState([]);
 
   const getLandingData = async ()=>{
     try {
@@ -74,8 +75,23 @@ export default function Home() {
     }
   }
 
+  const getTopGainer = async ()=>{
+    try {
+      const response  = await axios.get(apiUrl + "/toprank");
+      if (response.data && response.data.topUsers) {
+        setGainer(response.data.topUsers);
+      }else{
+        setGainer([]);
+      }
+    } catch (error) {
+      console.error("Error fetching top gainer data:", error);
+      setGainer([]);
+    }
+  }
+
   useEffect(()=>{
     getLandingData();
+    getTopGainer();
   },[])
   
 
@@ -594,8 +610,9 @@ export default function Home() {
                 <div className="icon text-white">
                   <i class="fa-solid fa-user-shield"></i>
                 </div>
-                <h4 className="text-white">#22345</h4>
-                <p className="text-white">Raised: ₹1,20,000 / Goal: ₹2,00,000</p>
+                <h4 className="text-white">{gainer[0]?.userId}</h4>
+                <h6 className="text-white">{gainer[0]?.userRef.slice(0,5) + "..." + gainer[0]?.userRef.slice(-5)}</h6>
+                <p className="text-white">Raised: <strong>${gainer[0]?.totalUsd / 1e18}</strong></p>
                 <div className="progress-bar">
                   <div style={{ width: "60%" }}></div>
                 </div>
@@ -608,8 +625,9 @@ export default function Home() {
                 <div className="icon text-white">
                   <i class="fa-solid fa-user-shield"></i>
                 </div>
-                <h4 className="text-white">#22365</h4>
-                <p className="text-white">Raised: ₹80,000 / Goal: ₹1,50,000</p>
+                <h4 className="text-white">{gainer[1]?.userId}</h4>
+                <h6 className="text-white">{gainer[1]?.userRef.slice(0,5) + "..." + gainer[1]?.userRef.slice(-5)}</h6>
+                <p className="text-white">Raised: <strong>${gainer[1]?.totalUsd / 1e18}</strong></p>
                 <div className="progress-bar">
                   <div style={{ width: "53%" }}></div>
                 </div>
@@ -622,8 +640,9 @@ export default function Home() {
                 <div className="icon text-white">
                   <i class="fa-solid fa-user-shield"></i>
                 </div>
-                <h4 className="text-white">#27645</h4>
-                <p className="text-white">Raised: ₹50,000 / Goal: ₹1,00,000</p>
+                <h4 className="text-white">{gainer[2]?.userId}</h4>
+                <h6 className="text-white">{gainer[2]?.userRef.slice(0,5) + "..." + gainer[2]?.userRef.slice(-5)}</h6>
+                <p className="text-white">Raised: <strong>${gainer[2]?.totalUsd / 1e18}</strong></p>
                 <div className="progress-bar">
                   <div style={{ width: "50%" }}></div>
                 </div>
